@@ -1,5 +1,14 @@
 {
+  "includes": ["env.d.ts", "src/**/*", "./typed-router.d.ts", "./typed-router.d.ts"],
   "files": [],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "moduleResolution": "Bundler",
+    "types": ["unplugin-vue-router/client"]
+  },
   "references": [
     {
       "path": "./tsconfig.node.json"

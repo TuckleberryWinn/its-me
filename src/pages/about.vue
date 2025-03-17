@@ -1,3 +1,5 @@
+<script lang="ts" setup></script>
+
 <template>
   <div class="about">
     <h2>About</h2>
