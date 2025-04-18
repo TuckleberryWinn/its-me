@@ -30,15 +30,16 @@
 }
 
 .taskbar .icons-left {
-	line-height: 4.5dvh;
 	display: inline-block;
+  vertical-align: bottom;
 }
 
 .taskbar .icons-left label {
 	display: inline-block;
 	padding-left: 0.5dvh;
 	padding-right: 0.5dvh;
-	height: 4dvh;
+  padding-top: .5dvh;
+  padding-bottom: .5dvh;
 	vertical-align: middle;
 }
 
