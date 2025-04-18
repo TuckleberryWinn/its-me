@@ -25,8 +25,10 @@
 .taskbar {
 	position: fixed;
 	bottom: 0;
+  max-height: 6dvh;
 	width: 100%;
-	background: #004172;
+  background-color: rgba(159, 8, 126, 0.363);
+	backdrop-filter: blur(10px);
 }
 
 .taskbar .icons-left {
@@ -38,7 +40,7 @@
 	display: inline-block;
 	padding-left: 0.5dvh;
 	padding-right: 0.5dvh;
-  padding-top: .5dvh;
+  padding-top: .75dvh;
   padding-bottom: .5dvh;
 	vertical-align: middle;
 }

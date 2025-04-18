@@ -2,20 +2,18 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 0.1, 3000);
 
 camera.position.set(0, 1.12, 3.77);
 
-camera.rotation.set(-10, 0, 0);
+camera.rotation.set(-.17, 0, 0);
 
 const renderer = new THREE.WebGLRenderer();
 
 const loader = new GLTFLoader();
 
-loader.load('models/desktop_floor.glb', (gltf) => {
-	console.log(gltf);
-	console.log(camera);
-	scene.add(gltf.scene);
+loader.load('models/desktop_floor.glb', async (gltf) => {
+	await scene.add(gltf.scene);
 });
 
 const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -24,7 +22,7 @@ const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
-
+ambientLight.position.set(0,0,0);
 scene.add(ambientLight);
 
 function animate() {
@@ -39,3 +37,5 @@ renderer.setAnimationLoop(animate);
 export const startScene = () => {
 	document.body.appendChild(renderer.domElement);
 };
+
+console.log(scene)
