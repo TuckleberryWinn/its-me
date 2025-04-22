@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { render } from 'vue';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 0.1, 3000);
@@ -35,7 +36,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
 
 export const startScene = () => {
-	document.body.appendChild(renderer.domElement);
+	const targetCanvas = renderer.domElement
+	const pageRef = document.getElementById('pageContent')
+	targetCanvas.className = 'threeCanvas'
+	document.body.insertBefore(targetCanvas, pageRef);
 };
 
 console.log(scene)

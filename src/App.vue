@@ -8,15 +8,21 @@ startScene();
 </script>
 
 <template>
-	<div class="page">
+	<div id="pageContent">
 		<PageHeader />
 		<RouterView />
 		<PageFooter />
 	</div>
 </template>
 
-<style scoped>
-.page {
-	background-color: rgb(133, 139, 142);
+<style>
+#pageContent {
+	background-color: rgba(133, 139, 142, 0.192);
+}
+.threeCanvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: -1;
 }
 </style>
