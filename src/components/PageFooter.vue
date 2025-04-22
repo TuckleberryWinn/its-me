@@ -15,6 +15,10 @@
 				<span id="chrome"></span>
 				<input type="checkbox" />
 			</label>
+			<label>
+				<span id="test"></span>
+				<input type="checkbox" />
+			</label>
 		</div>
 		<div class="taskbar-tabs"></div>
 		<div class="icons-right"></div>
@@ -23,6 +27,7 @@
 
 <style scoped>
 .taskbar {
+	--icon-size: 32px;
 	position: fixed;
 	bottom: 0;
 	max-height: 6dvh;
@@ -52,6 +57,7 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 100% 100%;
+	image-rendering: pixelated;
 }
 
 .taskbar .icons-left input {
@@ -77,5 +83,8 @@ label span ~ input:checked {
 
 .taskbar .icons-left #chrome {
 	background-image: url(/src/assets/ui/icon-chrome.png);
+}
+.taskbar .icons-left #test {
+	background-image: url(/src/assets/ui/tiny-test.png);
 }
 </style>

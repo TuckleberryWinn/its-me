@@ -16,13 +16,14 @@ startScene();
 </template>
 
 <style>
-#pageContent {
-	background-color: rgba(133, 139, 142, 0.192);
-}
 .threeCanvas {
 	position: absolute;
 	left: 0;
 	top: 0;
 	z-index: -1;
+	min-width: 100%;
+	min-height: 100%;
+	max-width: 100%;
+	max-height: 100%;
 }
 </style>
