@@ -74,15 +74,15 @@ label span ~ input:checked {
 
 .taskbar .icons-left #start-menu {
 	padding-left: 0.3dvh;
-	background-image: url(/src/assets/ui/icon-windows.png);
+	background-image: url(/src/assets/ui/48xWindows.png);
 }
 
 .taskbar .icons-left #folder {
-	background-image: url(/src/assets/ui/icon-folder.png);
+	background-image: url(/src/assets/ui/48xFolder.png);
 }
 
 .taskbar .icons-left #chrome {
-	background-image: url(/src/assets/ui/icon-chrome.png);
+	background-image: url(/src/assets/ui/48xChrome.png);
 }
 .taskbar .icons-left #test {
 	background-image: url(/src/assets/ui/tiny-test.png);
