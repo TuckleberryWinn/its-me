@@ -11,8 +11,8 @@ const props = defineProps({
 <template>
 	<RouterLink to="/apps/dewm">
 		<label>
-			<span></span>
-			<h4>{{ props.title || 'Title Not Found.exe' }}</h4>
+			<span :style="{ backgroundImage: `url(${props.iconURL})` }"></span>
+			<h4 class="font-vt323">{{ props.title || 'Title Not Found.exe' }}</h4>
 		</label>
 	</RouterLink>
 </template>
@@ -40,8 +40,10 @@ label > span {
 	display: block;
 	width: 4.5rem;
 	aspect-ratio: 1/1;
-	background-color: rgb(5, 5, 134);
-	border: 1px solid blue;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+	image-rendering: pixelated;
 	border-radius: 20%;
 	margin-left: auto;
 	margin-right: auto;
@@ -50,5 +52,6 @@ label > span {
 
 h4 {
 	filter: drop-shadow(0.05rem 0.05rem 0.2rem black);
+	font-size: 1.15rem;
 }
 </style>

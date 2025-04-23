@@ -3,20 +3,18 @@ import DesktopIcon from '@/components/DesktopIcon.vue';
 const testList = [
 	{
 		linkPath: '/dewm',
-		iconURL: 'icons/goat.png',
+		iconURL: '/src/assets/ui/64xDewm.png',
 		title: 'DEWM',
 	},
 	{
 		linkPath: '/',
 		iconURL: 'icons/goat.png',
-		title: 'Goat.mp4.exe',
+		title: 'exe not found.exe',
 	},
 	{
 		linkPath: '/goats',
 		iconURL: 'icons/goat_but_bigger.png',
-		title: 'Goat.TIFF.exe',
-		id: 'icon-but-redder',
-		class: 'icon-but-red',
+		title: 'bop box',
 	},
 ];
 </script>
