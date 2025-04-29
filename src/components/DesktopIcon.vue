@@ -54,5 +54,6 @@ h4 {
 	filter: drop-shadow(0.05rem 0.05rem 0.2rem black);
 	font-size: 1.15rem;
 	height: 2.3rem;
+	margin-bottom: 1.15rem;
 }
 </style>
