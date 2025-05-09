@@ -8,7 +8,7 @@ const testList = [
 	},
 	{
 		linkPath: '/',
-		iconURL: 'icons/goat.png',
+		iconURL: '/src/assets/ui/64xGithub.png',
 		title: 'exe not found.exe',
 	},
 	{
