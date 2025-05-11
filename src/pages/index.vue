@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DesktopIcon from '@/components/DesktopIcon.vue';
+
 const testList = [
 	{
 		linkPath: '/dewm',
