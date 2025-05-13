@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { deltaTime } from 'three/tsl';
 import { render } from 'vue';
 
 const scene = new THREE.Scene();
@@ -51,11 +52,26 @@ const resize = () => {
 	}
 };
 
+const clock = new THREE.Clock();
+
 function animate() {
+	const dt = clock.getDelta();
 	resize();
 	renderer.render(scene, camera);
-	cube.rotation.x += 0.01;
-	cube.rotation.y += 0.01;
+
+	cubeDance(dt);
+}
+
+let speed = 1;
+function cubeDance(dt: number) {
+	if (cube.rotation.y > 1) {
+		speed = -1;
+	}
+
+	if (cube.rotation.y < -1) {
+		speed = 5;
+	}
+	cube.rotation.y += speed * dt;
 }
 
 renderer.setSize(window.innerWidth, window.innerHeight);
