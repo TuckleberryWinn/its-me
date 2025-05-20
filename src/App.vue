@@ -3,8 +3,14 @@ import { RouterView } from 'vue-router';
 import PageHeader from './components/PageHeader.vue';
 import PageFooter from './components/PageFooter.vue';
 
-import { startScene } from './managers/threeSceneManager';
+import { startScene, endScene } from './managers/threeSceneManager';
+import { onUnmounted } from 'vue';
+
 startScene();
+
+onUnmounted(() => {
+	endScene();
+});
 </script>
 
 <template>
