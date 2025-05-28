@@ -3,6 +3,19 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { deltaTime } from 'three/tsl';
 import { render } from 'vue';
 
+const loadText = async (path: string): Promise<string> => {
+	return (await fetch(path)).text();
+};
+
+const customShaderChunks = {
+	gradient: await loadText('./shaders/common/gradient.glsl'),
+	voronoi: await loadText('./shaders/common/voronoi.glsl'),
+	normal: await loadText('./shaders/common/normal.glsl'),
+	brick: await loadText('./shaders/common/brick.glsl'),
+};
+
+Object.assign(THREE.ShaderChunk, customShaderChunks);
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 3000);
 
@@ -19,7 +32,17 @@ loader.load('models/desktop_floor.glb', (gltf) => {
 });
 
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshStandardMaterial({ color: 0xff3ff0 });
+const fragmentShader = await loadText('./shaders/test.frag');
+const vertexShader = await loadText('./shaders/worldSpace.vert');
+const uniforms = {
+	iTime: { value: 0 },
+	iResolution: { value: new THREE.Vector3() },
+};
+const material = new THREE.ShaderMaterial({
+	fragmentShader,
+	vertexShader,
+	uniforms,
+});
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
@@ -86,10 +109,12 @@ export const endScene = () => {
 
 const clock = new THREE.Clock();
 
-function animate() {
-	const dt = Math.min(0.02, clock.getDelta());
-	console.log(dt);
+function animate(time: number) {
+	const dt = Math.min(0.05, clock.getDelta());
+
 	resize();
+	uniforms.iResolution.value.set(1, 1, 1);
+	uniforms.iTime.value = time / 1000;
 	renderer.render(scene, camera);
 	cubeDance(dt);
 }
@@ -100,9 +125,9 @@ function cubeDance(dt: number) {
 		speed = -1;
 	}
 
-	if (cube.rotation.y <= 0) {
-		speed = 5;
-	}
+	// if (cube.rotation.y <= 0) {
+	// 	speed = 5;
+	// }
 	cube.rotation.y += speed * dt;
 }
 
