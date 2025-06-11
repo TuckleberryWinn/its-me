@@ -1,24 +1,21 @@
 <script lang="ts" setup>
-import { RouterLink } from 'vue-router';
-
 const props = defineProps({
-	linkPath: String,
+	appName: String,
 	iconURL: String,
-	title: String,
 });
 </script>
 
 <template>
-	<RouterLink to="/apps/dewm">
+	<div class="icon">
 		<label>
 			<span :style="{ backgroundImage: `url(${props.iconURL})` }"></span>
-			<h4 class="font-vt323">{{ props.title || 'Title Not Found.exe' }}</h4>
+			<h4 class="font-vt323">{{ props.appName || 'Title Not Found.exe' }}</h4>
 		</label>
-	</RouterLink>
+	</div>
 </template>
 
 <style scoped>
-a {
+.icon {
 	text-decoration: none;
 	color: rgb(255, 255, 255);
 	border: 1px solid rgba(255, 255, 255, 0);
@@ -26,7 +23,7 @@ a {
 	width: 6rem;
 }
 
-a:hover {
+.icon:hover {
 	background-color: rgba(0, 255, 255, 0.203);
 	border-color: rgba(255, 255, 255, 0.5);
 	box-sizing: border-box;

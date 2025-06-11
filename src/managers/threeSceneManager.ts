@@ -28,7 +28,7 @@ const renderer = new THREE.WebGLRenderer();
 const loader = new GLTFLoader();
 
 loader.load('models/desktop_floor.glb', (gltf) => {
-	scene.add(gltf.scene);
+	// scene.add(gltf.scene);
 });
 
 const geometry = new THREE.BoxGeometry(1, 1, 1);

@@ -3,30 +3,30 @@ import DesktopIcon from '@/components/DesktopIcon.vue';
 
 const testList = [
 	{
-		linkPath: '/dewm',
+		appName: 'DEWM',
 		iconURL: '/src/assets/ui/64xDewm.png',
-		title: 'DEWM',
 	},
 	{
-		linkPath: '/',
+		appName: 'exe not found.exe',
 		iconURL: '/src/assets/ui/64xGithub.png',
-		title: 'exe not found.exe',
 	},
 	{
-		linkPath: '/goats',
+		appName: 'bop box',
 		iconURL: 'icons/goat_but_bigger.png',
-		title: 'bop box',
 	},
 ];
+
+import DesktopApp from '@/components/DesktopApp.vue';
 </script>
 
 <template>
 	<main class="main">
 		<DesktopIcon
 			v-for="item in testList"
-			:key="item.linkPath"
+			:key="item.appName"
 			v-bind="item"
 		/>
+		<DesktopApp />
 	</main>
 </template>
 
