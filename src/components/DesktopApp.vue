@@ -8,7 +8,7 @@ const props = defineProps({
 <template>
 	<div class="app-window">
 		<div class="app-header">
-			<h1>{{ appName }}</h1>
+			<h1>{{ appName }}DEWM</h1>
 		</div>
 	</div>
 </template>
@@ -28,5 +28,10 @@ const props = defineProps({
 .app-header {
 	height: 2rem;
 	background-color: blue;
+}
+
+.app-header > h1 {
+	color: white;
+	font-size: 1.6rem;
 }
 </style>
