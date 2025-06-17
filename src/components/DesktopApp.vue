@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useDraggable } from '@vueuse/core';
+
 const props = defineProps({
 	appName: String,
 	iconURL: String,
@@ -8,7 +10,7 @@ const props = defineProps({
 <template>
 	<div class="app-window">
 		<div class="app-header">
-			<h1>{{ appName }}DEWM</h1>
+			<h1>{{ props.appName }}DEWM</h1>
 		</div>
 	</div>
 </template>
