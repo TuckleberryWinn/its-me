@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useDraggable } from '@vueuse/core';
+
 const props = defineProps({
 	appName: String,
 	iconURL: String,
