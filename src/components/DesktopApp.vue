@@ -8,7 +8,14 @@ const props = defineProps({
 <template>
 	<div class="app-window">
 		<div class="app-header">
-			<h1>{{ appName }}DEWM</h1>
+			<div class="app-title">
+				<h1>{{ appName }}DEWM</h1>
+			</div>
+			<div class="control-buttons">
+				<div class="control-minimize">-</div>
+				<div class="control-maximize">+</div>
+				<div class="control-close">X</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -28,10 +35,37 @@ const props = defineProps({
 .app-header {
 	height: 2rem;
 	background-color: blue;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.app-header > div {
+	padding: 0 0.5rem;
 }
 
 .app-header > h1 {
 	color: white;
 	font-size: 1.6rem;
+}
+
+.app-title {
+}
+
+.control-buttons {
+}
+
+.control-buttons > div {
+	display: inline-block;
+	height: 1.5rem;
+	aspect-ratio: 1;
+	border: 1px solid red;
+	border-radius: 0.4rem;
+	margin-left: 0.4rem;
+}
+.control-buttons > div > span {
+	height: 1rem;
+	width: 1rem;
+	background-color: black;
 }
 </style>
