@@ -15,7 +15,7 @@ onUnmounted(() => {
 
 <template>
 	<div id="pageContent">
-		<PageHeader />
+
 		<RouterView />
 		<PageFooter />
 	</div>

@@ -11,7 +11,7 @@ const props = defineProps({
 	<div class="app-window">
 		<div class="app-header">
 			<div class="app-title">
-				<h1>{{ appName }}DEWM</h1>
+				<h1>{{ appName }}ᗪ乇山爪</h1>
 			</div>
 			<div class="control-buttons">
 				<div class="control-minimize">-</div>
@@ -30,13 +30,13 @@ const props = defineProps({
 	height: auto;
 	aspect-ratio: 16/9;
 	background-color: grey;
-	border: 0.25rem solid rgb(77, 76, 76);
+	border: 0.155rem solid #00ffd4;
 	border-radius: 0.5rem 0.5rem 0 0;
 	resize: horizontal;
 }
 .app-header {
 	height: 2rem;
-	background-color: blue;
+	background: linear-gradient(0deg,rgba(90, 0, 138, 1) 8%, rgba(66, 145, 214, 1) 35%, rgba(0, 255, 212, 1) 65%, #00ffd4 100%);;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -61,9 +61,14 @@ const props = defineProps({
 	display: inline-block;
 	height: 1.5rem;
 	aspect-ratio: 1;
-	border: 1px solid red;
+	border: 2px solid rgb(79, 7, 142);
 	border-radius: 0.4rem;
 	margin-left: 0.4rem;
+  background-color: rgba(1, 110, 187, 0.7);
+}
+
+.control-buttons > .control-close {
+  background-color: rgba(255, 7, 7, 0.7);
 }
 .control-buttons > div > span {
 	height: 1rem;
