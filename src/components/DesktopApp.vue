@@ -1,5 +1,16 @@
 <script lang="ts" setup>
+import { UseDraggable as Draggable } from '@vueuse/components';
 import { useDraggable } from '@vueuse/core';
+import { useTemplateRef } from 'vue';
+
+const draggable = useTemplateRef<HTMLElement>('draggable');
+const handle = useTemplateRef<HTMLElement>('handle');
+
+const { x, y, style } = useDraggable(draggable, {
+	initialValue: { x: 180, y: 180 },
+});
+
+const width: string = '400';
 
 const props = defineProps({
 	appName: String,
@@ -8,10 +19,18 @@ const props = defineProps({
 </script>
 
 <template>
-	<div class="app-window">
-		<div class="app-header">
+	<Draggable
+		class="app-window"
+		ref="draggable"
+		:handle="handle"
+		:style="[style, width]"
+	>
+		<div
+			class="app-header cursor-move"
+			ref="handle"
+		>
 			<div class="app-title">
-				<h1>{{ appName }}ᗪ乇山爪</h1>
+				<h1>{{ appName }}ᗪ乇山爪 {{ x }}, {{ y }}</h1>
 			</div>
 			<div class="control-buttons">
 				<div class="control-minimize">-</div>
@@ -19,7 +38,7 @@ const props = defineProps({
 			</div>
 		</div>
 		<div class="app-body"></div>
-	</div>
+	</Draggable>
 </template>
 
 <style scoped>
@@ -32,6 +51,7 @@ const props = defineProps({
 	border: 0.155rem solid #00ffd4;
 	border-radius: 0.5rem 0.5rem 0 0;
 	resize: horizontal;
+	position: fixed;
 }
 .app-header {
 	height: 2rem;
@@ -45,6 +65,7 @@ const props = defineProps({
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	cursor: move;
 }
 
 .app-header > div {
@@ -67,6 +88,7 @@ const props = defineProps({
 	border-radius: 0.4rem;
 	margin-left: 0.4rem;
 	background-color: rgba(1, 110, 187, 0.7);
+	cursor: default;
 }
 
 .control-buttons > .control-close {
@@ -94,6 +116,6 @@ const props = defineProps({
 }
 
 .app-body {
-	aspect-ratio: 16/9;
+	aspect-ratio: 16 / 9;
 }
 </style>
