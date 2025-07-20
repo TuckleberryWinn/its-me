@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import ToolbarApp from './ToolbarApp.vue';
+</script>
 
 <template>
 	<div class="taskbar">
@@ -20,6 +22,9 @@
 				<input type="checkbox" />
 			</label>
 		</div>
+    <div class="taskbar-apps">
+      <ToolbarApp />
+    </div>
 		<div class="taskbar-tabs"></div>
 		<div class="icons-right"></div>
 	</div>
@@ -27,13 +32,14 @@
 
 <style scoped>
 .taskbar {
-	--icon-size: 32px;
-	position: fixed;
+  position: absolute;
 	bottom: 0;
-	max-height: 6dvh;
-	width: 100%;
+  left: 0;
+  right: 0;
+	height: 48px;
 	background-color: rgba(159, 8, 126, 0.363);
 	backdrop-filter: blur(10px);
+  display: flex;
 }
 
 .taskbar .icons-left {
@@ -43,15 +49,15 @@
 
 .taskbar .icons-left label {
 	display: inline-block;
-	padding-left: 0.5dvh;
-	padding-right: 0.5dvh;
-	padding-top: 0.75dvh;
-	padding-bottom: 0.5dvh;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 	vertical-align: middle;
 }
 
 .taskbar .icons-left span {
-	height: 3.5dvh;
+	height: 32px;
 	aspect-ratio: 1 / 1;
 	display: block;
 	background-repeat: no-repeat;

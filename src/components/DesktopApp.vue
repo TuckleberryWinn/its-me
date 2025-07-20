@@ -6,15 +6,18 @@ import { useTemplateRef } from 'vue';
 const draggable = useTemplateRef<HTMLElement>('draggable');
 const handle = useTemplateRef<HTMLElement>('handle');
 
-const { x, y, style } = useDraggable(draggable, {
-	initialValue: { x: 180, y: 180 },
-});
+// const { x, y, style } = useDraggable(draggable, {
+// 	initialValue: { x: 180, y: 180 },
+// });
 
-const width: string = '400';
+let x = 180;
+let y = 180;
 
 const props = defineProps({
-	appName: String,
-	iconURL: String,
+  iconURL: {type: String, required: true},
+	appName: {type: String, required: true},
+  startingXPosition: {type: Number, required: true, default: 180},
+  startingYPosition: {type: Number, required: true, default: 120},
 });
 </script>
 
@@ -23,14 +26,15 @@ const props = defineProps({
 		class="app-window"
 		ref="draggable"
 		:handle="handle"
-		:style="[style, width]"
+    v-slot="{ x, y }"
+    :initial-value="{ x: startingXPosition, y: startingYPosition }"
 	>
 		<div
 			class="app-header cursor-move"
 			ref="handle"
 		>
 			<div class="app-title">
-				<h1>{{ appName }}ᗪ乇山爪 {{ x }}, {{ y }}</h1>
+				<h1>{{ appName }}ᗪ乇山爪 {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
 			</div>
 			<div class="control-buttons">
 				<div class="control-minimize">-</div>
@@ -57,10 +61,10 @@ const props = defineProps({
 	height: 2rem;
 	background: linear-gradient(
 		0deg,
-		rgba(90, 0, 138, 1) 8%,
-		rgba(66, 145, 214, 1) 35%,
-		rgba(0, 255, 212, 1) 65%,
-		#00ffd4 100%
+		rgb(90, 0, 138) 8%,
+		rgb(66, 145, 214) 35%,
+		rgb(0, 255, 212) 65%,
+		rgb(0, 255, 212) 100%
 	);
 	display: flex;
 	justify-content: space-between;
