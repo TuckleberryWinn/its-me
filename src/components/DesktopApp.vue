@@ -1,36 +1,33 @@
 <script lang="ts" setup>
+import useWindowManager, { type DesktopWindow } from '@/composables/useWindowManager';
 import { UseDraggable as Draggable } from '@vueuse/components';
-import { useDraggable } from '@vueuse/core';
 import { useTemplateRef } from 'vue';
 
-const draggable = useTemplateRef<HTMLElement>('draggable');
+const { closeWindowByID } = useWindowManager();
+
 const handle = useTemplateRef<HTMLElement>('handle');
 
-// const { x, y, style } = useDraggable(draggable, {
-// 	initialValue: { x: 180, y: 180 },
-// });
+const props = defineProps<DesktopWindow>();
 
-let x = 180;
-let y = 180;
-
-const props = defineProps({
-  iconURL: {type: String, required: true},
-	appName: {type: String, required: true},
-  startingXPosition: {type: Number, required: true, default: 180},
-  startingYPosition: {type: Number, required: true, default: 120},
-});
+const startingWidth = (function () {
+	if (innerWidth * 0.5 < innerHeight * 1.5) {
+		return innerWidth * 0.5 + 'px';
+	} else {
+		return innerHeight * 1.5 + 'px';
+	}
+})();
 </script>
 
 <template>
 	<Draggable
 		class="app-window"
-		ref="draggable"
+		v-slot="{ x, y }"
 		:handle="handle"
-    v-slot="{ x, y }"
-    :initial-value="{ x: startingXPosition, y: startingYPosition }"
+		:initial-value="{ x: startingXPosition, y: startingYPosition }"
+		:data-instance-id="instanceID"
 	>
 		<div
-			class="app-header cursor-move"
+			class="app-header"
 			ref="handle"
 		>
 			<div class="app-title">
@@ -38,7 +35,12 @@ const props = defineProps({
 			</div>
 			<div class="control-buttons">
 				<div class="control-minimize">-</div>
-				<div class="control-close">X</div>
+				<div
+					class="control-close"
+					@click="closeWindowByID(instanceID)"
+				>
+					X
+				</div>
 			</div>
 		</div>
 		<div class="app-body"></div>
@@ -47,7 +49,7 @@ const props = defineProps({
 
 <style scoped>
 .app-window {
-	width: min(60%, 1200px);
+	width: v-bind(startingWidth);
 	min-width: 16rem;
 	min-height: 9rem;
 	height: auto;
@@ -58,7 +60,7 @@ const props = defineProps({
 	position: fixed;
 }
 .app-header {
-	height: 2rem;
+	height: 40px;
 	background: linear-gradient(
 		0deg,
 		rgb(90, 0, 138) 8%,
@@ -72,25 +74,13 @@ const props = defineProps({
 	cursor: move;
 }
 
-.app-header > div {
-	padding: 0 0.5rem;
-}
-
-.app-header > h1 {
-	color: white;
-	font-size: 1.6rem;
-}
-
-.control-buttons {
-}
-
 .control-buttons > div {
 	display: inline-block;
-	height: 1.5rem;
+	height: 28px;
 	aspect-ratio: 1;
 	border: 2px solid rgb(79, 7, 142);
 	border-radius: 0.4rem;
-	margin-left: 0.4rem;
+	margin-right: 6px;
 	background-color: rgba(1, 110, 187, 0.7);
 	cursor: default;
 }
@@ -98,13 +88,13 @@ const props = defineProps({
 .control-buttons > .control-close {
 	background-color: #f826fc;
 }
-.control-buttons > div > span {
-	height: 1rem;
-	width: 1rem;
-	background-color: black;
+
+.app-title {
+	padding: 0 0.5rem;
+	user-select: none;
 }
 
-.app-title h1 {
+h1 {
 	font-weight: 600;
 	text-shadow:
 		-1px 1px 1px #9de0f9,
@@ -117,6 +107,7 @@ const props = defineProps({
 		-2px -2px 1px #6bd7ff;
 	overflow: visible;
 	color: #f826fc;
+	font-size: 24px;
 }
 
 .app-body {

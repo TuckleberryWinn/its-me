@@ -89,7 +89,7 @@ const handleVisibilityChange = () => {
 console.log(scene);
 
 const testClickEvent = (event: MouseEvent) => {
-	console.log('click 5', event);
+	//	console.log('click 5', event);
 };
 
 export const startScene = () => {

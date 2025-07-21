@@ -1,15 +1,23 @@
 <script lang="ts" setup>
-const props = defineProps({
-	appName: String,
-	iconURL: String,
-});
+import useWindowManager, { type DesktopIcon } from '@/composables/useWindowManager';
+
+const props = defineProps<DesktopIcon>();
+
+const { openWindow } = useWindowManager();
+
+const openNewWindow = () => {
+	openWindow({ appName: props.appName, iconURL: props.iconURL, instanceID: Math.random() });
+};
 </script>
 
 <template>
-	<div class="icon">
+	<div
+		class="icon"
+		@click="openNewWindow"
+	>
 		<label>
-			<span :style="{ backgroundImage: `url(${props.iconURL})` }"></span>
-			<h4 class="font-vt323">{{ props.appName || 'Title Not Found.exe' }}</h4>
+			<span :style="{ backgroundImage: `url(${iconURL})` }"></span>
+			<h4 class="font-vt323">{{ appName || 'Title Not Found.exe' }}</h4>
 		</label>
 	</div>
 </template>

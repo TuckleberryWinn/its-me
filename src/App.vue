@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import PageHeader from './components/PageHeader.vue';
-import PageFooter from './components/PageFooter.vue';
 
 import { startScene, endScene } from './managers/threeSceneManager';
 import { onUnmounted } from 'vue';
@@ -15,9 +13,7 @@ onUnmounted(() => {
 
 <template>
 	<div id="pageContent">
-
 		<RouterView />
-		<PageFooter />
 	</div>
 </template>
 
