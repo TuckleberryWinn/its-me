@@ -24,7 +24,7 @@ const startingWidth = (function () {
 		v-slot="{ x, y }"
 		:handle="handle"
 		:initial-value="{ x: startingXPosition, y: startingYPosition }"
-		:data-instance-id="instanceID"
+		:data-instance-id="appID"
 	>
 		<div
 			class="app-header"
@@ -37,7 +37,7 @@ const startingWidth = (function () {
 				<div class="control-minimize">-</div>
 				<div
 					class="control-close"
-					@click="closeWindowByID(instanceID)"
+					@click="closeWindowByID(appID)"
 				>
 					X
 				</div>

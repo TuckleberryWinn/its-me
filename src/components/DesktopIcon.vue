@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import useWindowManager, { type DesktopIcon } from '@/composables/useWindowManager';
+import useWindowManager, { type AppData } from '@/composables/useWindowManager';
 
-const props = defineProps<DesktopIcon>();
+const props = defineProps<AppData>();
 
 const { openWindow } = useWindowManager();
 
 const openNewWindow = () => {
-	openWindow({ appName: props.appName, iconURL: props.iconURL, instanceID: Math.random() });
+	openWindow({ appName: props.appName, iconURL: props.iconURL, appID: Math.random() });
 };
 </script>
 

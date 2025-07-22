@@ -10,5 +10,8 @@
 <style scoped>
 .button {
 	border: 2px solid black;
+  background-color: pink;
+  height: 90%;
+  padding: 8px;
 }
 </style>

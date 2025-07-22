@@ -4,18 +4,21 @@ import Taskbar from '@/components/Taskbar.vue';
 import useWindowManager from '@/composables/useWindowManager';
 const { windows, openWindow, closeWindow } = useWindowManager();
 
-const testList = [
+const appList = [
 	{
 		appName: 'DEWM',
 		iconURL: '/src/assets/ui/64xDewm.png',
+    appID: 1,
 	},
 	{
 		appName: 'exe not found.exe',
 		iconURL: '/src/assets/ui/64xGithub.png',
+    appID: 2,
 	},
 	{
 		appName: 'Shmoogle Dome',
 		iconURL: '/src/assets/ui/48xChrome.png',
+    appID: 3,
 	},
 ];
 
@@ -26,29 +29,13 @@ import TaskbarApp from '@/components/TaskbarApp.vue';
 <template>
 	<main class="main">
 		<DesktopIcon
-			v-for="item in testList"
-			:key="item.appName"
-			v-bind="item"
+			v-for="app in appList"
+			:key="app.appName"
+			v-bind="app"
 		/>
-		<div class="desktop-app-container">
-			<DesktopApp
-				v-for="window in windows"
-				v-bind="window"
-			/>
-		</div>
+		<div id="desktop-app-container"></div>
 		<Taskbar>
-			<div class="taskbar-app-container">
-				<span
-					class="window-tab"
-					v-for="windowToClose in windows"
-					:key="windowToClose.instanceID"
-					v-bind="windowToClose"
-				>
-					<span> {{ windowToClose.appName }}</span>
-					<button @click="closeWindow(windowToClose)">X</button>
-				</span>
-				<TaskbarApp> </TaskbarApp>
-			</div>
+			<div id="taskbar-app-container"></div>
 		</Taskbar>
 	</main>
 </template>
