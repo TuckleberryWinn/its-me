@@ -24,20 +24,20 @@ const startingWidth = (function () {
 		v-slot="{ x, y }"
 		:handle="handle"
 		:initial-value="{ x: startingXPosition, y: startingYPosition }"
-		:data-instance-id="appID"
+		:data-instance-id="appData.appID"
 	>
 		<div
 			class="app-header"
 			ref="handle"
 		>
 			<div class="app-title">
-				<h1>{{ appName }}ᗪ乇山爪 {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
+				<h1>{{ appData.appName }}ᗪ乇山爪 {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
 			</div>
 			<div class="control-buttons">
 				<div class="control-minimize">-</div>
 				<div
 					class="control-close"
-					@click="closeWindowByID(appID)"
+					@click="closeWindowByID(appData.appID)"
 				>
 					X
 				</div>
