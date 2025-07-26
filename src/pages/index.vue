@@ -6,19 +6,19 @@ const { windows, openWindow, closeWindow } = useWindowManager();
 
 const appList = [
 	{
-		appName: 'DEWM',
+		appName: 'ᗪ乇山爪',
 		iconURL: '/src/assets/ui/64xDewm.png',
-    appID: 1,
+		appID: 1,
 	},
 	{
 		appName: 'exe not found.exe',
 		iconURL: '/src/assets/ui/64xGithub.png',
-    appID: 2,
+		appID: 2,
 	},
 	{
 		appName: 'Shmoogle Dome',
 		iconURL: '/src/assets/ui/48xChrome.png',
-    appID: 3,
+		appID: 3,
 	},
 ];
 
@@ -33,20 +33,22 @@ import TaskbarApp from '@/components/TaskbarApp.vue';
 			:key="app.appName"
 			v-bind="app"
 		/>
-		<div id="desktop-app-container"></div>
+		<div id="desktop-app-container">
+			<DesktopApp :app-Data="appList[0]" />
+			<DesktopApp :app-Data="appList[1]" />
+		</div>
 		<Taskbar>
-			<div id="taskbar-app-container"></div>
+			<div id="taskbar-app-container">
+				123123123
+				<TaskbarApp :app-Data="appList[0]" />
+				<TaskbarApp :app-Data="appList[1]" />
+				<TaskbarApp />
+			</div>
 		</Taskbar>
 	</main>
 </template>
 
 <style scoped>
-.window-tab {
-	display: inline-block;
-	border: 2px solid white;
-	height: 1rem;
-	color: white;
-}
 .main {
 	height: auto;
 	display: flex;
@@ -54,5 +56,8 @@ import TaskbarApp from '@/components/TaskbarApp.vue';
 	flex-wrap: wrap;
 	align-content: flex-start;
 	height: 91dvh;
+}
+#taskbar-app-container {
+	display: flex;
 }
 </style>

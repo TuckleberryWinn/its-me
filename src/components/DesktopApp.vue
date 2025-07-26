@@ -31,7 +31,7 @@ const startingWidth = (function () {
 			ref="handle"
 		>
 			<div class="app-title">
-				<h1>{{ appData.appName }}ᗪ乇山爪 {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
+				<h1>{{ appData.appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
 			</div>
 			<div class="control-buttons">
 				<div class="control-minimize">-</div>
