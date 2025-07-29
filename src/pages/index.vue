@@ -2,7 +2,7 @@
 import DesktopIcon from '@/components/DesktopIcon.vue';
 import Taskbar from '@/components/Taskbar.vue';
 import useWindowManager from '@/composables/useWindowManager';
-const { windows, tryOpenWindow: openWindow, closeWindow, appList } = useWindowManager();
+const { windows, taskbarTabs, appList } = useWindowManager();
 
 import DesktopApp from '@/components/DesktopApp.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
@@ -12,19 +12,19 @@ import TaskbarApp from '@/components/TaskbarApp.vue';
 	<main class="main">
 		<DesktopIcon
 			v-for="app in appList"
-			:key="app.appName"
+			:key="app.appID"
 			v-bind="app"
 		/>
 		<div id="desktop-app-container">
-			<DesktopApp :app-Data="appList[0]" />
-			<DesktopApp :app-Data="appList[1]" />
+			<DesktopApp
+				v-for="window in windows.values"
+				:key="window.appData.appID"
+			>
+			</DesktopApp>
 		</div>
 		<Taskbar>
 			<div id="taskbar-app-container">
-				123123123
-				<TaskbarApp :app-Data="appList[0]" />
-				<TaskbarApp :app-Data="appList[1]" />
-				<TaskbarApp />
+				<TaskbarApp v-for="tab in taskbarTabs"></TaskbarApp>
 			</div>
 		</Taskbar>
 	</main>

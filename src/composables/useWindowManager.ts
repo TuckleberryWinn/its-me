@@ -31,8 +31,8 @@ export type AppData = {
 
 export type DesktopWindow = {
 	appData: AppData;
-	startingXPosition?: number;
-	startingYPosition?: number;
+	startingXPosition: number;
+	startingYPosition: number;
 };
 
 export const windows = ref<DesktopWindow[]>([]);
@@ -44,7 +44,6 @@ const yWindowOffset: number = 30;
 const tryOpenWindow = (targetAppID: number) => {
 	//all possible arguments are created from the same source file.
 	const targetApp: AppData = appList.find((app) => app.appID === targetAppID)!;
-	let windowData: DesktopWindow = { appData: targetApp };
 
 	if (taskbarTabs.value.find((app) => app.appID === targetAppID)) {
 		console.log(`Window already open`);
@@ -57,22 +56,24 @@ const tryOpenWindow = (targetAppID: number) => {
 		targetX = 100;
 		targetY = 150;
 	} else {
-		const element = document.getElementById(targetAppID.toString())!;
+		const element = document.getElementById(windows.value[windows.value.length]);
 		const computedStyle = window.getComputedStyle(element);
 		targetX = parseInt(computedStyle.left) + xWindowOffset;
 		targetY = +computedStyle.top + yWindowOffset;
 	}
 
-	console.log(targetX);
-
-	windowData.startingXPosition = targetX;
-	windowData.startingXPosition = targetY;
+	let windowData: DesktopWindow = {
+		appData: targetApp,
+		startingXPosition: targetX,
+		startingYPosition: targetY,
+	};
 
 	console.log(taskbarTabs.value);
 	console.log(windowData.startingXPosition);
 
-	taskbarTabs.value.push(targetApp);
+	// taskbarTabs.value.push(targetApp);
 	windows.value.push(windowData);
+	console.log(windows.value);
 };
 
 const closeWindow = (b: DesktopWindow) => {

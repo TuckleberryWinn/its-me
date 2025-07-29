@@ -24,8 +24,7 @@ const startingWidth = (function () {
 		v-slot="{ x, y }"
 		:handle="handle"
 		:initial-value="{ x: startingXPosition, y: startingYPosition }"
-		:data-instance-id="appData.appID"
-		:id="appData.appID"
+		:id="props.appData.appID"
 	>
 		<div
 			class="app-header"
