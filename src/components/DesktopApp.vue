@@ -25,6 +25,7 @@ const startingWidth = (function () {
 		:handle="handle"
 		:initial-value="{ x: startingXPosition, y: startingYPosition }"
 		:data-instance-id="appData.appID"
+		:id="appData.appID"
 	>
 		<div
 			class="app-header"

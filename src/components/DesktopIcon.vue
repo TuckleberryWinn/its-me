@@ -3,10 +3,10 @@ import useWindowManager, { type AppData } from '@/composables/useWindowManager';
 
 const props = defineProps<AppData>();
 
-const { openWindow } = useWindowManager();
+const { tryOpenWindow: openWindow } = useWindowManager();
 
 const openNewWindow = () => {
-	openWindow({ appName: props.appName, iconURL: props.iconURL, appID: Math.random() });
+	openWindow(props.appID);
 };
 </script>
 

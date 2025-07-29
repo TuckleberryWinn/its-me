@@ -5,6 +5,24 @@ import TaskbarApp from '@/components/TaskbarApp.vue';
 let windowTarget = document.getElementById('desktop-app-container');
 let taskbarTabTarget = document.getElementById('taskbar-app-container');
 
+export const appList = [
+	{
+		appName: 'ᗪ乇山爪',
+		iconURL: '/src/assets/ui/64xDewm.png',
+		appID: 1,
+	},
+	{
+		appName: 'exe not found.exe',
+		iconURL: '/src/assets/ui/64xGithub.png',
+		appID: 2,
+	},
+	{
+		appName: 'Shmoogle Dome',
+		iconURL: '/src/assets/ui/48xChrome.png',
+		appID: 3,
+	},
+];
+
 export type AppData = {
 	appID: number;
 	appName: string;
@@ -17,42 +35,44 @@ export type DesktopWindow = {
 	startingYPosition?: number;
 };
 
-let currentX = 100;
-let currentY = 150;
+export const windows = ref<DesktopWindow[]>([]);
+export const taskbarTabs = ref<AppData[]>([]);
 
-const windows = ref<DesktopWindow[]>([]);
+const xWindowOffset: number = 30;
+const yWindowOffset: number = 30;
 
-const openWindow = (newApp: AppData) => {
-	if (windowTarget == null || taskbarTabTarget == null) {
-		windowTarget = document.getElementById('desktop-app-container');
-		taskbarTabTarget = document.getElementById('taskbar-app-container');
+const tryOpenWindow = (targetAppID: number) => {
+	//all possible arguments are created from the same source file.
+	const targetApp: AppData = appList.find((app) => app.appID === targetAppID)!;
+	let windowData: DesktopWindow = { appData: targetApp };
+
+	if (taskbarTabs.value.find((app) => app.appID === targetAppID)) {
+		console.log(`Window already open`);
+		return;
 	}
 
-	let newWindow = document.createElement(`div`);
+	//sets target location to open relative to top window. Default location is first window.
+	let targetX: number, targetY: number;
+	if (windows.value.length === 0) {
+		targetX = 100;
+		targetY = 150;
+	} else {
+		const element = document.getElementById(targetAppID.toString())!;
+		const computedStyle = window.getComputedStyle(element);
+		targetX = parseInt(computedStyle.left) + xWindowOffset;
+		targetY = +computedStyle.top + yWindowOffset;
+	}
 
-	newWindow.startingXPosition = currentX;
-	newWindow.startingYPosition = currentY;
+	console.log(targetX);
 
-	windowTarget?.appendChild(newWindow);
+	windowData.startingXPosition = targetX;
+	windowData.startingXPosition = targetY;
 
-	currentX += 20;
-	currentY += 20;
+	console.log(taskbarTabs.value);
+	console.log(windowData.startingXPosition);
 
-	console.log(windowTarget);
-	console.log(newWindow);
-
-	let newTaskbarTab = TaskbarApp;
-
-	// if (!newWindowData.startingXPosition) {
-	// 	newWindowData.startingXPosition = currentX;
-	// 	currentX += 20;
-	// }
-	// if (!newWindowData.startingYPosition) {
-	// 	newWindowData.startingYPosition = currentY;
-	// 	currentY += 40;
-	// }
-
-	// windows.value.push(newWindowData);
+	taskbarTabs.value.push(targetApp);
+	windows.value.push(windowData);
 };
 
 const closeWindow = (b: DesktopWindow) => {
@@ -70,8 +90,10 @@ const closeWindowByID = (instanceID: number) => {
 export default () => {
 	return {
 		windows,
-		openWindow,
+		taskbarTabs,
+		tryOpenWindow,
 		closeWindow,
 		closeWindowByID,
+		appList,
 	};
 };

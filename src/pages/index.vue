@@ -2,25 +2,7 @@
 import DesktopIcon from '@/components/DesktopIcon.vue';
 import Taskbar from '@/components/Taskbar.vue';
 import useWindowManager from '@/composables/useWindowManager';
-const { windows, openWindow, closeWindow } = useWindowManager();
-
-const appList = [
-	{
-		appName: 'ᗪ乇山爪',
-		iconURL: '/src/assets/ui/64xDewm.png',
-		appID: 1,
-	},
-	{
-		appName: 'exe not found.exe',
-		iconURL: '/src/assets/ui/64xGithub.png',
-		appID: 2,
-	},
-	{
-		appName: 'Shmoogle Dome',
-		iconURL: '/src/assets/ui/48xChrome.png',
-		appID: 3,
-	},
-];
+const { windows, tryOpenWindow: openWindow, closeWindow, appList } = useWindowManager();
 
 import DesktopApp from '@/components/DesktopApp.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
