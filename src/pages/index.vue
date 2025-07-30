@@ -16,15 +16,25 @@ import TaskbarApp from '@/components/TaskbarApp.vue';
 			v-bind="app"
 		/>
 		<div id="desktop-app-container">
+			<h1
+				style="color: white"
+				v-for="window in windows"
+			>
+				{{ window }}
+			</h1>
 			<DesktopApp
-				v-for="window in windows.values"
-				:key="window.appData.appID"
+				v-for="window in windows"
+				:desktop-window="window"
+				v-bind="window"
 			>
 			</DesktopApp>
 		</div>
 		<Taskbar>
 			<div id="taskbar-app-container">
-				<TaskbarApp v-for="tab in taskbarTabs"></TaskbarApp>
+				<TaskbarApp
+					v-for="tab in taskbarTabs"
+					:app-data="tab"
+				></TaskbarApp>
 			</div>
 		</Taskbar>
 	</main>

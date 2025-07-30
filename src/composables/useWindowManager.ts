@@ -56,10 +56,13 @@ const tryOpenWindow = (targetAppID: number) => {
 		targetX = 100;
 		targetY = 150;
 	} else {
-		const element = document.getElementById(windows.value[windows.value.length]);
-		const computedStyle = window.getComputedStyle(element);
-		targetX = parseInt(computedStyle.left) + xWindowOffset;
-		targetY = +computedStyle.top + yWindowOffset;
+		// const element = document.getElementById(windows.value[0].appData.appID.toString());
+		// const computedStyle = window.getComputedStyle(element);
+		// targetX = parseInt(computedStyle.left) + xWindowOffset;
+		// targetY = +computedStyle.top + yWindowOffset;
+
+		targetX = 200;
+		targetY = 250;
 	}
 
 	let windowData: DesktopWindow = {
@@ -71,7 +74,7 @@ const tryOpenWindow = (targetAppID: number) => {
 	console.log(taskbarTabs.value);
 	console.log(windowData.startingXPosition);
 
-	// taskbarTabs.value.push(targetApp);
+	taskbarTabs.value.push(targetApp);
 	windows.value.push(windowData);
 	console.log(windows.value);
 };
@@ -85,7 +88,7 @@ const closeWindowByID = (instanceID: number) => {
 		return;
 	}
 	windowToClose.remove();
-	windows.value = windows.value.filter((a) => a.appID !== instanceID);
+	windows.value = windows.value.filter((a) => a.appData.appID !== instanceID);
 };
 
 export default () => {
