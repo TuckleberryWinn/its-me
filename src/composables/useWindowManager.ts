@@ -85,7 +85,6 @@ const closeWindowByID = (instanceID: number) => {
 		return;
 	}
 	windowToClose.remove();
-	windows.value = windows.value.filter((a) => a.appData.appID !== instanceID);
 };
 
 export default () => {
