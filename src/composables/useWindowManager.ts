@@ -79,9 +79,6 @@ const tryOpenWindow = (targetAppID: number) => {
 	console.log(windows.value);
 };
 
-const closeWindow = (b: DesktopWindow) => {
-	windows.value = windows.value.filter((a) => a !== b);
-};
 const closeWindowByID = (instanceID: number) => {
 	let windowToClose = document.getElementById(instanceID.toString());
 	if (!windowToClose) {
@@ -96,7 +93,6 @@ export default () => {
 		windows,
 		taskbarTabs,
 		tryOpenWindow,
-		closeWindow,
 		closeWindowByID,
 		appList,
 	};
