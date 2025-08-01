@@ -34,6 +34,7 @@ import TaskbarApp from '@/components/TaskbarApp.vue';
 				<TaskbarApp
 					v-for="tab in taskbarTabs"
 					:app-data="tab"
+					v-bind="tab"
 				></TaskbarApp>
 			</div>
 		</Taskbar>

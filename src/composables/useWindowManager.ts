@@ -9,22 +9,22 @@ export const appList = [
 	{
 		appName: 'ᗪ乇山爪',
 		iconURL: '/src/assets/ui/64xDewm.png',
-		appID: 1,
+		appID: 'App:1',
 	},
 	{
 		appName: 'exe not found.exe',
 		iconURL: '/src/assets/ui/64xGithub.png',
-		appID: 2,
+		appID: 'App:2',
 	},
 	{
 		appName: 'Shmoogle Dome',
 		iconURL: '/src/assets/ui/48xChrome.png',
-		appID: 3,
+		appID: 'App:3',
 	},
 ];
 
 export type AppData = {
-	appID: number;
+	appID: string;
 	appName: string;
 	iconURL: string;
 };
@@ -41,7 +41,7 @@ export const taskbarTabs = ref<AppData[]>([]);
 const xWindowOffset: number = 30;
 const yWindowOffset: number = 30;
 
-const tryOpenWindow = (targetAppID: number) => {
+const tryOpenWindow = (targetAppID: string) => {
 	//all possible arguments are created from the same source file.
 	const targetApp: AppData = appList.find((app) => app.appID === targetAppID)!;
 
@@ -79,12 +79,20 @@ const tryOpenWindow = (targetAppID: number) => {
 	console.log(windows.value);
 };
 
-const closeWindowByID = (instanceID: number) => {
-	let windowToClose = document.getElementById(instanceID.toString());
+const closeWindowByID = (instanceID: string) => {
+	let windowToClose = document.getElementsByClassName(instanceID);
+	console.log(windowToClose);
 	if (!windowToClose) {
 		return;
 	}
-	windowToClose.remove();
+
+	// while (windowToClose.length) {
+	// 	windowToClose[0].remove();
+	// }
+
+	windows.value = windows.value.filter((win) => win.appData.appID !== instanceID);
+	taskbarTabs.value = taskbarTabs.value.filter((tab) => tab.appID !== instanceID);
+	console.log(windows.value);
 };
 
 export default () => {
