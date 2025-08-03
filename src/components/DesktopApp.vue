@@ -1,13 +1,18 @@
 <script lang="ts" setup>
 import useWindowManager, { type DesktopWindow } from '@/composables/useWindowManager';
 import { UseDraggable as Draggable } from '@vueuse/components';
-import { useTemplateRef } from 'vue';
+import { useDraggable } from '@vueuse/core';
+import { ref, useTemplateRef } from 'vue';
 
 const { closeWindowByID } = useWindowManager();
 
 const handle = useTemplateRef<HTMLElement>('handle');
 
 const props = defineProps<DesktopWindow>();
+
+const dragWindow = useTemplateRef<HTMLElement>('dragWindow');
+
+console.log(dragWindow.value?.style.left, dragWindow.value?.style.top);
 
 const startingWidth = (function () {
 	if (innerWidth * 0.5 < innerHeight * 1.5) {
@@ -16,14 +21,17 @@ const startingWidth = (function () {
 		return innerHeight * 1.5 + 'px';
 	}
 })();
+
+const textValue = ref('');
 </script>
 
 <template>
 	<Draggable
 		class="app-window"
 		v-slot="{ x, y }"
+		ref="dragWindow"
 		:handle="handle"
-		:initial-value="{ x: startingXPosition, y: startingYPosition }"
+		:initial-value="{ x: xPos, y: yPos }"
 		:class="appData.appID"
 	>
 		<div
@@ -43,7 +51,15 @@ const startingWidth = (function () {
 				</div>
 			</div>
 		</div>
-		<div class="app-body"></div>
+		<div class="app-body">
+			<textarea v-model="textValue"></textarea>
+			<div>
+				<input
+					type="text"
+					:key="textValue"
+				/>
+			</div>
+		</div>
 	</Draggable>
 </template>
 

@@ -31,17 +31,17 @@ export type AppData = {
 
 export type DesktopWindow = {
 	appData: AppData;
-	startingXPosition: number;
-	startingYPosition: number;
+	xPos: number;
+	yPos: number;
 };
 
 export const windows = ref<DesktopWindow[]>([]);
 export const taskbarTabs = ref<AppData[]>([]);
 
-const xWindowOffset: number = 30;
-const yWindowOffset: number = 30;
+const xWindowOffset: number = 25;
+const yWindowOffset: number = 50;
 
-const tryOpenWindow = (targetAppID: string) => {
+export const tryOpenWindow = (targetAppID: string) => {
 	//all possible arguments are created from the same source file.
 	const targetApp: AppData = appList.find((app) => app.appID === targetAppID)!;
 
@@ -50,46 +50,35 @@ const tryOpenWindow = (targetAppID: string) => {
 		return;
 	}
 
-	//sets target location to open relative to top window. Default location is first window.
-	let targetX: number, targetY: number;
-	if (windows.value.length === 0) {
-		targetX = 100;
-		targetY = 150;
-	} else {
-		// const element = document.getElementById(windows.value[0].appData.appID.toString());
-		// const computedStyle = window.getComputedStyle(element);
-		// targetX = parseInt(computedStyle.left) + xWindowOffset;
-		// targetY = +computedStyle.top + yWindowOffset;
-
-		targetX = 200;
-		targetY = 250;
+	let targetX: number = 100;
+	let targetY: number = 150;
+	//update target position if other windows are open
+	if (windows.value.length) {
+		targetX = windows.value[windows.value.length - 1].xPos + xWindowOffset;
+		targetY = windows.value[windows.value.length - 1].yPos + yWindowOffset;
 	}
 
-	let windowData: DesktopWindow = {
+	const newWindowData: DesktopWindow = {
 		appData: targetApp,
-		startingXPosition: targetX,
-		startingYPosition: targetY,
+		xPos: targetX,
+		yPos: targetY,
 	};
 
 	console.log(taskbarTabs.value);
-	console.log(windowData.startingXPosition);
+	console.log(newWindowData);
 
 	taskbarTabs.value.push(targetApp);
-	windows.value.push(windowData);
+	windows.value.push(newWindowData);
 	console.log(windows.value);
 };
 
+const scramble = () => {
+	windows.value.sort(() => {
+		return Math.random() - 0.5;
+	});
+};
+
 const closeWindowByID = (instanceID: string) => {
-	let windowToClose = document.getElementsByClassName(instanceID);
-	console.log(windowToClose);
-	if (!windowToClose) {
-		return;
-	}
-
-	// while (windowToClose.length) {
-	// 	windowToClose[0].remove();
-	// }
-
 	windows.value = windows.value.filter((win) => win.appData.appID !== instanceID);
 	taskbarTabs.value = taskbarTabs.value.filter((tab) => tab.appID !== instanceID);
 	console.log(windows.value);

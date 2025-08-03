@@ -61,5 +61,6 @@ h4 {
 	font-size: 1.15rem;
 	height: 2.3rem;
 	margin-bottom: 1.15rem;
+	overflow: visible;
 }
 </style>
