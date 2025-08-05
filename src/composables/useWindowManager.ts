@@ -21,6 +21,16 @@ export const appList = [
 		iconURL: '/src/assets/ui/48xChrome.png',
 		appID: 'App:3',
 	},
+	{
+		appName: 'KIDZ 101.1FM Radio Jungle',
+		iconURL: '/src/assets/ui/64xMusicPlayer.png',
+		appID: 'App:4',
+	},
+	{
+		appName: 'Notes',
+		iconURL: '/src/assets/ui/64xNotes.png',
+		appID: 'App:5',
+	},
 ];
 
 export type AppData = {
