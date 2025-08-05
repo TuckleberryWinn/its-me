@@ -72,12 +72,6 @@ export const tryOpenWindow = (targetAppID: string) => {
 	console.log(windows.value);
 };
 
-const scramble = () => {
-	windows.value.sort(() => {
-		return Math.random() - 0.5;
-	});
-};
-
 const closeWindowByID = (instanceID: string) => {
 	windows.value = windows.value.filter((win) => win.appData.appID !== instanceID);
 	taskbarTabs.value = taskbarTabs.value.filter((tab) => tab.appID !== instanceID);

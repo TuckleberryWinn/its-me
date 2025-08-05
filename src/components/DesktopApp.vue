@@ -12,8 +12,6 @@ const props = defineProps<DesktopWindow>();
 
 const dragWindow = useTemplateRef<HTMLElement>('dragWindow');
 
-console.log(dragWindow.value?.style.left, dragWindow.value?.style.top);
-
 const startingWidth = (function () {
 	if (innerWidth * 0.5 < innerHeight * 1.5) {
 		return innerWidth * 0.5 + 'px';

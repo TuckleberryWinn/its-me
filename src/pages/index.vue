@@ -12,6 +12,14 @@ const scramble = () => {
 		return Math.random() - 0.5;
 	});
 };
+
+addEventListener('click', (env) => {});
+
+const bringWindowToFront = (appID: string) => {
+	console.log(`Bring ${appID} to front.`);
+	const targetIndex = windows.value.findIndex((win) => win.appData.appID === appID);
+	windows.value.push(windows.value.splice(targetIndex, 1)[0]);
+};
 </script>
 
 <template>
@@ -33,6 +41,7 @@ const scramble = () => {
 				:desktop-window="window"
 				:key="window.appData.appID"
 				v-bind="window"
+				@click="bringWindowToFront(window.appData.appID)"
 			>
 			</DesktopApp>
 		</div>
