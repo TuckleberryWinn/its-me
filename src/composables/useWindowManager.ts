@@ -80,6 +80,10 @@ const closeWindowByID = (instanceID: string) => {
 };
 
 const tryBringWindowToFront = (appID: string) => {
+	if (!windows.value.length) {
+		console.log('bug fixed <3');
+		return;
+	}
 	console.log(`Bring ${appID} to front.`);
 	const targetIndex = windows.value.findIndex((win) => win.appData.appID === appID);
 	windows.value.push(windows.value.splice(targetIndex, 1)[0]);
