@@ -2,7 +2,7 @@
 import DesktopIcon from '@/components/DesktopIcon.vue';
 import Taskbar from '@/components/Taskbar.vue';
 import useWindowManager from '@/composables/useWindowManager';
-const { windows, taskbarTabs, appList } = useWindowManager();
+const { windows, taskbarTabs, appList, tryBringWindowToFront } = useWindowManager();
 
 import DesktopApp from '@/components/DesktopApp.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
@@ -14,12 +14,6 @@ const scramble = () => {
 };
 
 addEventListener('click', (env) => {});
-
-const bringWindowToFront = (appID: string) => {
-	console.log(`Bring ${appID} to front.`);
-	const targetIndex = windows.value.findIndex((win) => win.appData.appID === appID);
-	windows.value.push(windows.value.splice(targetIndex, 1)[0]);
-};
 </script>
 
 <template>
@@ -41,7 +35,7 @@ const bringWindowToFront = (appID: string) => {
 				:desktop-window="window"
 				:key="window.appData.appID"
 				v-bind="window"
-				@click="bringWindowToFront(window.appData.appID)"
+				@click="tryBringWindowToFront(window.appData.appID)"
 			>
 			</DesktopApp>
 		</div>

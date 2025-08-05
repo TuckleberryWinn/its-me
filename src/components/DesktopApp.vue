@@ -1,16 +1,25 @@
 <script lang="ts" setup>
 import useWindowManager, { type DesktopWindow } from '@/composables/useWindowManager';
 import { UseDraggable as Draggable } from '@vueuse/components';
-import { useDraggable } from '@vueuse/core';
+import { useDraggable as useDrag } from '@vueuse/core';
 import { ref, useTemplateRef } from 'vue';
 
-const { closeWindowByID } = useWindowManager();
+const { closeWindowByID, tryBringWindowToFront, updateWindowPosition } = useWindowManager();
 
 const handle = useTemplateRef<HTMLElement>('handle');
 
 const props = defineProps<DesktopWindow>();
 
 const dragWindow = useTemplateRef<HTMLElement>('dragWindow');
+
+const { x, y } = useDrag(handle, {
+	onStart() {
+		tryBringWindowToFront(props.appData.appID);
+	},
+	onEnd() {
+		updateWindowPosition(props.appData.appID, x.value, y.value);
+	},
+});
 
 const startingWidth = (function () {
 	if (innerWidth * 0.5 < innerHeight * 1.5) {

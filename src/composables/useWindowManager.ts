@@ -49,11 +49,12 @@ export const tryOpenWindow = (targetAppID: string) => {
 		console.log(`Window already open`);
 		return;
 	}
-
+	console.log('length: ', windows.value);
 	let targetX: number = 100;
 	let targetY: number = 150;
 	//update target position if other windows are open
 	if (windows.value.length) {
+		console.log('length: ', windows.value);
 		targetX = windows.value[windows.value.length - 1].xPos + xWindowOffset;
 		targetY = windows.value[windows.value.length - 1].yPos + yWindowOffset;
 	}
@@ -78,12 +79,26 @@ const closeWindowByID = (instanceID: string) => {
 	console.log(windows.value);
 };
 
+const tryBringWindowToFront = (appID: string) => {
+	console.log(`Bring ${appID} to front.`);
+	const targetIndex = windows.value.findIndex((win) => win.appData.appID === appID);
+	windows.value.push(windows.value.splice(targetIndex, 1)[0]);
+};
+
+const updateWindowPosition = (appID: string, newXPos: number, newYPos: number) => {
+	const targetIndex = windows.value.findIndex((win) => win.appData.appID === appID);
+	windows.value[targetIndex].xPos = newXPos;
+	windows.value[targetIndex].yPos = newYPos;
+};
+
 export default () => {
 	return {
+		appList,
 		windows,
 		taskbarTabs,
 		tryOpenWindow,
 		closeWindowByID,
-		appList,
+		tryBringWindowToFront,
+		updateWindowPosition,
 	};
 };
