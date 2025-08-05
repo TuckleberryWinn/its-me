@@ -28,4 +28,8 @@ onUnmounted(() => {
 	max-width: 100%;
 	max-height: 100%;
 }
+
+#pageContent {
+	cursor: url(/src/assets/ui/32x_cursorSheet.png), pointer;
+}
 </style>
