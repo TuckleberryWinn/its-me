@@ -21,6 +21,9 @@ const { x, y } = useDrag(handle, {
 	},
 });
 
+x.value = props.xPos;
+y.value = props.yPos;
+
 const startingWidth = (function () {
 	if (innerWidth * 0.5 < innerHeight * 1.5) {
 		return innerWidth * 0.5 + 'px';
