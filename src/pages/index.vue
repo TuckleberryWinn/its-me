@@ -7,6 +7,8 @@ const { windows, taskbarTabs, appList, tryBringWindowToFront } = useWindowManage
 import DesktopApp from '@/components/DesktopApp.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
 
+import Cursor from '@/components/Cursor.vue';
+
 const scramble = () => {
 	windows.value.sort(() => {
 		return Math.random() - 0.5;
@@ -49,21 +51,24 @@ addEventListener('click', (env) => {});
 				></TaskbarApp>
 			</div>
 		</Taskbar>
-		<component
+		<!-- <component
 			:is="'PopupWindowB'"
 			@click="scramble"
-		/>
+		/> -->
 	</main>
+	<Cursor />
 </template>
 
 <style scoped>
+* {
+	cursor: none !important;
+}
 .main {
 	height: auto;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
 	align-content: flex-start;
-	height: 91dvh;
 }
 #taskbar-app-container {
 	display: flex;
