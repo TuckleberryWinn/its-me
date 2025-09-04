@@ -33,6 +33,19 @@ const startingWidth = (function () {
 })();
 
 const textValue = ref('');
+
+enum ResizeContext {
+	none = 'none',
+	horizontal = 'horizontal',
+	vertical = 'vertical',
+	diagnal = 'diagnal',
+}
+const resizeContext = ref('none');
+
+const horizontalResizeTrigger = () => {
+	resizeContext.value = ResizeContext.horizontal;
+	console.log('123123');
+};
 </script>
 
 <template>
@@ -62,6 +75,12 @@ const textValue = ref('');
 			</div>
 		</div>
 		<div class="app-body">
+			<div
+				class="drag d-side"
+				@mouseenter="horizontalResizeTrigger"
+			></div>
+			<div class="drag d-bottom"></div>
+			<div class="drag d-corner"></div>
 			<textarea v-model="textValue"></textarea>
 			<div>
 				<input
@@ -82,7 +101,6 @@ const textValue = ref('');
 	background-color: grey;
 	border: 0.155rem solid #00ffd4;
 	border-radius: 0.5rem 0.5rem 0 0;
-	resize: horizontal;
 	position: fixed;
 }
 .app-header {
@@ -138,5 +156,30 @@ h1 {
 
 .app-body {
 	aspect-ratio: 16 / 9;
+}
+
+.drag {
+	background-color: #ff0eb7;
+	position: absolute;
+}
+
+.d-side {
+	width: 5px;
+	height: calc(100% - 60px);
+	right: 0;
+	cursor: ew-resize;
+}
+.d-bottom {
+	height: 5px;
+	width: calc(100% - 20px);
+	bottom: 0;
+	cursor: ns-resize;
+}
+.d-corner {
+	height: 20px;
+	width: 20px;
+	bottom: 0;
+	right: 0;
+	cursor: nw-resize;
 }
 </style>

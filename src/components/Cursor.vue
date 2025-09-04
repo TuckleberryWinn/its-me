@@ -10,7 +10,7 @@ cursorFrame.value = cursorSheet;
 document.addEventListener('mousemove', (x) => {
 	xOffset.value = x.pageX;
 	yOffset.value = x.pageY;
-	console.log(xOffset.value, xOffset.value);
+	// console.log(xOffset.value, xOffset.value);
 });
 </script>
 
