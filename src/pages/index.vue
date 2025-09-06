@@ -60,9 +60,6 @@ addEventListener('click', (env) => {});
 </template>
 
 <style scoped>
-* {
-	cursor: none !important;
-}
 .main {
 	height: auto;
 	display: flex;
@@ -72,5 +69,6 @@ addEventListener('click', (env) => {});
 }
 #taskbar-app-container {
 	display: flex;
+  flex-wrap: nowrap;
 }
 </style>

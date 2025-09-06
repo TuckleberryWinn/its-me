@@ -167,19 +167,16 @@ h1 {
 	width: 5px;
 	height: calc(100% - 60px);
 	right: 0;
-	cursor: ew-resize;
 }
 .d-bottom {
 	height: 5px;
 	width: calc(100% - 20px);
 	bottom: 0;
-	cursor: ns-resize;
 }
 .d-corner {
 	height: 20px;
 	width: 20px;
 	bottom: 0;
 	right: 0;
-	cursor: nw-resize;
 }
 </style>

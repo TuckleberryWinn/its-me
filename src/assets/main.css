@@ -8,6 +8,7 @@
 	overflow: hidden;
 	line-height: 1.15;
 	font-family: 'Gill Sans Extrabold', sans-serif;
+  cursor: none !important;
 }
 
 .font-vt323 {
