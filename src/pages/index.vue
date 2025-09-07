@@ -61,12 +61,12 @@ addEventListener('click', (env) => {});
 
 <style scoped>
 .main {
-	height: auto;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
 	align-content: flex-start;
 }
+
 #taskbar-app-container {
 	display: flex;
   flex-wrap: nowrap;

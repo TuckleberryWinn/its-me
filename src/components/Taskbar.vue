@@ -16,9 +16,7 @@
 				<input type="checkbox" />
 			</label>
 		</div>
-		<div class="taskbar-apps">
 			<slot />
-		</div>
 		<div class="taskbar-tabs"></div>
 		<div class="icons-right"></div>
 	</div>
@@ -83,10 +81,5 @@ label span ~ input:checked {
 
 .icons-left #chrome {
 	background-image: url(/src/assets/ui/48xChrome.png);
-}
-
-.taskbar-apps {
-	display: flex;
-	margin: 6px 12px 6px 0px;
 }
 </style>
