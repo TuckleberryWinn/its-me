@@ -58,7 +58,7 @@ const horizontalResizeTrigger = () => {
 		:class="appData.appID"
 	>
 		<div
-			class="app-header"
+			class="app-header draggable"
 			ref="handle"
 		>
 			<div class="app-title">

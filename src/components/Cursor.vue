@@ -43,7 +43,8 @@ document.addEventListener('mousemove', (x) => {
 	const classes = x.target.classList;
 	if (classes.contains('clickable')) {
 		currentCursor.value = Cursor.pointer;
-		console.log(currentCursor.value);
+	} else if (classes.contains('draggable')) {
+		currentCursor.value = Cursor.draggable;
 	} else {
 		console.log('not clickable?', classes);
 		currentCursor.value = Cursor.default;
