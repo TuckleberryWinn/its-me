@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import cursorSheet from '@/assets/ui/32x_cursorSheet.png';
 
+import cursorAcid from '@/assets/ui/48xCursorSet-Sheet.png';
+
 const xOffset = ref(0);
 const yOffset = ref(0);
 const cursorFrame = ref('');
@@ -10,26 +12,55 @@ cursorFrame.value = cursorSheet;
 document.addEventListener('mousemove', (x) => {
 	xOffset.value = x.pageX;
 	yOffset.value = x.pageY;
-	// console.log(xOffset.value, xOffset.value);
 });
+
+const frameInterval = ref(0);
+
+const cursorAnimator = setInterval(() => {
+	frameInterval.value += 1;
+	frameInterval.value %= 8;
+}, 125);
+
+enum Cursor {
+	default = 0,
+	pointer = 1,
+	rockOn = 2,
+	holding = 3,
+	frameNE = 4,
+	frameSE = 5,
+	frameSW = 6,
+	frameNW = 7,
+	draggable = 8,
+	resizeEW = 9,
+	resizeNS = 10,
+	resizeSE = 11,
+}
+const currentCursor = ref<Cursor>(Cursor.default);
+
+const cursorSwap = setInterval(() => {
+	currentCursor.value += 1;
+	currentCursor.value %= 12;
+}, 500);
 </script>
 
 <template>
 	<div
 		:style="{
-			left: `${xOffset}px`,
-			top: `${yOffset}px`,
-			backgroundImage: `url(${cursorFrame})`,
+			left: `${xOffset - 16}px`,
+			top: `${yOffset - 16}px`,
+			backgroundImage: `url(${cursorAcid})`,
+			backgroundPosition: `${frameInterval * -48}px ${currentCursor * -48}px`,
 		}"
-		class="test"
+		class="cursor"
 	></div>
 </template>
 
 <style>
-.test {
-	width: 32px;
+.cursor {
+	width: 48px;
 	aspect-ratio: 1;
 	position: absolute;
 	pointer-events: none;
+	image-rendering: pixelated;
 }
 </style>
