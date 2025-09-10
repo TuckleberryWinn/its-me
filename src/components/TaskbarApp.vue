@@ -9,8 +9,8 @@ const props = defineProps<AppData>();
 		class="app-button clickable"
 		:class="appID"
 	>
-		<span class="icon"></span>
-		<h1>{{ appName }}</h1>
+		<span class="icon clickable"></span>
+		<h1 class="clickable">{{ appName }}</h1>
 	</div>
 </template>
 
