@@ -76,11 +76,11 @@ const horizontalResizeTrigger = () => {
 		</div>
 		<div class="app-body">
 			<div
-				class="drag d-side"
+				class="resize resizeEW d-side"
 				@mouseenter="horizontalResizeTrigger"
 			></div>
-			<div class="drag d-bottom"></div>
-			<div class="drag d-corner"></div>
+			<div class="resize resizeNS d-bottom"></div>
+			<div class="resize resizeSE d-corner"></div>
 			<textarea v-model="textValue"></textarea>
 			<div>
 				<input
@@ -158,25 +158,49 @@ h1 {
 	aspect-ratio: 16 / 9;
 }
 
-.drag {
+.resize {
 	background-color: #ff0eb7;
 	position: absolute;
 }
 
 .d-side {
-	width: 5px;
-	height: calc(100% - 60px);
+	background: linear-gradient(
+		270deg,
+		rgba(255, 14, 183, 1) 0%,
+		rgba(248, 24, 178, 1) 29%,
+		rgba(66, 255, 255, 0.49) 37%,
+		rgba(66, 255, 255, 0) 42%,
+		rgba(199, 87, 147, 0) 100%
+	);
+	width: 10px;
+	height: calc(100% - 55px);
 	right: 0;
 }
 .d-bottom {
-	height: 5px;
-	width: calc(100% - 20px);
+	height: 10px;
+	width: calc(100% - 15px);
 	bottom: 0;
+	background: linear-gradient(
+		0deg,
+		rgba(255, 14, 183, 1) 0%,
+		rgba(248, 24, 178, 1) 29%,
+		rgba(66, 255, 255, 0.49) 37%,
+		rgba(66, 255, 255, 0) 42%,
+		rgba(199, 87, 147, 0) 100%
+	);
 }
 .d-corner {
 	height: 20px;
 	width: 20px;
 	bottom: 0;
 	right: 0;
+	background: linear-gradient(
+		315deg,
+		rgba(255, 14, 183, 1) 0%,
+		rgba(248, 24, 178, 1) 29%,
+		rgba(66, 255, 255, 0.49) 37%,
+		rgba(66, 255, 255, 0) 42%,
+		rgba(199, 87, 147, 0) 100%
+	);
 }
 </style>

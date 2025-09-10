@@ -45,6 +45,12 @@ document.addEventListener('mousemove', (x) => {
 		currentCursor.value = Cursor.pointer;
 	} else if (classes.contains('draggable')) {
 		currentCursor.value = Cursor.draggable;
+	} else if (classes.contains('resizeNS')) {
+		currentCursor.value = Cursor.resizeNS;
+	} else if (classes.contains('resizeEW')) {
+		currentCursor.value = Cursor.resizeEW;
+	} else if (classes.contains('resizeSE')) {
+		currentCursor.value = Cursor.resizeSE;
 	} else {
 		console.log('not clickable?', classes);
 		currentCursor.value = Cursor.default;
