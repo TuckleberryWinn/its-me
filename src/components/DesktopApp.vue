@@ -61,8 +61,8 @@ const horizontalResizeTrigger = () => {
 			class="app-header draggable"
 			ref="handle"
 		>
-			<div class="app-title">
-				<h1>{{ appData.appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
+			<div class="app-title draggable">
+				<h1 class="draggable">{{ appData.appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
 			</div>
 			<div class="control-buttons">
 				<div class="control-minimize clickable">-</div>
