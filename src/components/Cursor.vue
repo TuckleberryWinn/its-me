@@ -9,11 +9,6 @@ const yOffset = ref(0);
 const cursorFrame = ref('');
 cursorFrame.value = cursorSheet;
 
-document.addEventListener('mousemove', (x) => {
-	xOffset.value = x.pageX;
-	yOffset.value = x.pageY;
-});
-
 const frameInterval = ref(0);
 
 const cursorAnimator = setInterval(() => {
@@ -37,10 +32,24 @@ enum Cursor {
 }
 const currentCursor = ref<Cursor>(Cursor.default);
 
-const cursorSwap = setInterval(() => {
-	currentCursor.value += 1;
-	currentCursor.value %= 12;
-}, 500);
+document.addEventListener('mousemove', (x) => {
+	xOffset.value = x.pageX;
+	yOffset.value = x.pageY;
+
+	if (x.target instanceof HTMLElement == false) {
+		return;
+	}
+
+	const classes = x.target.classList;
+	if (classes.contains('clickable')) {
+		currentCursor.value = Cursor.pointer;
+		console.log(currentCursor.value);
+	} else {
+		console.log('not clickable?', classes);
+		currentCursor.value = Cursor.default;
+	}
+	console.log(x.target);
+});
 </script>
 
 <template>

@@ -4,19 +4,28 @@
 	<div class="taskbar">
 		<div class="icons-left">
 			<label>
-				<span id="start-menu"></span>
+				<span
+					id="start-menu"
+					class="clickable"
+				></span>
 				<input type="checkbox" />
 			</label>
 			<label>
-				<span id="folder"></span>
+				<span
+					id="folder"
+					class="clickable"
+				></span>
 				<input type="checkbox" />
 			</label>
 			<label>
-				<span id="chrome"></span>
+				<span
+					id="chrome"
+					class="clickable"
+				></span>
 				<input type="checkbox" />
 			</label>
 		</div>
-			<slot />
+		<slot />
 		<div class="taskbar-tabs"></div>
 		<div class="icons-right"></div>
 	</div>

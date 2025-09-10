@@ -13,12 +13,15 @@ const openNewWindow = () => {
 
 <template>
 	<div
-		class="icon"
+		class="icon clickable"
 		@click="openNewWindow"
 	>
 		<label>
-			<span :style="{ backgroundImage: `url(${iconURL})` }"></span>
-			<h4 class="font-vt323">{{ appName || 'Title Not Found.exe' }}</h4>
+			<span
+				class="clickable"
+				:style="{ backgroundImage: `url(${iconURL})` }"
+			></span>
+			<h4 class="font-vt323 clickable">{{ appName || 'Title Not Found.exe' }}</h4>
 		</label>
 	</div>
 </template>

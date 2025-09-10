@@ -65,9 +65,9 @@ const horizontalResizeTrigger = () => {
 				<h1>{{ appData.appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
 			</div>
 			<div class="control-buttons">
-				<div class="control-minimize">-</div>
+				<div class="control-minimize clickable">-</div>
 				<div
-					class="control-close"
+					class="control-close clickable"
 					@click="closeWindowByID(appData.appID)"
 				>
 					X
