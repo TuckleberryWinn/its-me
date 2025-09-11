@@ -4,7 +4,7 @@ import Taskbar from '@/components/Taskbar.vue';
 import useWindowManager from '@/composables/useWindowManager';
 const { windows, taskbarTabs, appList, tryBringWindowToFront } = useWindowManager();
 
-import DesktopApp from '@/components/DesktopApp.vue';
+import DesktopApp from '@/components/DesktopAppAlt.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
 
 import Cursor from '@/components/Cursor.vue';
@@ -69,6 +69,6 @@ addEventListener('click', (env) => {});
 
 #taskbar-app-container {
 	display: flex;
-  flex-wrap: nowrap;
+	flex-wrap: nowrap;
 }
 </style>

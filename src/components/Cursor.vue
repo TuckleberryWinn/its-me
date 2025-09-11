@@ -52,10 +52,10 @@ document.addEventListener('mousemove', (x) => {
 	} else if (classes.contains('resizeSE')) {
 		currentCursor.value = Cursor.resizeSE;
 	} else {
-		console.log('not clickable?', classes);
+		// console.log('not clickable?', classes);
 		currentCursor.value = Cursor.default;
 	}
-	console.log(x.target);
+	// console.log(x.target);
 });
 </script>
 
