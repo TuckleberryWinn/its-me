@@ -9,10 +9,8 @@ const { closeWindowByID, tryBringWindowToFront, updateWindowPosition } = useWind
 
 const handle = useTemplateRef<HTMLElement>('handle');
 
+const textValue = ref('');
 const props = defineProps<DesktopWindow>();
-
-const dragWindow = useTemplateRef<HTMLElement>('dragWindow');
-const dragResize = useTemplateRef<HTMLElement>('appBody');
 
 const { x, y } = useDrag(handle, {
 	onStart() {
@@ -22,11 +20,11 @@ const { x, y } = useDrag(handle, {
 		updateWindowPosition(props.appData.appID, x.value, y.value);
 	},
 });
-
+//Set drag values to initial window position
 x.value = props.xPos;
 y.value = props.yPos;
 
-const startingWidth = (function () {
+const startingWidth = (() => {
 	if (innerWidth * 0.5 < innerHeight * 1.5) {
 		return innerWidth * 0.5 + 'px';
 	} else {
@@ -34,29 +32,32 @@ const startingWidth = (function () {
 	}
 })();
 
-const textValue = ref('');
-
 enum ResizeContext {
 	none = 'none',
 	horizontal = 'horizontal',
 	vertical = 'vertical',
 	diagnal = 'diagnal',
 }
-const resizeContext = ref('none');
+const resizeContext = ref<ResizeContext>(ResizeContext.none);
+const mouseDown = ref(false);
 
 const horizontalResizeTrigger = () => {
+	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.horizontal;
 	console.log('horizontal');
 };
 const verticalResizeTrigger = () => {
+	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.vertical;
 	console.log('vertical');
 };
 const bothResizeTrigger = () => {
+	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.diagnal;
 	console.log('diag');
 };
 const exitResizeTrigger = () => {
+	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.none;
 	console.log('exit');
 };
@@ -66,14 +67,35 @@ const styleObject = ref({
 	height: '',
 });
 
+window.addEventListener('mousedown', () => {
+	mouseDown.value = true;
+	console.log('click down', mouseDown.value);
+});
+window.addEventListener('mouseup', () => {
+	mouseDown.value = false;
+	console.log('click up', mouseDown.value);
+});
 window.addEventListener('mousemove', (e) => {
 	//Calc width between window start and cursor
+
+	if (!mouseDown.value) return;
 	const xOffset: number = e.clientX - x.value;
 	const yOffset: number = e.clientY - y.value;
 	console.log(e.clientX - x.value);
 
-	styleObject.value.width = `${xOffset}px`;
-	styleObject.value.height = `${yOffset}px`;
+	if (
+		resizeContext.value == ResizeContext.horizontal ||
+		resizeContext.value == ResizeContext.diagnal
+	) {
+		styleObject.value.width = `${xOffset}px`;
+	}
+
+	if (
+		resizeContext.value == ResizeContext.vertical ||
+		resizeContext.value == ResizeContext.diagnal
+	) {
+		styleObject.value.height = `${yOffset}px`;
+	}
 });
 </script>
 
@@ -81,7 +103,6 @@ window.addEventListener('mousemove', (e) => {
 	<Draggable
 		class="app-window"
 		v-slot="{ x, y }"
-		ref="dragWindow"
 		:handle="handle"
 		:initial-value="{ x: xPos, y: yPos }"
 		:class="appData.appID"
@@ -108,18 +129,21 @@ window.addEventListener('mousemove', (e) => {
 		>
 			<div
 				class="resize resizeEW d-side"
-				@mousedown="horizontalResizeTrigger"
-				@mouseup="exitResizeTrigger"
+				@click="tryBringWindowToFront(props.appData.appID)"
+				@mouseover="horizontalResizeTrigger"
+				@mouseout="exitResizeTrigger"
 			></div>
 			<div
 				class="resize resizeNS d-bottom"
-				@mousedown="verticalResizeTrigger"
-				@mouseup="exitResizeTrigger"
+				@click="tryBringWindowToFront(props.appData.appID)"
+				@mouseover="verticalResizeTrigger"
+				@mouseout="exitResizeTrigger"
 			></div>
 			<div
 				class="resize resizeSE d-corner"
-				@mousedown="bothResizeTrigger"
-				@mouseup="exitResizeTrigger"
+				@click="tryBringWindowToFront(props.appData.appID)"
+				@mouseover="bothResizeTrigger"
+				@mouseout="exitResizeTrigger"
 			></div>
 			<textarea v-model="textValue"></textarea>
 			<div>
@@ -140,7 +164,8 @@ window.addEventListener('mousemove', (e) => {
 	height: auto;
 	background-color: rgba(0, 0, 0, 0.922);
 	position: fixed;
-	border: 1.5px solid greenyellow;
+	border: 2.5px solid greenyellow;
+	overflow: visible;
 }
 .app-header {
 	height: 40px;
@@ -156,13 +181,15 @@ window.addEventListener('mousemove', (e) => {
 	height: 100%;
 	display: flex;
 	align-items: center;
+	/* 32px * button count  */
+	min-width: 64px;
 }
 
 .control-buttons > div {
 	display: inline-block;
 	height: 24px;
-	aspect-ratio: 1;
 	margin-right: 8px;
+	aspect-ratio: 1;
 }
 
 .control-buttons > .control-minimize {
@@ -213,11 +240,14 @@ h1 {
 		-1px -1px 1px #00ff08,
 		-2px -2px 1px #00ff08;
 	overflow: visible;
-	color: #0000009b;
+	color: #000000ae;
 	font-size: 24px;
+	white-space: nowrap;
 }
 
 .app-body {
+	height: calc(100% - 40px);
+	border: 3px solid rgb(40, 183, 5);
 }
 
 .resize {
@@ -225,25 +255,26 @@ h1 {
 }
 
 .d-side {
-	width: 10px;
+	position: absolute;
+	width: 16px;
 	height: calc(100% - 55px);
-	right: 0;
+	right: -8px;
 }
 .d-bottom {
-	height: 10px;
+	height: 16px;
 	width: calc(100% - 15px);
-	bottom: 0;
+	bottom: -8px;
 }
 .d-corner {
-	height: 20px;
-	width: 20px;
-	bottom: 0;
-	right: 0;
+	height: 23px;
+	width: 23px;
+	bottom: -8px;
+	right: -8px;
 	background: linear-gradient(
 		315deg,
 		rgba(20, 255, 11, 1) 0%,
-		rgba(20, 255, 11, 1) 30%,
-		rgba(20, 255, 11, 0) 31%
+		rgba(20, 255, 11, 1) 40%,
+		rgba(20, 255, 11, 0) 41%
 	);
 }
 </style>
