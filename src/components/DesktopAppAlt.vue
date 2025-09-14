@@ -123,6 +123,7 @@ window.addEventListener('mousemove', (e) => {
 				></div>
 			</div>
 		</div>
+		<div class="app-divider"></div>
 		<div
 			ref="appBody"
 			class="app-body"
@@ -157,6 +158,17 @@ window.addEventListener('mousemove', (e) => {
 </template>
 
 <style scoped>
+* {
+	--outer-border: 35, 73, 93;
+	--inner-border: 57, 112, 122;
+	--title-accent: 218, 242, 233;
+	--header-background: 10, 2, 25;
+	--control-button: 149, 224, 204;
+	--close-button: 155, 34, 43;
+
+	--test: #daf2e9;
+}
+
 .app-window {
 	width: v-bind(startingWidth);
 	min-width: 16rem;
@@ -164,17 +176,20 @@ window.addEventListener('mousemove', (e) => {
 	height: auto;
 	background-color: rgba(0, 0, 0, 0.922);
 	position: fixed;
-	border: 2.5px solid greenyellow;
+	border: 2.5px solid rgb(var(--outer-border));
 	overflow: visible;
 }
 .app-header {
 	height: 40px;
-	background-color: #000000;
+	background-color: rgb(var(--header-background));
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	cursor: move;
-	border-bottom: 1px solid greenyellow;
+	border: 4px solid rgb(var(--inner-border));
+}
+.app-divider {
+	border-bottom: 2px solid rgb(var(--outer-border));
 }
 
 .control-buttons {
@@ -193,23 +208,23 @@ window.addEventListener('mousemove', (e) => {
 }
 
 .control-buttons > .control-minimize {
-	background-color: rgba(15, 239, 26, 0.25);
-	border: 1px solid rgb(8, 242, 0);
+	background-color: rgba(var(--control-button), 0.25);
+	border: 1px solid rgb(var(--control-button));
 	background-image: url('@/assets/ui/24x_MinimizeIcon.png');
 	image-rendering: pixelated;
 	background-size: cover;
 	background-position: center;
 }
 .control-buttons > .control-minimize:hover {
-	background-color: rgba(15, 239, 26, 0.4);
+	background-color: rgba(var(--control-button), 0.4);
 }
 .control-buttons > .control-minimize:active {
-	background-color: rgba(15, 239, 26, 0.7);
+	background-color: rgba(var(--control-button), 0.7);
 }
 
 .control-buttons > .control-close {
-	background-color: rgba(241, 0, 0, 0.25);
-	border: 1px solid rgb(255, 13, 13);
+	background-color: rgba(var(--close-button), 0.25);
+	border: 1px solid rgb(var(--close-button));
 	background-image: url('@/assets/ui/24x_CloseIcon.png');
 	image-rendering: pixelated;
 	background-size: cover;
@@ -217,10 +232,10 @@ window.addEventListener('mousemove', (e) => {
 }
 
 .control-buttons > .control-close:hover {
-	background-color: rgba(241, 0, 0, 0.4);
+	background-color: rgba(var(--close-button), 0.4);
 }
 .control-buttons > .control-close:active {
-	background-color: rgba(241, 0, 0, 0.7);
+	background-color: rgba(var(--close-button), 0.7);
 }
 
 .app-title {
@@ -231,14 +246,14 @@ window.addEventListener('mousemove', (e) => {
 h1 {
 	font-weight: 600;
 	text-shadow:
-		-1px 1px 1px #00ff08,
-		-2px 2px 1px #00ff08,
-		1px -1px 1px #00ff08,
-		2px -2px 1px #00ff08,
-		1px 1px 1px #00ff08,
-		2px 2px 1px #00ff08,
-		-1px -1px 1px #00ff08,
-		-2px -2px 1px #00ff08;
+		-1px 1px 1px rgb(var(--title-accent)),
+		-2px 2px 1px rgb(var(--title-accent)),
+		1px -1px 1px rgb(var(--title-accent)),
+		2px -2px 1px rgb(var(--title-accent)),
+		1px 1px 1px rgb(var(--title-accent)),
+		2px 2px 1px rgb(var(--title-accent)),
+		-1px -1px 1px rgb(var(--title-accent)),
+		-2px -2px 1px rgb(var(--title-accent));
 	overflow: visible;
 	color: #000000ae;
 	font-size: 24px;
@@ -247,7 +262,7 @@ h1 {
 
 .app-body {
 	height: calc(100% - 40px);
-	border: 3px solid rgb(40, 183, 5);
+	border: 4px solid rgb(var(--inner-border));
 }
 
 .resize {
@@ -272,9 +287,9 @@ h1 {
 	right: -8px;
 	background: linear-gradient(
 		315deg,
-		rgba(20, 255, 11, 1) 0%,
-		rgba(20, 255, 11, 1) 40%,
-		rgba(20, 255, 11, 0) 41%
+		rgba(var(--title-accent), 1) 0%,
+		rgba(var(--title-accent), 1) 40%,
+		rgba(var(--title-accent), 0) 41%
 	);
 }
 </style>
