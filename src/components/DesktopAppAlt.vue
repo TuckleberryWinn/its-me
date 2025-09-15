@@ -130,19 +130,19 @@ window.addEventListener('mousemove', (e) => {
 		>
 			<div
 				class="resize resizeEW d-side"
-				@click="tryBringWindowToFront(props.appData.appID)"
+				@mousedown="tryBringWindowToFront(props.appData.appID)"
 				@mouseover="horizontalResizeTrigger"
 				@mouseout="exitResizeTrigger"
 			></div>
 			<div
 				class="resize resizeNS d-bottom"
-				@click="tryBringWindowToFront(props.appData.appID)"
+				@mousedown="tryBringWindowToFront(props.appData.appID)"
 				@mouseover="verticalResizeTrigger"
 				@mouseout="exitResizeTrigger"
 			></div>
 			<div
 				class="resize resizeSE d-corner"
-				@click="tryBringWindowToFront(props.appData.appID)"
+				@mousedown="tryBringWindowToFront(props.appData.appID)"
 				@mouseover="bothResizeTrigger"
 				@mouseout="exitResizeTrigger"
 			></div>
