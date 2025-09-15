@@ -113,7 +113,9 @@ window.addEventListener('mousemove', (e) => {
 			ref="handle"
 		>
 			<div class="app-title draggable">
-				<h1 class="draggable">{{ appData.appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
+				<h1 class="draggable font-vt323">
+					{{ appData.appName }} {{ Math.round(x) }}, {{ Math.round(y) }}
+				</h1>
 			</div>
 			<div class="control-buttons draggable">
 				<div class="control-minimize clickable"></div>
@@ -213,7 +215,7 @@ window.addEventListener('mousemove', (e) => {
 	background-color: rgba(var(--control-button), 0.25);
 	border: 1px solid rgb(var(--control-button));
 	background-image: url('@/assets/ui/24x_MinimizeIcon.png');
-	image-rendering: pixelated;
+	image-rendering: crisp-edges;
 	background-size: cover;
 	background-position: center;
 }
@@ -228,7 +230,7 @@ window.addEventListener('mousemove', (e) => {
 	background-color: rgba(var(--close-button), 0.25);
 	border: 1px solid rgb(var(--close-button));
 	background-image: url('@/assets/ui/24x_CloseIcon.png');
-	image-rendering: pixelated;
+	image-rendering: crisp-edge0;
 	background-size: cover;
 	background-position: center;
 }
@@ -248,14 +250,14 @@ window.addEventListener('mousemove', (e) => {
 h1 {
 	font-weight: 600;
 	text-shadow:
-		-1px 1px 2px rgb(var(--title-accent)),
-		-2px 2px 2px rgb(var(--title-accent)),
-		1px -1px 2px rgb(var(--title-accent)),
-		2px -2px 2px rgb(var(--title-accent)),
-		1px 1px 2px rgb(var(--title-accent)),
-		2px 2px 2px rgb(var(--title-accent)),
-		-1px -1px 2px rgb(var(--title-accent)),
-		-2px -2px 2px rgb(var(--title-accent));
+		-0px 0px 1px rgb(var(--title-accent)),
+		-0px 0px 1px rgb(var(--title-accent)),
+		0px -0px 1px rgb(var(--title-accent)),
+		0px -0px 1px rgb(var(--title-accent)),
+		0px 0px 1px rgb(var(--title-accent)),
+		0px 0px 1px rgb(var(--title-accent)),
+		-0px -0px 1px rgb(var(--title-accent)),
+		-0px -0px 1px rgb(var(--title-accent));
 	overflow: visible;
 	color: #02252ddf;
 	font-size: 22px;
