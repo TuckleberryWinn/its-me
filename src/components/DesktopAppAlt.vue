@@ -164,6 +164,8 @@ window.addEventListener('mousemove', (e) => {
 	--header-background: 31, 22, 51;
 	--outer-border: 60, 110, 166;
 	--inner-border: 17, 69, 81;
+	--title: 211, 45, 207;
+	--title-accent: 211, 45, 207;
 	--title-accent: 232, 131, 234;
 	--control-button: 232, 131, 234;
 	--close-button: 211, 45, 207;
@@ -250,17 +252,26 @@ window.addEventListener('mousemove', (e) => {
 h1 {
 	font-weight: 600;
 	text-shadow:
-		-0px 0px 1px rgb(var(--title-accent)),
-		-0px 0px 1px rgb(var(--title-accent)),
-		0px -0px 1px rgb(var(--title-accent)),
-		0px -0px 1px rgb(var(--title-accent)),
-		0px 0px 1px rgb(var(--title-accent)),
-		0px 0px 1px rgb(var(--title-accent)),
-		-0px -0px 1px rgb(var(--title-accent)),
-		-0px -0px 1px rgb(var(--title-accent));
+		-0px 0px 1.5px #000,
+		-0px 0px 1.5px #000,
+		0px -0px 1.5px #000,
+		0px -0px 1.5px #000,
+		0px 0px 1.5px #000,
+		0px 0px 1.5px #000,
+		-0px -0px 1.5px #000,
+		-0px -0px 1.5px #000,
+		-0px 0px 5px rgba(var(--title-accent), 0.8),
+		-0px 0px 5px rgba(var(--title-accent), 0.8),
+		0px -0px 5px rgba(var(--title-accent), 0.8),
+		0px -0px 5px rgba(var(--title-accent), 0.8),
+		0px 0px 5px rgba(var(--title-accent), 0.8),
+		0px 0px 5px rgba(var(--title-accent), 0.8),
+		-0px -0px 5px rgba(var(--title-accent), 0.8),
+		-0px -0px 5px rgba(var(--title-accent), 0.8);
 	overflow: visible;
-	color: #02252ddf;
-	font-size: 22px;
+	color: rgba(var(--title), 1);
+	font-size: 24px;
+	line-height: 34px;
 	white-space: nowrap;
 }
 
