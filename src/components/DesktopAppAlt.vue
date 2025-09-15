@@ -159,14 +159,14 @@ window.addEventListener('mousemove', (e) => {
 
 <style scoped>
 * {
-	--outer-border: 35, 73, 93;
-	--inner-border: 57, 112, 122;
-	--title-accent: 218, 242, 233;
-	--header-background: 10, 2, 25;
-	--control-button: 149, 224, 204;
-	--close-button: 155, 34, 43;
+	--header-background: 31, 22, 51;
+	--outer-border: 60, 110, 166;
+	--inner-border: 17, 69, 81;
+	--title-accent: 232, 131, 234;
+	--control-button: 232, 131, 234;
+	--close-button: 211, 45, 207;
 
-	--test: #daf2e9;
+	--blue-white: 215, 233, 254;
 }
 
 .app-window {
@@ -176,17 +176,19 @@ window.addEventListener('mousemove', (e) => {
 	height: auto;
 	background-color: rgba(0, 0, 0, 0.922);
 	position: fixed;
-	border: 2.5px solid rgb(var(--outer-border));
+	border: 2px solid rgb(var(--outer-border));
 	overflow: visible;
+	border-radius: 15px 15px 0 0;
 }
 .app-header {
+	border-radius: 12.5px 12.5px 0 0;
 	height: 40px;
 	background-color: rgb(var(--header-background));
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	cursor: move;
-	border: 4px solid rgb(var(--inner-border));
+	border: 3px solid rgb(var(--inner-border));
 }
 .app-divider {
 	border-bottom: 2px solid rgb(var(--outer-border));
@@ -246,23 +248,23 @@ window.addEventListener('mousemove', (e) => {
 h1 {
 	font-weight: 600;
 	text-shadow:
-		-1px 1px 1px rgb(var(--title-accent)),
-		-2px 2px 1px rgb(var(--title-accent)),
-		1px -1px 1px rgb(var(--title-accent)),
-		2px -2px 1px rgb(var(--title-accent)),
-		1px 1px 1px rgb(var(--title-accent)),
-		2px 2px 1px rgb(var(--title-accent)),
-		-1px -1px 1px rgb(var(--title-accent)),
-		-2px -2px 1px rgb(var(--title-accent));
+		-1px 1px 2px rgb(var(--title-accent)),
+		-2px 2px 2px rgb(var(--title-accent)),
+		1px -1px 2px rgb(var(--title-accent)),
+		2px -2px 2px rgb(var(--title-accent)),
+		1px 1px 2px rgb(var(--title-accent)),
+		2px 2px 2px rgb(var(--title-accent)),
+		-1px -1px 2px rgb(var(--title-accent)),
+		-2px -2px 2px rgb(var(--title-accent));
 	overflow: visible;
-	color: #000000ae;
-	font-size: 24px;
+	color: #02252ddf;
+	font-size: 22px;
 	white-space: nowrap;
 }
 
 .app-body {
-	height: calc(100% - 40px);
-	border: 4px solid rgb(var(--inner-border));
+	height: calc(100% - 42.5px);
+	border: 3px solid rgb(var(--inner-border));
 }
 
 .resize {
