@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { AppData } from '@/composables/useWindowManager';
+import type { DesktopWindow } from '@/composables/useWindowManager';
 import { ref } from 'vue';
 
-const props = defineProps<AppData>();
+const props = defineProps<DesktopWindow>();
 
 const tabVerticalPull = ref(0);
 
@@ -19,7 +19,7 @@ const styleObject = ref({
 <template>
 	<div
 		class="app-button clickable"
-		:class="appID"
+		:class="{ appID, 'active-window': isTopWindow }"
 		:style="styleObject"
 	>
 		<span class="icon clickable"></span>
@@ -48,6 +48,10 @@ const styleObject = ref({
 	margin-left: 3px;
 	margin-right: 3px;
 	border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.app-button.active-window {
+	background-color: pink;
 }
 
 .app-button:hover {

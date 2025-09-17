@@ -105,7 +105,7 @@ window.addEventListener('mousemove', (e) => {
 		v-slot="{ x, y }"
 		:handle="handle"
 		:initial-value="{ x: xPos, y: yPos }"
-		:class="appID"
+		:class="{ appID, 'active-window': !isTopWindow }"
 		:style="{ width: styleObject.width, height: styleObject.height }"
 	>
 		<div
@@ -182,6 +182,7 @@ window.addEventListener('mousemove', (e) => {
 	overflow: visible;
 	border-radius: 15px 15px 0 0;
 }
+
 .app-header {
 	border-radius: 12.5px 12.5px 0 0;
 	height: 40px;
@@ -307,5 +308,8 @@ h1 {
 		rgba(var(--title-accent), 1) 40%,
 		rgba(var(--title-accent), 0) 41%
 	);
+}
+.active-window {
+	filter: blur(1.1px);
 }
 </style>

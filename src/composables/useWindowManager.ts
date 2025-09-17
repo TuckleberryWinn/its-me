@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import DesktopApp from '@/components/DesktopApp.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
 
@@ -58,6 +58,11 @@ export const taskbarTabs = ref<DesktopWindow[]>([]);
 const xWindowOffset: number = 25;
 const yWindowOffset: number = 50;
 
+function setTopWindow(appID: string) {
+	windows.value.forEach((x) => (x.isTopWindow = x.appID === appID));
+	taskbarTabs.value.forEach((x) => (x.isTopWindow = x.appID === appID));
+}
+
 export const tryOpenWindow = (targetAppID: string) => {
 	//all possible arguments are created from the same source file.
 	const targetApp: AppData = appList.find((x) => x.appID === targetAppID)!;
@@ -81,7 +86,7 @@ export const tryOpenWindow = (targetAppID: string) => {
 		appName: targetApp.appName,
 		iconURL: targetApp.iconURL,
 		currentState: WindowState.Open,
-		isTopWindow: true,
+		isTopWindow: false,
 		xPos: targetX,
 		yPos: targetY,
 	};
@@ -91,6 +96,7 @@ export const tryOpenWindow = (targetAppID: string) => {
 
 	taskbarTabs.value.push(newWindowData);
 	windows.value.push(newWindowData);
+	setTopWindow(targetApp.appID);
 	console.log(windows.value);
 };
 
@@ -108,6 +114,8 @@ const tryBringWindowToFront = (appID: string) => {
 	console.log(`Bring ${appID} to front.`);
 	const targetIndex = windows.value.findIndex((win) => win.appID === appID);
 	windows.value.push(windows.value.splice(targetIndex, 1)[0]);
+
+	setTopWindow(appID);
 };
 
 const updateWindowPosition = (appID: string, newXPos: number, newYPos: number) => {
