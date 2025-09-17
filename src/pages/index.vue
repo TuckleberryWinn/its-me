@@ -35,9 +35,9 @@ addEventListener('click', (env) => {});
 			<DesktopApp
 				v-for="window in windows"
 				:desktop-window="window"
-				:key="window.appData.appID"
+				:key="window.appID"
 				v-bind="window"
-				@click="tryBringWindowToFront(window.appData.appID)"
+				@click="tryBringWindowToFront(window.appID)"
 			>
 			</DesktopApp>
 		</div>

@@ -1,13 +1,26 @@
 <script lang="ts" setup>
 import type { AppData } from '@/composables/useWindowManager';
+import { ref } from 'vue';
 
 const props = defineProps<AppData>();
+
+const tabVerticalPull = ref(0);
+
+const mouseHover = () => {
+	tabVerticalPull.value += 1;
+	tabVerticalPull.value = Math.min(tabVerticalPull.value, 8);
+};
+
+const styleObject = ref({
+	marginTop: '12px',
+});
 </script>
 
 <template>
 	<div
 		class="app-button clickable"
 		:class="appID"
+		:style="styleObject"
 	>
 		<span class="icon clickable"></span>
 		<h1 class="clickable font-vt323">{{ appName }}</h1>
@@ -32,7 +45,6 @@ const props = defineProps<AppData>();
 	border-right: 4px solid rgba(var(--outer-border), 0.8);
 	background-color: rgba(var(--inner-border), 0.5);
 	padding: 0 1.25rem;
-	margin-top: 12px;
 	margin-left: 3px;
 	margin-right: 3px;
 	border-radius: 0.75rem 0.75rem 0 0;

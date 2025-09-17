@@ -14,10 +14,10 @@ const props = defineProps<DesktopWindow>();
 
 const { x, y } = useDrag(handle, {
 	onStart() {
-		tryBringWindowToFront(props.appData.appID);
+		tryBringWindowToFront(props.appID);
 	},
 	onEnd() {
-		updateWindowPosition(props.appData.appID, x.value, y.value);
+		updateWindowPosition(props.appID, x.value, y.value);
 	},
 });
 //Set drag values to initial window position
@@ -105,7 +105,7 @@ window.addEventListener('mousemove', (e) => {
 		v-slot="{ x, y }"
 		:handle="handle"
 		:initial-value="{ x: xPos, y: yPos }"
-		:class="appData.appID"
+		:class="appID"
 		:style="{ width: styleObject.width, height: styleObject.height }"
 	>
 		<div
@@ -113,15 +113,13 @@ window.addEventListener('mousemove', (e) => {
 			ref="handle"
 		>
 			<div class="app-title draggable">
-				<h1 class="draggable font-vt323">
-					{{ appData.appName }} {{ Math.round(x) }}, {{ Math.round(y) }}
-				</h1>
+				<h1 class="draggable font-vt323">{{ appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
 			</div>
 			<div class="control-buttons draggable">
 				<div class="control-minimize clickable"></div>
 				<div
 					class="control-close clickable"
-					@click="closeWindowByID(appData.appID)"
+					@click="closeWindowByID(appID)"
 				></div>
 			</div>
 		</div>
@@ -132,19 +130,19 @@ window.addEventListener('mousemove', (e) => {
 		>
 			<div
 				class="resize resizeEW d-side"
-				@mousedown="tryBringWindowToFront(props.appData.appID)"
+				@mousedown="tryBringWindowToFront(props.appID)"
 				@mouseover="horizontalResizeTrigger"
 				@mouseout="exitResizeTrigger"
 			></div>
 			<div
 				class="resize resizeNS d-bottom"
-				@mousedown="tryBringWindowToFront(props.appData.appID)"
+				@mousedown="tryBringWindowToFront(props.appID)"
 				@mouseover="verticalResizeTrigger"
 				@mouseout="exitResizeTrigger"
 			></div>
 			<div
 				class="resize resizeSE d-corner"
-				@mousedown="tryBringWindowToFront(props.appData.appID)"
+				@mousedown="tryBringWindowToFront(props.appID)"
 				@mouseover="bothResizeTrigger"
 				@mouseout="exitResizeTrigger"
 			></div>
@@ -260,19 +258,22 @@ h1 {
 		0px 0px 1.5px #000,
 		-0px -0px 1.5px #000,
 		-0px -0px 1.5px #000,
-		-0px 0px 5px rgba(var(--title-accent), 0.8),
-		-0px 0px 5px rgba(var(--title-accent), 0.8),
-		0px -0px 5px rgba(var(--title-accent), 0.8),
-		0px -0px 5px rgba(var(--title-accent), 0.8),
-		0px 0px 5px rgba(var(--title-accent), 0.8),
-		0px 0px 5px rgba(var(--title-accent), 0.8),
-		-0px -0px 5px rgba(var(--title-accent), 0.8),
-		-0px -0px 5px rgba(var(--title-accent), 0.8);
+		-0px 0px 5px rgba(var(--title-accent), 0.15),
+		-0px 0px 5px rgba(var(--title-accent), 0.15),
+		0px -0px 5px rgba(var(--title-accent), 0.15),
+		0px -0px 5px rgba(var(--title-accent), 0.15),
+		0px 0px 5px rgba(var(--title-accent), 0.15),
+		0px 0px 5px rgba(var(--title-accent), 0.15),
+		-0px -0px 5px rgba(var(--title-accent), 0.15),
+		-0px -0px 5px rgba(var(--title-accent), 0.15);
 	overflow: visible;
 	color: rgba(var(--title), 1);
 	font-size: 24px;
 	line-height: 34px;
 	white-space: nowrap;
+	font-family:
+		'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana,
+		sans-serif;
 }
 
 .app-body {

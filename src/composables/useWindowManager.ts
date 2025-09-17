@@ -33,27 +33,34 @@ export const appList = [
 	},
 ];
 
+enum WindowState {
+	Minimized,
+	Maximized,
+	Open,
+}
+
 export type AppData = {
 	appID: string;
 	appName: string;
 	iconURL: string;
 };
 
-export type DesktopWindow = {
-	appData: AppData;
+export type DesktopWindow = AppData & {
 	xPos: number;
 	yPos: number;
+	currentState: WindowState;
+	isTopWindow: boolean;
 };
 
 export const windows = ref<DesktopWindow[]>([]);
-export const taskbarTabs = ref<AppData[]>([]);
+export const taskbarTabs = ref<DesktopWindow[]>([]);
 
 const xWindowOffset: number = 25;
 const yWindowOffset: number = 50;
 
 export const tryOpenWindow = (targetAppID: string) => {
 	//all possible arguments are created from the same source file.
-	const targetApp: AppData = appList.find((app) => app.appID === targetAppID)!;
+	const targetApp: AppData = appList.find((x) => x.appID === targetAppID)!;
 
 	if (taskbarTabs.value.find((app) => app.appID === targetAppID)) {
 		console.log(`Window already open`);
@@ -70,7 +77,11 @@ export const tryOpenWindow = (targetAppID: string) => {
 	}
 
 	const newWindowData: DesktopWindow = {
-		appData: targetApp,
+		appID: targetApp.appID,
+		appName: targetApp.appName,
+		iconURL: targetApp.iconURL,
+		currentState: WindowState.Open,
+		isTopWindow: true,
 		xPos: targetX,
 		yPos: targetY,
 	};
@@ -78,13 +89,13 @@ export const tryOpenWindow = (targetAppID: string) => {
 	console.log(taskbarTabs.value);
 	console.log(newWindowData);
 
-	taskbarTabs.value.push(targetApp);
+	taskbarTabs.value.push(newWindowData);
 	windows.value.push(newWindowData);
 	console.log(windows.value);
 };
 
 const closeWindowByID = (instanceID: string) => {
-	windows.value = windows.value.filter((win) => win.appData.appID !== instanceID);
+	windows.value = windows.value.filter((win) => win.appID !== instanceID);
 	taskbarTabs.value = taskbarTabs.value.filter((tab) => tab.appID !== instanceID);
 	console.log(windows.value);
 };
@@ -95,12 +106,12 @@ const tryBringWindowToFront = (appID: string) => {
 		return;
 	}
 	console.log(`Bring ${appID} to front.`);
-	const targetIndex = windows.value.findIndex((win) => win.appData.appID === appID);
+	const targetIndex = windows.value.findIndex((win) => win.appID === appID);
 	windows.value.push(windows.value.splice(targetIndex, 1)[0]);
 };
 
 const updateWindowPosition = (appID: string, newXPos: number, newYPos: number) => {
-	const targetIndex = windows.value.findIndex((win) => win.appData.appID === appID);
+	const targetIndex = windows.value.findIndex((win) => win.appID === appID);
 	windows.value[targetIndex].xPos = newXPos;
 	windows.value[targetIndex].yPos = newYPos;
 };
