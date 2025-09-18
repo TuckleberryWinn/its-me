@@ -105,7 +105,7 @@ window.addEventListener('mousemove', (e) => {
 		v-slot="{ x, y }"
 		:handle="handle"
 		:initial-value="{ x: xPos, y: yPos }"
-		:class="{ appID, 'active-window': !isTopWindow }"
+		:class="{ 'app-id': appID, 'active-window': !isTopWindow, 'is-minimized': isMinimized }"
 		:style="{ width: styleObject.width, height: styleObject.height }"
 	>
 		<div
@@ -181,6 +181,10 @@ window.addEventListener('mousemove', (e) => {
 	border: 2px solid rgb(var(--outer-border));
 	overflow: visible;
 	border-radius: 15px 15px 0 0;
+}
+
+.app-window.is-minimized {
+	display: none;
 }
 
 .app-header {
