@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import type { DesktopWindow } from '@/composables/useWindowManager';
+import type { AppData } from '@/composables/useWindowManager';
+import { taskbarAppClick } from '@/composables/useWindowManager';
 import { ref } from 'vue';
 
-const props = defineProps<DesktopWindow>();
+const props = defineProps<AppData>();
 
 const tabVerticalPull = ref(0);
 
@@ -21,6 +22,7 @@ const styleObject = ref({
 		class="app-button clickable"
 		:class="{ appID, 'active-window': isTopWindow }"
 		:style="styleObject"
+		@click="taskbarAppClick(appID)"
 	>
 		<span class="icon clickable"></span>
 		<h1 class="clickable font-vt323">{{ appName }}</h1>
