@@ -2,10 +2,10 @@
 import useWindowManager, { type DesktopWindow } from '@/composables/useWindowManager';
 import { UseDraggable as Draggable } from '@vueuse/components';
 import { useDraggable as useDrag } from '@vueuse/core';
-import { ConvexObjectBreaker } from 'three/examples/jsm/Addons.js';
 import { ref, useTemplateRef } from 'vue';
 
-const { closeWindowByID, tryBringWindowToFront, updateWindowPosition } = useWindowManager();
+const { closeWindowByID, tryBringWindowToFront, updateWindowPosition, minimizeFrontWindow } =
+	useWindowManager();
 
 const handle = useTemplateRef<HTMLElement>('handle');
 
@@ -116,7 +116,10 @@ window.addEventListener('mousemove', (e) => {
 				<h1 class="draggable font-vt323">{{ appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
 			</div>
 			<div class="control-buttons draggable">
-				<div class="control-minimize clickable"></div>
+				<div
+					class="control-minimize clickable"
+					@click="minimizeFrontWindow"
+				></div>
 				<div
 					class="control-close clickable"
 					@click="closeWindowByID(appID)"

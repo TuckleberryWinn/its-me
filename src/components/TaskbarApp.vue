@@ -53,7 +53,7 @@ const styleObject = ref({
 }
 
 .app-button.active-window {
-	background-color: pink;
+	background-color: rgb(var(--title-accent));
 }
 
 .app-button:hover {
