@@ -4,24 +4,12 @@ import { taskbarAppClick } from '@/composables/useWindowManager';
 import { ref } from 'vue';
 
 const props = defineProps<AppData>();
-
-const tabVerticalPull = ref(0);
-
-const mouseHover = () => {
-	tabVerticalPull.value += 1;
-	tabVerticalPull.value = Math.min(tabVerticalPull.value, 8);
-};
-
-const styleObject = ref({
-	marginTop: '12px',
-});
 </script>
 
 <template>
 	<div
 		class="app-button clickable"
 		:class="{ appID, 'active-window': isTopWindow }"
-		:style="styleObject"
 		@click="taskbarAppClick(appID)"
 	>
 		<span class="icon clickable"></span>
@@ -42,18 +30,27 @@ const styleObject = ref({
 }
 
 .app-button {
-	border-top: 4px solid rgba(var(--outer-border), 0.8);
-	border-left: 4px solid rgba(var(--outer-border), 0.8);
-	border-right: 4px solid rgba(var(--outer-border), 0.8);
+	border-top: 3px solid rgba(var(--outer-border), 0.8);
+	border-left: 3px solid rgba(var(--outer-border), 0.8);
+	border-right: 3px solid rgba(var(--outer-border), 0.8);
 	background-color: rgba(var(--inner-border), 0.5);
 	padding: 0 1.25rem;
 	margin-left: 3px;
 	margin-right: 3px;
+	margin-top: 12px;
 	border-radius: 0.75rem 0.75rem 0 0;
+	animation-name: unHover;
+	animation-duration: 2s;
+}
+
+.app-button:hover {
+	animation-name: hover;
+	animation-duration: 2s;
 }
 
 .app-button.active-window {
 	background-color: rgb(var(--title-accent));
+	margin-top: 4px;
 }
 
 .app-button:hover {
@@ -65,5 +62,22 @@ h1 {
 	color: rgb(var(--blue-white));
 	font-size: 1.75rem;
 	font-kerning: normal;
+}
+
+@keyframes hover {
+	from {
+		margin-top: 12px;
+	}
+	to {
+		margin-top: 4px;
+	}
+}
+@keyframes unHover {
+	from {
+		margin-top: 4px;
+	}
+	to {
+		margin-top: 12px;
+	}
 }
 </style>

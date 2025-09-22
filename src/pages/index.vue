@@ -6,6 +6,7 @@ const { windows, taskbarTabs, appList } = useWindowManager();
 
 import DesktopApp from '@/components/DesktopAppAlt.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
+import ScanlineShader from '@/components/ScanlineShader.vue';
 
 import Cursor from '@/components/Cursor.vue';
 
@@ -55,6 +56,7 @@ addEventListener('click', (env) => {});
 			@click="scramble"
 		/> -->
 	</main>
+	<ScanlineShader />
 	<Cursor />
 </template>
 
