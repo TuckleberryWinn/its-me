@@ -33,8 +33,8 @@ enum Cursor {
 const currentCursor = ref<Cursor>(Cursor.default);
 
 document.addEventListener('mousemove', (x) => {
-	xOffset.value = x.pageX;
-	yOffset.value = x.pageY;
+	xOffset.value = Math.floor(x.pageX / 2) * 2;
+	yOffset.value = Math.floor(x.pageY / 2) * 2;
 
 	if (x.target instanceof HTMLElement == false) {
 		return;
