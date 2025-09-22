@@ -59,14 +59,13 @@ const getIndicesFromAppID = (appID: string) => {
 };
 
 export const tryOpenWindow = (targetAppID: string) => {
-	//all possible arguments are created from the same source file.
+	if (taskbarTabs.value.find((app) => app.appID === targetAppID)) {
+		return;
+	}
 	const targetApp: AppData = appList.find((x) => x.appID === targetAppID)!;
 	targetApp.isMinimized = false;
 	targetApp.isTopWindow = true;
 
-	if (taskbarTabs.value.find((app) => app.appID === targetAppID)) {
-		return;
-	}
 	let targetX: number = 100;
 	let targetY: number = 150;
 	//update target position if other windows are open

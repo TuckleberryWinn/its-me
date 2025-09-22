@@ -169,14 +169,14 @@ window.addEventListener('mousemove', (e) => {
 
 .app-window {
 	width: v-bind(startingWidth);
-	min-width: 16rem;
-	min-height: 9rem;
 	height: auto;
 	background-color: rgba(0, 0, 0, 0.922);
 	position: fixed;
 	border: 2px solid rgb(var(--outer-border));
 	overflow: visible;
 	border-radius: 15px 15px 0 0;
+	display: flex;
+	flex-direction: column;
 }
 
 .app-window.is-minimized {
