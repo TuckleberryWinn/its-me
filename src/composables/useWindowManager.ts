@@ -52,25 +52,25 @@ export const taskbarTabs = ref<AppData[]>([]);
 const xWindowOffset: number = 25;
 const yWindowOffset: number = 50;
 
-function setTopWindow(appID: string) {
-	appWindows.value.forEach((x) => (x.isTopWindow = x.appID === appID));
-	taskbarTabs.value.forEach((x) => (x.isTopWindow = x.appID === appID));
-}
+const getIndicesFromAppID = (appID: string) => {
+	const windowIndex = appWindows.value.findIndex((app) => app.appID === appID);
+	const taskbarIndex = taskbarTabs.value.findIndex((app) => app.appID === appID);
+	return [windowIndex, taskbarIndex];
+};
 
 export const tryOpenWindow = (targetAppID: string) => {
 	//all possible arguments are created from the same source file.
 	const targetApp: AppData = appList.find((x) => x.appID === targetAppID)!;
+	targetApp.isMinimized = false;
+	targetApp.isTopWindow = true;
 
 	if (taskbarTabs.value.find((app) => app.appID === targetAppID)) {
-		console.log(`Window already open`);
 		return;
 	}
-	console.log('length: ', appWindows.value);
 	let targetX: number = 100;
 	let targetY: number = 150;
 	//update target position if other windows are open
 	if (appWindows.value.length) {
-		console.log('length: ', appWindows.value);
 		targetX = appWindows.value[appWindows.value.length - 1].xPos + xWindowOffset;
 		targetY = appWindows.value[appWindows.value.length - 1].yPos + yWindowOffset;
 	}
@@ -79,55 +79,58 @@ export const tryOpenWindow = (targetAppID: string) => {
 		appID: targetApp.appID,
 		appName: targetApp.appName,
 		iconURL: targetApp.iconURL,
-		isMinimized: false,
-		isTopWindow: false,
+		isMinimized: targetApp.isMinimized,
+		isTopWindow: targetApp.isTopWindow,
 		xPos: targetX,
 		yPos: targetY,
 	};
 
-	console.log(taskbarTabs.value);
-	console.log(newWindowData);
-
 	taskbarTabs.value.push(newWindowData);
 	appWindows.value.push(newWindowData);
-	setTopWindow(targetApp.appID);
-	console.log(appWindows.value);
+	findFrontWindow();
 };
 
-const closeWindowByID = (instanceID: string) => {
-	appWindows.value = appWindows.value.filter((win) => win.appID !== instanceID);
-	taskbarTabs.value = taskbarTabs.value.filter((tab) => tab.appID !== instanceID);
-	console.log(appWindows.value);
+const closeWindowByID = (appID: string) => {
+	appWindows.value = appWindows.value.filter((win) => win.appID !== appID);
+	taskbarTabs.value = taskbarTabs.value.filter((tab) => tab.appID !== appID);
+	findFrontWindow();
+};
+
+export const minimizeWindowByID = (appID: string) => {
+	const indices: number[] = getIndicesFromAppID(appID);
+	appWindows.value[indices[0]].isMinimized = true;
+	taskbarTabs.value[indices[1]].isMinimized = true;
+	findFrontWindow();
 };
 
 const tryBringWindowToFront = (appID: string) => {
-	if (!appWindows.value.length) {
-		console.log('bug fixed <3');
-		return;
-	}
-	console.log(`Bring ${appID} to front.`);
-	const targetIndex = appWindows.value.findIndex((win) => win.appID === appID);
-	appWindows.value.push(appWindows.value.splice(targetIndex, 1)[0]);
+	const indices: number[] = getIndicesFromAppID(appID);
+	const tabIndex = taskbarTabs.value.findIndex((tab) => tab.appID === appID);
+	appWindows.value[indices[0]].isMinimized = false;
+	taskbarTabs.value[tabIndex].isMinimized = false;
+	const targetWindow = appWindows.value.splice(indices[0], 1)[0];
+	appWindows.value.push(targetWindow);
+	findFrontWindow();
+};
 
-	setTopWindow(appID);
+const findFrontWindow = () => {
+	let topFound: boolean = false;
+	for (let i = appWindows.value.length - 1; i >= 0; i--) {
+		console.log(topFound);
+		appWindows.value[i].isTopWindow = false;
+	}
+	for (let i = appWindows.value.length - 1; i >= 0; i--) {
+		if (!appWindows.value[i].isMinimized && !topFound) {
+			topFound = true;
+			appWindows.value[i].isTopWindow = true;
+		}
+	}
 };
 
 const updateWindowPosition = (appID: string, newXPos: number, newYPos: number) => {
 	const targetIndex = appWindows.value.findIndex((win) => win.appID === appID);
 	appWindows.value[targetIndex].xPos = newXPos;
 	appWindows.value[targetIndex].yPos = newYPos;
-};
-
-export const minimizeFrontWindow = () => {
-	appWindows.value[appWindows.value.length - 1].isMinimized = true;
-	taskbarTabs.value[taskbarTabs.value.length - 1].isMinimized = true;
-	const targetWin: DesktopWindow = appWindows.value.pop()!;
-	appWindows.value.unshift(targetWin);
-	appWindows.value[0].isTopWindow = false;
-	const arrayLength = appWindows.value.length - 1;
-
-	if (appWindows.value[arrayLength].isMinimized) return;
-	appWindows.value[arrayLength].isTopWindow = true;
 };
 
 export const taskbarAppClick = (appID: string) => {
@@ -138,11 +141,7 @@ export const taskbarAppClick = (appID: string) => {
 
 	console.log(windowMinimized, windowIndex, taskbarIndex);
 	if (windowIsOnTop) {
-		minimizeFrontWindow();
-	} else if (windowMinimized) {
-		appWindows.value[windowIndex].isMinimized = false;
-		taskbarTabs.value[taskbarIndex].isMinimized = false;
-		tryBringWindowToFront(appID);
+		minimizeWindowByID(appID);
 	} else {
 		tryBringWindowToFront(appID);
 	}
@@ -156,7 +155,7 @@ export default () => {
 		tryOpenWindow,
 		closeWindowByID,
 		tryBringWindowToFront,
-		minimizeFrontWindow,
+		minimizeWindowByID,
 		updateWindowPosition,
 	};
 };

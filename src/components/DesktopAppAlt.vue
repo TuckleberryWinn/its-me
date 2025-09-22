@@ -4,7 +4,7 @@ import { UseDraggable as Draggable } from '@vueuse/components';
 import { useDraggable as useDrag } from '@vueuse/core';
 import { ref, useTemplateRef } from 'vue';
 
-const { closeWindowByID, tryBringWindowToFront, updateWindowPosition, minimizeFrontWindow } =
+const { closeWindowByID, tryBringWindowToFront, updateWindowPosition, minimizeWindowByID } =
 	useWindowManager();
 
 const handle = useTemplateRef<HTMLElement>('handle');
@@ -44,22 +44,18 @@ const mouseDown = ref(false);
 const horizontalResizeTrigger = () => {
 	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.horizontal;
-	console.log('horizontal');
 };
 const verticalResizeTrigger = () => {
 	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.vertical;
-	console.log('vertical');
 };
 const bothResizeTrigger = () => {
 	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.diagnal;
-	console.log('diag');
 };
 const exitResizeTrigger = () => {
 	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.none;
-	console.log('exit');
 };
 
 const styleObject = ref({
@@ -69,11 +65,9 @@ const styleObject = ref({
 
 window.addEventListener('mousedown', () => {
 	mouseDown.value = true;
-	console.log('click down', mouseDown.value);
 });
 window.addEventListener('mouseup', () => {
 	mouseDown.value = false;
-	console.log('click up', mouseDown.value);
 });
 window.addEventListener('mousemove', (e) => {
 	//Calc width between window start and cursor
@@ -81,7 +75,6 @@ window.addEventListener('mousemove', (e) => {
 	if (!mouseDown.value) return;
 	const xOffset: number = e.clientX - x.value;
 	const yOffset: number = e.clientY - y.value;
-	console.log(e.clientX - x.value);
 
 	if (
 		resizeContext.value == ResizeContext.horizontal ||
@@ -118,7 +111,7 @@ window.addEventListener('mousemove', (e) => {
 			<div class="control-buttons draggable">
 				<div
 					class="control-minimize clickable"
-					@click="minimizeFrontWindow"
+					@click="minimizeWindowByID(appID)"
 				></div>
 				<div
 					class="control-close clickable"

@@ -4,17 +4,12 @@ import useWindowManager, { type AppData } from '@/composables/useWindowManager';
 const props = defineProps<AppData>();
 
 const { tryOpenWindow } = useWindowManager();
-
-const openNewWindow = () => {
-	console.log(`Try open appID:${props.appID}`);
-	tryOpenWindow(props.appID);
-};
 </script>
 
 <template>
 	<div
 		class="icon clickable"
-		@click="openNewWindow"
+		@click="tryOpenWindow(appID)"
 	>
 		<label>
 			<span
