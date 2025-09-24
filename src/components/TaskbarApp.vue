@@ -12,25 +12,28 @@ const topMarginTarget = 4;
 const bottomMarginTarget = 16;
 
 const animationClock = setInterval(function () {
-	if (props.isTopWindow) {
+	if (props.isTopWindow || isHovered.value) {
 		marginTop.value -= 1;
 		marginTop.value = Math.max(marginTop.value, topMarginTarget);
-	}
-	if (isHovered.value && marginTop.value <= topMarginTarget) {
-		console.log('early out top');
-		return;
-	}
-	if (isHovered.value) {
-		marginTop.value -= 1;
-	}
-	if (!isHovered.value && marginTop.value >= bottomMarginTarget) {
-		console.log('early out bottom');
-		return;
-	}
-	if (!isHovered.value) {
+	} else {
 		marginTop.value += 1;
-		return;
+		marginTop.value = Math.min(marginTop.value, bottomMarginTarget);
 	}
+	// if (isHovered.value && marginTop.value <= topMarginTarget) {
+	// 	console.log('early out top');
+	// 	return;
+	// }
+	// if (isHovered.value) {
+	// 	marginTop.value -= 1;
+	// }
+	// if (!isHovered.value && marginTop.value >= bottomMarginTarget) {
+	// 	console.log('early out bottom');
+	// 	return;
+	// }
+	// if (!isHovered.value) {
+	// 	marginTop.value += 1;
+	// 	return;
+	// }
 }, 125);
 
 watch(

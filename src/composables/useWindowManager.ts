@@ -128,8 +128,8 @@ const findFrontWindow = () => {
 
 const updateWindowPosition = (appID: string, newXPos: number, newYPos: number) => {
 	const targetIndex = appWindows.value.findIndex((win) => win.appID === appID);
-	appWindows.value[targetIndex].xPos = newXPos;
-	appWindows.value[targetIndex].yPos = newYPos;
+	appWindows.value[targetIndex].xPos = Math.floor(newXPos / 4) * 4;
+	appWindows.value[targetIndex].yPos = Math.floor(newYPos / 4) * 4;
 };
 
 export const taskbarAppClick = (appID: string) => {
@@ -146,6 +146,15 @@ export const taskbarAppClick = (appID: string) => {
 	}
 };
 
+export const mouseInScreen = ref(true);
+
+document.body.addEventListener('mouseleave', () => {
+	mouseInScreen.value = false;
+});
+document.body.addEventListener('mouseenter', () => {
+	mouseInScreen.value = true;
+});
+
 export default () => {
 	return {
 		appList,
@@ -156,5 +165,6 @@ export default () => {
 		tryBringWindowToFront,
 		minimizeWindowByID,
 		updateWindowPosition,
+		mouseInScreen,
 	};
 };

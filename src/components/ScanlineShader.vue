@@ -2,7 +2,6 @@
 
 <template>
 	<div class="scan-lines"></div>
-	>
 </template>
 
 <style scoped>

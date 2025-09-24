@@ -2,10 +2,15 @@
 import useWindowManager, { type DesktopWindow } from '@/composables/useWindowManager';
 import { UseDraggable as Draggable } from '@vueuse/components';
 import { useDraggable as useDrag } from '@vueuse/core';
-import { ref, useTemplateRef } from 'vue';
+import { ref, useTemplateRef, watch } from 'vue';
 
-const { closeWindowByID, tryBringWindowToFront, updateWindowPosition, minimizeWindowByID } =
-	useWindowManager();
+const {
+	closeWindowByID,
+	tryBringWindowToFront,
+	updateWindowPosition,
+	minimizeWindowByID,
+	mouseInScreen,
+} = useWindowManager();
 
 const handle = useTemplateRef<HTMLElement>('handle');
 
@@ -16,7 +21,9 @@ const { x, y } = useDrag(handle, {
 	onStart() {
 		tryBringWindowToFront(props.appID);
 	},
-
+	onMove(pos, event) {
+		console.log(pos, event);
+	},
 	onEnd() {
 		updateWindowPosition(props.appID, x.value, y.value);
 	},
@@ -83,10 +90,12 @@ window.addEventListener('mousemove', (e) => {
 
 //Mirrors initial position to drag values for pre-drag edge cases
 
-const initDragValues = (() => {
+const initDragValues = () => {
 	x.value = props.xPos;
 	y.value = props.yPos;
-})();
+	console.log(props.xPos, props.yPos);
+};
+initDragValues();
 
 const startingWidth = (() => {
 	if (innerWidth * 0.5 < innerHeight * 1.5) {
@@ -95,6 +104,11 @@ const startingWidth = (() => {
 		return innerHeight * 1.5 + 'px';
 	}
 })();
+
+watch(mouseInScreen, () => {
+	exitResizeTrigger();
+	mouseDown.value = false;
+});
 </script>
 
 <template>
@@ -174,7 +188,6 @@ const startingWidth = (() => {
 
 .app-window {
 	width: v-bind(startingWidth);
-	height: auto;
 	background-color: rgba(0, 0, 0, 0.922);
 	position: fixed;
 	border: 2px solid rgb(var(--outer-border));
@@ -208,7 +221,6 @@ const startingWidth = (() => {
 	height: 100%;
 	display: flex;
 	align-items: center;
-	/* 32px * button count  */
 	min-width: 64px;
 }
 
