@@ -1,9 +1,44 @@
 <script lang="ts" setup>
 import type { AppData } from '@/composables/useWindowManager';
 import { taskbarAppClick } from '@/composables/useWindowManager';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps<AppData>();
+
+const isHovered = ref(false);
+
+const marginTop = ref(12);
+const topMarginTarget = 4;
+const bottomMarginTarget = 16;
+
+const animationClock = setInterval(function () {
+	if (props.isTopWindow) {
+		marginTop.value -= 1;
+		marginTop.value = Math.max(marginTop.value, topMarginTarget);
+	}
+	if (isHovered.value && marginTop.value <= topMarginTarget) {
+		console.log('early out top');
+		return;
+	}
+	if (isHovered.value) {
+		marginTop.value -= 1;
+	}
+	if (!isHovered.value && marginTop.value >= bottomMarginTarget) {
+		console.log('early out bottom');
+		return;
+	}
+	if (!isHovered.value) {
+		marginTop.value += 1;
+		return;
+	}
+}, 125);
+
+watch(
+	() => props.isMinimized,
+	(update, outdate) => {
+		console.log(isHovered.value);
+	},
+);
 </script>
 
 <template>
@@ -11,6 +46,8 @@ const props = defineProps<AppData>();
 		class="app-button clickable"
 		:class="{ appID, 'active-window': isTopWindow }"
 		@click="taskbarAppClick(appID)"
+		@mouseenter="isHovered = true"
+		@mouseleave="isHovered = false"
 	>
 		<span class="icon clickable"></span>
 		<h1 class="clickable font-vt323">{{ appName }}</h1>
@@ -37,24 +74,18 @@ const props = defineProps<AppData>();
 	padding: 0 1.25rem;
 	margin-left: 3px;
 	margin-right: 3px;
-	margin-top: 12px;
+	margin-top: v-bind(marginTop + 'px');
 	border-radius: 0.75rem 0.75rem 0 0;
 	animation-name: unHover;
 	animation-duration: 2s;
 }
 
-.app-button:hover {
-	animation-name: hover;
-	animation-duration: 2s;
-}
-
 .app-button.active-window {
 	background-color: rgb(var(--title-accent));
-	margin-top: 4px;
+	animation: tabBecomesActive 1s forwards;
 }
-
-.app-button:hover {
-	background-color: rgba(83, 199, 220, 0.68);
+.app-button.active-window {
+	animation: tabBecomesActive 1s backwards;
 }
 
 h1 {
@@ -64,20 +95,14 @@ h1 {
 	font-kerning: normal;
 }
 
-@keyframes hover {
+@keyframes tabBecomesActive {
 	from {
-		margin-top: 12px;
+		/* top-margin: v-bind(topMarginTarget);
+		background-color: yellow; */
 	}
 	to {
-		margin-top: 4px;
-	}
-}
-@keyframes unHover {
-	from {
-		margin-top: 4px;
-	}
-	to {
-		margin-top: 12px;
+		/* margin-top: v-bind(marginTop);
+		background-color: red; */
 	}
 }
 </style>

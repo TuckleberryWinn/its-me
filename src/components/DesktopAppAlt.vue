@@ -16,21 +16,14 @@ const { x, y } = useDrag(handle, {
 	onStart() {
 		tryBringWindowToFront(props.appID);
 	},
+	onMove() {
+		x.value = Math.floor(x.value / 4) * 4;
+		y.value = Math.floor(x.value / 4) * 4;
+	},
 	onEnd() {
 		updateWindowPosition(props.appID, x.value, y.value);
 	},
 });
-//Set drag values to initial window position
-x.value = props.xPos;
-y.value = props.yPos;
-
-const startingWidth = (() => {
-	if (innerWidth * 0.5 < innerHeight * 1.5) {
-		return innerWidth * 0.5 + 'px';
-	} else {
-		return innerHeight * 1.5 + 'px';
-	}
-})();
 
 enum ResizeContext {
 	none = 'none',
@@ -90,6 +83,21 @@ window.addEventListener('mousemove', (e) => {
 		styleObject.value.height = `${yOffset}px`;
 	}
 });
+
+//Mirrors initial position to drag values for pre-drag edge cases
+
+const initDragValues = (() => {
+	x.value = props.xPos;
+	y.value = props.yPos;
+})();
+
+const startingWidth = (() => {
+	if (innerWidth * 0.5 < innerHeight * 1.5) {
+		return innerWidth * 0.5 + 'px';
+	} else {
+		return innerHeight * 1.5 + 'px';
+	}
+})();
 </script>
 
 <template>
@@ -310,6 +318,6 @@ h1 {
 	);
 }
 .active-window {
-	filter: blur(1.1px);
+	filter: blur(2.2px);
 }
 </style>
