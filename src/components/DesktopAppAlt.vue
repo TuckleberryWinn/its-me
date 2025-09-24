@@ -16,10 +16,7 @@ const { x, y } = useDrag(handle, {
 	onStart() {
 		tryBringWindowToFront(props.appID);
 	},
-	onMove() {
-		x.value = Math.floor(x.value / 4) * 4;
-		y.value = Math.floor(x.value / 4) * 4;
-	},
+
 	onEnd() {
 		updateWindowPosition(props.appID, x.value, y.value);
 	},
@@ -185,6 +182,8 @@ const startingWidth = (() => {
 	border-radius: 15px 15px 0 0;
 	display: flex;
 	flex-direction: column;
+	min-height: 50px;
+	min-width: 200px;
 }
 
 .app-window.is-minimized {
