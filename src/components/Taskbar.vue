@@ -1,12 +1,22 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import TheTaskbarStartMenu from './TheTaskbarStartMenu.vue';
+
+const showStartMenu = ref(false);
+</script>
 
 <template>
+	<TheTaskbarStartMenu
+		class="start-menu"
+		v-if="showStartMenu"
+	/>
 	<div class="taskbar">
 		<div class="icons-left">
 			<label>
 				<span
 					id="start-menu"
 					class="clickable"
+					@click="showStartMenu = !showStartMenu"
 				></span>
 				<input type="checkbox" />
 			</label>
@@ -32,12 +42,16 @@
 </template>
 
 <style scoped>
+* {
+	--taskbar-height: 48px;
+}
+
 .taskbar {
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	height: 48px;
+	height: var(--taskbar-height);
 	background-color: rgba(66, 88, 97, 0.22);
 	backdrop-filter: blur(10px);
 	display: flex;
@@ -90,5 +104,10 @@ label span ~ input:checked {
 
 .icons-left #chrome {
 	background-image: url(/src/assets/ui/48xChrome.png);
+}
+
+.start-menu {
+	position: absolute;
+	bottom: var(--taskbar-height);
 }
 </style>
