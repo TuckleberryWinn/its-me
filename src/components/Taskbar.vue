@@ -52,7 +52,7 @@ const showStartMenu = ref(false);
 	left: 0;
 	right: 0;
 	height: var(--taskbar-height);
-	background-color: rgba(66, 88, 97, 0.22);
+  background: linear-gradient(0deg,rgba(40, 27, 67, 1) 0%, rgba(40, 27, 67, 0.5) 14%, rgba(40, 27, 67, 0.6) 60%, rgba(40, 27, 67, 0.1) 80%, rgba(40, 27, 67, .7) 88%, rgba(0, 255, 212, .7) 100%);
 	backdrop-filter: blur(10px);
 	display: flex;
 }
