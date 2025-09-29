@@ -17,3 +17,73 @@
 	font-weight: 400;
 	font-style: normal;
 }
+
+@font-face {
+	font-family: 'Disco';
+	src: url('/public/fonts/Discopia_Reg.woff');
+}
+
+@font-face {
+	font-family: 'Dewave-1';
+	src: url('/public/fonts/Dewave/Type1.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-2';
+	src: url('/public/fonts/Dewave/Type2.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-3';
+	src: url('/public/fonts/Dewave/Type3.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-4';
+	src: url('/public/fonts/Dewave/Type4.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-5';
+	src: url('/public/fonts/Dewave/Type5.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-6';
+	src: url('/public/fonts/Dewave/Type6.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-7';
+	src: url('/public/fonts/Dewave/Type7.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-8';
+	src: url('/public/fonts/Dewave/Type8.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-9';
+	src: url('/public/fonts/Dewave/Type9.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-10';
+	src: url('/public/fonts/Dewave/Type10.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-11';
+	src: url('/public/fonts/Dewave/Type11.woff') format('woff');
+}
+@font-face {
+	font-family: 'Dewave-12';
+	src: url('/public/fonts/Dewave/Type11.woff') format('woff');
+}
+@font-face {
+	font-family: 'Examors-Regular';
+	src: url('/public/fonts/Examors/Regular.woff') format('woff');
+}
+@font-face {
+	font-family: 'Examors-Oblique';
+	src: url('/public/fonts/Examors/Oblique.woff') format('woff');
+}
+@font-face {
+	font-family: 'Examors-Outline';
+	src: url('/public/fonts/Examors/Outline.woff') format('woff');
+}
+@font-face {
+	font-family: 'Examors-ObliqueOutline';
+	src: url('/public/fonts/Examors/ObliqueOutline.woff') format('woff');
+}
