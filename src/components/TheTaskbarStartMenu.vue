@@ -27,7 +27,7 @@ const menuContents = [
 
 const updateHoverPosition = (event: MouseEvent) => {
 	//Lord forgive my magic numbers.  -12 and -54 are offsets to account for borders, the toolbar, the start menu title bar, and centering the gradiant
-	styleObject.value.left = Math.floor(x.value / 4) * 4 - 48;
+	styleObject.value.left = Math.floor(x.value / 4) * 4 - 86;
 	styleObject.value.bottom = Math.floor((window.innerHeight - y.value - 90) / 4) * 4;
 	styleObject.value.isInside = !isOutside.value;
 };
@@ -47,6 +47,7 @@ const styleObject = ref({
 			@mousemove="updateHoverPosition"
 		>
 			<MenuItem
+				class="menu-item"
 				v-for="item in menuContents"
 				:key="item.title"
 				v-bind="item"
@@ -74,6 +75,11 @@ const styleObject = ref({
 	padding: 0.03rem;
 	background-color: rgba(137, 43, 226, 0.238);
 	overflow: hidden;
+	position: relative;
+}
+
+.menu-item {
+	margin-top: 5px;
 }
 
 .hover-effect {

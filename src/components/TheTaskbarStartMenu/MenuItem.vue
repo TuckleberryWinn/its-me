@@ -24,15 +24,18 @@ const props = defineProps({
 	background: linear-gradient(90deg, rgba(0, 255, 212, 1) 0%, rgb(16, 157, 134) 100%);
 	overflow: hidden;
 	overflow: clip;
+	box-sizing: content-box;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .menu-item {
 	width: 200px;
 	height: 1.8em;
-	border-right: 1px solid rgba(0, 0, 0, 0);
-	border-left: 1px solid rgba(0, 0, 0, 0);
-	border-top: 1px solid rgba(0, 0, 0, 0);
-	border-bottom: 1px solid rgba(0, 0, 0, 0);
+	border-right: 3px solid rgba(0, 0, 0, 0);
+	border-left: 3px solid rgba(0, 0, 0, 0);
+	border-top: 3px solid rgba(0, 0, 0, 0);
+	border-bottom: 3px solid rgba(0, 0, 0, 0);
 	background-color: rgba(65, 4, 87, 0.857);
 	border-radius: 0.2rem;
 	background-clip: content-box;
