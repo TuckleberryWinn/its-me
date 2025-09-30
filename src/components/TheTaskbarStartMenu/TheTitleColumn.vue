@@ -11,7 +11,6 @@
 <style scoped>
 .start-menu-title-background {
 	align-self: flex-end;
-	height: 600px;
 	width: 40px;
 	background: linear-gradient(
 		90deg,
@@ -20,10 +19,11 @@
 		rgba(40, 27, 67, 0.621) 90%,
 		rgba(0, 255, 212, 1) 95%
 	);
+	overflow: hidden;
 }
 
 .taskbar-title {
-	height: 100%;
+	height: 700px;
 	background: linear-gradient(
 		77deg,
 		rgba(40, 27, 67, 0) 5%,

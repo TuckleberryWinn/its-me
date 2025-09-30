@@ -35,7 +35,6 @@ addEventListener('click', (env) => {});
 			</h1>
 			<DesktopApp
 				v-for="window in windows"
-				:desktop-window="window"
 				:key="window.appID"
 				v-bind="window"
 			>
@@ -45,7 +44,6 @@ addEventListener('click', (env) => {});
 			<div id="taskbar-app-container">
 				<TaskbarApp
 					v-for="tab in taskbarTabs"
-					:app-data="tab"
 					:key="tab.appID"
 					v-bind="tab"
 				></TaskbarApp>
