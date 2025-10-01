@@ -117,7 +117,7 @@ watch(mouseInScreen, () => {
 		v-slot="{ x, y }"
 		:handle="handle"
 		:initial-value="{ x: xPos, y: yPos }"
-		:class="{ 'app-id': appID, 'active-window': !isTopWindow, 'is-minimized': isMinimized }"
+		:class="{ 'app-id': appID, 'inactive-window': !isTopWindow, 'is-minimized': isMinimized }"
 		:style="{ width: styleObject.width, height: styleObject.height }"
 	>
 		<div
@@ -197,6 +197,8 @@ watch(mouseInScreen, () => {
 	flex-direction: column;
 	min-height: 50px;
 	min-width: 200px;
+	filter: blur(0px);
+	transition-duration: filter 200ms ease-in;
 }
 
 .app-window.is-minimized {
@@ -328,7 +330,8 @@ h1 {
 		rgba(var(--title-accent), 0) 41%
 	);
 }
-.active-window {
+.inactive-window {
+	transition-duration: 2000ms;
 	filter: blur(2.2px);
 }
 </style>
