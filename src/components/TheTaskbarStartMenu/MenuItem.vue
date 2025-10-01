@@ -1,62 +1,65 @@
 <script lang="ts" setup>
 import { useMouseInElement } from '@vueuse/core';
+import { ref, watch } from 'vue';
 
 const { x, elementX, elementPositionX, y, elementY, elementPositionY, isOutside } =
 	useMouseInElement();
 const props = defineProps({
 	title: String,
+	activeMenu: String,
 });
+
+const isActiveMenu = ref(false);
+watch(
+	() => props.activeMenu,
+	(newVal, oldVal) => {
+		isActiveMenu.value = props.title == props.activeMenu;
+	},
+);
 </script>
 
 <template>
-	<div class="item-background">
-		<div class="menu-item">
-			<div class="icon"></div>
-			<h1>
-				{{ props.title }}
-			</h1>
-		</div>
+	<div
+		class="menu-item"
+		:class="{ 'active-menu': isActiveMenu }"
+	>
+		<div class="icon"></div>
+		<h1>
+			{{ props.title }}
+		</h1>
 	</div>
 </template>
 
 <style scoped>
-.item-background {
-	background: linear-gradient(90deg, rgba(0, 255, 212, 1) 0%, rgb(16, 157, 134) 100%);
-	overflow: hidden;
-	overflow: clip;
-	box-sizing: content-box;
-	padding-left: 5px;
-	padding-right: 5px;
-}
-
 .menu-item {
 	width: 200px;
-	height: 1.8em;
+	height: 40px;
 	border-right: 3px solid rgba(0, 0, 0, 0);
 	border-left: 3px solid rgba(0, 0, 0, 0);
 	border-top: 3px solid rgba(0, 0, 0, 0);
 	border-bottom: 3px solid rgba(0, 0, 0, 0);
-	background-color: rgba(65, 4, 87, 0.857);
+	background-color: rgba(65, 4, 87, 0.46);
 	border-radius: 0.2rem;
 	background-clip: content-box;
 	display: flex;
-	flex-flow: row;
-	overflow: hidden;
-	overflow: clip;
+	border: 2px solid transparent;
+	border-image: linear-gradient(50deg, rgb(0, 255, 212) 0%, rgb(1, 19, 16) 100%);
+	border-image-slice: 1;
+}
+
+.active-menu {
+	animation: pulse infinite 1.5s;
 }
 
 @keyframes pulse {
 	0% {
 		background-color: rgb(41, 148, 255);
 	}
-	25% {
-		background-color: rgb(42, 113, 184);
+	33% {
+		background-color: rgb(66, 160, 253);
 	}
-	50% {
-		background-color: rgb(41, 148, 255);
-	}
-	75% {
-		background-color: rgb(28, 97, 165);
+	66% {
+		background-color: rgb(34, 118, 202);
 	}
 	100% {
 		background-color: rgb(41, 148, 255);
