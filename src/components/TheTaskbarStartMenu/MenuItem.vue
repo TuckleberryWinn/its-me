@@ -33,22 +33,20 @@ watch(
 <style scoped>
 .menu-item {
 	width: 200px;
-	height: 40px;
+	height: 42px;
 	border-right: 3px solid rgba(0, 0, 0, 0);
 	border-left: 3px solid rgba(0, 0, 0, 0);
 	border-top: 3px solid rgba(0, 0, 0, 0);
 	border-bottom: 3px solid rgba(0, 0, 0, 0);
-	background-color: rgba(65, 4, 87, 0.46);
+	background-color: rgba(72, 14, 93, 0.759);
 	border-radius: 0.2rem;
 	background-clip: content-box;
 	display: flex;
 	border: 2px solid transparent;
-	border-image: linear-gradient(50deg, rgb(0, 255, 212) 0%, rgb(1, 19, 16) 100%);
+	border-image: linear-gradient(50deg, rgb(0, 255, 212) 0%, rgb(5, 124, 104) 100%);
 	border-image-slice: 1;
-}
-
-.active-menu {
-	animation: pulse infinite 1.5s;
+	transform: skew(-12deg, 2deg);
+	margin: 0.4rem;
 }
 
 @keyframes pulse {
@@ -81,5 +79,20 @@ watch(
 	font-weight: bold;
 	letter-spacing: 0.3rem;
 	align-self: center;
+	font-size: 1.3rem;
+}
+
+.active-menu {
+	animation: pulse infinite 1.5s;
+}
+
+.active-menu > h1 {
+	color: rgb(97, 3, 87);
+	text-shadow:
+		0 0 2px white,
+		0 0 2px white,
+		0 0 4px white,
+		0 0 4px white,
+		0 0 7px white;
 }
 </style>

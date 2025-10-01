@@ -87,14 +87,16 @@ const styleObject = ref({
 	border-top: 5px groove rgba(0, 255, 212, 0.9);
 	border-right: 5px groove rgba(0, 255, 212, 0.9);
 	display: flex;
-	height: 400px;
+	height: 280px;
 }
 
 .start-menu-list {
 	padding: 0.03rem;
 	background-color: rgba(137, 43, 226, 0.238);
-	overflow: hidden;
 	position: relative;
+	display: flex;
+	flex-direction: column-reverse;
+	overflow: visible;
 }
 
 .menu-item {
