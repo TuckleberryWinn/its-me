@@ -40,3 +40,10 @@ console.log(canDrink, canVote);
 function blockUser() {
 	throw new Error('Function not implemented.');
 }
+
+export type Coordinate = {
+	x: Number;
+	y: Number;
+};
+
+export const activeCoords = ref<Coordinate[]>([]);

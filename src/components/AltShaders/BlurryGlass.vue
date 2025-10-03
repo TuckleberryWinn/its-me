@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useWindowSize } from '@vueuse/core';
+
+import { activeCoords } from '@/composables/useGoats';
 const { width, height } = useWindowSize();
 
 const rowSize = ref(0);
@@ -14,13 +16,10 @@ window.addEventListener('resize', () => {
 	columnSize.value = Math.min(Math.ceil(height.value / 75), 20);
 });
 
-console.log(rowSize, columnSize);
 type Coordinate = {
 	x: Number;
 	y: Number;
 };
-
-const activeCoords = ref<Coordinate[]>([]);
 
 for (let i = 0; i < 10; i++) {
 	const localX = Math.ceil(Math.random() * rowSize.value);
@@ -31,11 +30,11 @@ for (let i = 0; i < 10; i++) {
 
 let offset = 0;
 setInterval(() => {
-	activeCoords.value[offset].x = Math.ceil(Math.random() * rowSize.value);
-	activeCoords.value[offset].y = Math.ceil(Math.random() * columnSize.value);
+	activeCoords.value[offset].x = Math.ceil(Math.random() * columnSize.value);
+	activeCoords.value[offset].y = Math.ceil(Math.random() * rowSize.value);
 	offset += 1;
 	offset %= 10;
-}, 50);
+}, 100);
 </script>
 
 <template>
@@ -52,17 +51,7 @@ setInterval(() => {
 				v-for="y in rowSize"
 				:key="`box-${x}-${y}`"
 				:class="{
-					'box-highlighted':
-						(x === activeCoords[0].x && y === activeCoords[0].y) ||
-						(x === activeCoords[1].x && y === activeCoords[1].y) ||
-						(x === activeCoords[2].x && y === activeCoords[2].y) ||
-						(x === activeCoords[3].x && y === activeCoords[3].y) ||
-						(x === activeCoords[4].x && y === activeCoords[4].y) ||
-						(x === activeCoords[5].x && y === activeCoords[5].y) ||
-						(x === activeCoords[6].x && y === activeCoords[6].y) ||
-						(x === activeCoords[7].x && y === activeCoords[7].y) ||
-						(x === activeCoords[8].x && y === activeCoords[8].y) ||
-						(x === activeCoords[9].x && y === activeCoords[9].y),
+					[`box-${x}-${y}`]: true,
 				}"
 			></div>
 		</div>
@@ -94,7 +83,7 @@ setInterval(() => {
 }
 
 .box-highlighted {
-	background-color: rgba(59, 207, 237, 0.859) !important;
+	background-color: rgba(59, 207, 237, 0.474);
 	transition: 0.2s;
 }
 
@@ -108,7 +97,7 @@ setInterval(() => {
 }
 
 .test-box {
-	width: 2px;
+	width: 4px;
 	height: 100dvh;
 	backdrop-filter: invert(10%);
 	animation: slideX infinite 10s linear -1s;
@@ -116,7 +105,7 @@ setInterval(() => {
 }
 .test-box2 {
 	width: 100dvw;
-	height: 2px;
+	height: 4px;
 	backdrop-filter: invert(20%);
 	animation: slideY infinite 10s linear;
 	position: absolute;

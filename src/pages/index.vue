@@ -10,6 +10,7 @@ import ScanlineShader from '@/components/ScanlineShader.vue';
 
 import Cursor from '@/components/Cursor.vue';
 import BlurryGlass from '@/components/AltShaders/BlurryGlass.vue';
+import BoxStyles from '@/components/AltShaders/BoxStyles.vue';
 
 const scramble = () => {
 	windows.value.sort(() => {
@@ -23,6 +24,7 @@ addEventListener('click', (env) => {});
 <template>
 	<main class="main">
 		<BlurryGlass />
+		<BoxStyles />
 		<DesktopIcon
 			v-for="app in appList"
 			:key="app.appID"
