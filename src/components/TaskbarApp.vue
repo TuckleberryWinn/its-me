@@ -6,42 +6,6 @@ import { ref, watch } from 'vue';
 const props = defineProps<AppData>();
 
 const isHovered = ref(false);
-
-const marginTop = ref(12);
-const topMarginTarget = 4;
-const bottomMarginTarget = 16;
-
-const animationClock = setInterval(function () {
-	if (props.isTopWindow || isHovered.value) {
-		marginTop.value -= 1;
-		marginTop.value = Math.max(marginTop.value, topMarginTarget);
-	} else {
-		marginTop.value += 1;
-		marginTop.value = Math.min(marginTop.value, bottomMarginTarget);
-	}
-	// if (isHovered.value && marginTop.value <= topMarginTarget) {
-	// 	console.log('early out top');
-	// 	return;
-	// }
-	// if (isHovered.value) {
-	// 	marginTop.value -= 1;
-	// }
-	// if (!isHovered.value && marginTop.value >= bottomMarginTarget) {
-	// 	console.log('early out bottom');
-	// 	return;
-	// }
-	// if (!isHovered.value) {
-	// 	marginTop.value += 1;
-	// 	return;
-	// }
-}, 125);
-
-watch(
-	() => props.isMinimized,
-	(update, outdate) => {
-		console.log(isHovered.value);
-	},
-);
 </script>
 
 <template>
@@ -70,10 +34,10 @@ watch(
 }
 
 .app-button {
-	border-top: 3px solid rgba(var(--outer-border), 0.8);
-	border-left: 3px solid rgba(var(--outer-border), 0.8);
-	border-right: 3px solid rgba(var(--outer-border), 0.8);
-	background-color: rgba(var(--inner-border), 0.5);
+	border-top: 4px solid rgba(var(--outer-border), 0.8);
+	border-left: 4px solid rgba(var(--outer-border), 0.8);
+	border-right: 4px solid rgba(var(--outer-border), 0.8);
+	background-color: rgba(201, 57, 230, 0.586);
 	padding: 0 1.25rem;
 	margin-left: 3px;
 	margin-right: 3px;
@@ -81,14 +45,16 @@ watch(
 	border-radius: 0.75rem 0.75rem 0 0;
 	animation-name: unHover;
 	animation-duration: 2s;
+	margin-top: 15px;
+	transition: 1s ease-in;
 }
 
 .app-button.active-window {
-	background-color: rgb(var(--title-accent));
+	background-color: rgb(106, 3, 106);
+	border-color: rgb(213, 61, 178);
 	animation: tabBecomesActive 1s forwards;
-}
-.app-button.active-window {
-	animation: tabBecomesActive 1s backwards;
+	margin-top: 6px;
+	transition: 1s ease-in;
 }
 
 h1 {

@@ -1,7 +1,13 @@
 <script lang="ts" setup></script>
 
 <template>
-	<div></div>
+	<div class="grid-menu"></div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.grid-menu {
+	width: 500px;
+	height: 500px;
+	background-color: brown;
+}
+</style>
