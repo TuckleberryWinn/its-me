@@ -56,38 +56,46 @@ const styleObject = ref({
 </script>
 
 <template>
-	<div class="start-menu">
-		<TheTitleColumn />
-		<div
-			class="start-menu-list"
-			@mousemove="updateHoverPosition"
-		>
-			<MenuItem
-				class="menu-item"
-				v-for="item in menuContents"
-				:key="item.title"
-				:title="item.title"
-				v-bind="{ activeMenu }"
-				@click="clickMenuItem(item.title)"
-			/>
-			<span
-				class="hover-effect"
-				:style="{ left: `${styleObject.left}px`, bottom: `${styleObject.bottom}px` }"
-				:class="{ hidden: !hoverEffectOnMouse }"
-			/>
+	<div class="start-container">
+		<div class="pillar-list">
+			<TheTitleColumn />
+			<div
+				class="start-menu-list"
+				@mousemove="updateHoverPosition"
+			>
+				<MenuItem
+					class="menu-item"
+					v-for="item in menuContents"
+					:key="item.title"
+					:title="item.title"
+					v-bind="{ activeMenu }"
+					@click="clickMenuItem(item.title)"
+				/>
+				<span
+					class="hover-effect"
+					:style="{ left: `${styleObject.left}px`, bottom: `${styleObject.bottom}px` }"
+					:class="{ hidden: !hoverEffectOnMouse }"
+				/>
+			</div>
 		</div>
 		<GridMenu />
 	</div>
 </template>
 
 <style scoped>
-.start-menu {
-	background-color: rgba(40, 27, 67, 0.621);
-	backdrop-filter: blur(10px);
-	border-top: 5px groove rgba(0, 255, 212, 0.9);
-	border-right: 5px groove rgba(0, 255, 212, 0.9);
+.start-container {
 	display: flex;
-	height: 280px;
+	flex-direction: row;
+	align-items: flex-end;
+	overflow: visible;
+}
+.pillar-list {
+	backdrop-filter: blur(10px);
+	background-color: rgba(40, 27, 67, 0.621);
+	border-right: 5px groove rgba(0, 255, 212, 0.9);
+	border-top: 5px groove rgba(0, 255, 212, 0.9);
+	height: 300px;
+	display: flex;
 }
 
 .start-menu-list {
