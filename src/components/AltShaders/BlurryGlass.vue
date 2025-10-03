@@ -1,6 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useWindowSize } from '@vueuse/core';
+const { width, height } = useWindowSize();
 
+const rowSize = ref(0);
+const columnSize = ref(0);
+
+rowSize.value = Math.min(Math.ceil(width.value / 75), 30);
+columnSize.value = Math.min(Math.ceil(height.value / 75), 20);
+
+window.addEventListener('resize', () => {
+	rowSize.value = Math.min(Math.ceil(width.value / 75), 30);
+	columnSize.value = Math.min(Math.ceil(height.value / 75), 20);
+});
+
+console.log(rowSize, columnSize);
 type Coordinate = {
 	x: Number;
 	y: Number;
@@ -9,16 +23,16 @@ type Coordinate = {
 const activeCoords = ref<Coordinate[]>([]);
 
 for (let i = 0; i < 10; i++) {
-	const localX = Math.ceil(Math.random() * 25);
-	const localY = Math.ceil(Math.random() * 25);
+	const localX = Math.ceil(Math.random() * rowSize.value);
+	const localY = Math.floor(Math.random() * columnSize.value);
 	const newEntry: Coordinate = { x: localX, y: localY };
 	activeCoords.value.push(newEntry);
 }
 
 let offset = 0;
 setInterval(() => {
-	activeCoords.value[offset].x = Math.ceil(Math.random() * 25);
-	activeCoords.value[offset].y = Math.ceil(Math.random() * 25);
+	activeCoords.value[offset].x = Math.ceil(Math.random() * rowSize.value);
+	activeCoords.value[offset].y = Math.ceil(Math.random() * columnSize.value);
 	offset += 1;
 	offset %= 10;
 }, 50);
@@ -31,11 +45,11 @@ setInterval(() => {
 		<div class="test-box2"></div>
 		<div
 			class="box-row"
-			v-for="x in 18"
+			v-for="x in columnSize"
 		>
 			<div
 				class="box-item"
-				v-for="y in 32"
+				v-for="y in rowSize"
 				:key="`box-${x}-${y}`"
 				:class="{
 					'box-highlighted':
