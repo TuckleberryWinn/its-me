@@ -10,11 +10,13 @@ export const appList = [
 		appName: 'ᗪ乇山爪',
 		iconURL: '/src/assets/ui/64xDewm.png',
 		appID: 'App:1',
+		componentName: 'Dewm',
 	},
 	{
 		appName: 'exe not found.exe',
 		iconURL: '/src/assets/ui/64xGithub.png',
 		appID: 'App:2',
+		componentName: 'ShaderController',
 	},
 	{
 		appName: 'Shmoogle Dome',
@@ -33,10 +35,12 @@ export const appList = [
 	},
 ];
 
+//TODO:  Component name should not be optional by 1.0
 export type AppData = {
 	appID: string;
 	appName: string;
 	iconURL: string;
+	componentName?: string;
 	isMinimized?: boolean;
 	isTopWindow?: boolean;
 };
@@ -80,6 +84,7 @@ export const tryOpenWindow = (targetAppID: string) => {
 		iconURL: targetApp.iconURL,
 		isMinimized: targetApp.isMinimized,
 		isTopWindow: targetApp.isTopWindow,
+		componentName: targetApp.componentName,
 		xPos: targetX,
 		yPos: targetY,
 	};

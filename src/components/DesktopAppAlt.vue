@@ -2,7 +2,7 @@
 import useWindowManager, { type DesktopWindow } from '@/composables/useWindowManager';
 import { UseDraggable as Draggable } from '@vueuse/components';
 import { useDraggable as useDrag } from '@vueuse/core';
-import { ref, useTemplateRef, watch } from 'vue';
+import { computed, defineAsyncComponent, ref, useTemplateRef, watch, type Component } from 'vue';
 
 const {
 	closeWindowByID,
@@ -11,6 +11,24 @@ const {
 	minimizeWindowByID,
 	mouseInScreen,
 } = useWindowManager();
+
+//PERFORMANCE: eagerly loading all apps could grow to unreasonable. Potential loading screen
+const appLoader = import.meta.glob<Component>('./CustomApps/*.vue');
+
+const LoadedApp = computed(() => {
+	if (!props.componentName) {
+		console.warn(`Component is undefined.`);
+		return;
+	}
+	const path = `./CustomApps/${props.componentName}.vue`;
+	const targetApp = appLoader[path];
+
+	if (!targetApp) {
+		console.warn(`"${path}" is a broken path.`);
+		return null;
+	}
+	return defineAsyncComponent(targetApp);
+});
 
 const handle = useTemplateRef<HTMLElement>('handle');
 
@@ -21,9 +39,7 @@ const { x, y } = useDrag(handle, {
 	onStart() {
 		tryBringWindowToFront(props.appID);
 	},
-	onMove(pos, event) {
-		console.log(pos, event);
-	},
+	onMove(pos, event) {},
 	onEnd() {
 		updateWindowPosition(props.appID, x.value, y.value);
 	},
@@ -161,13 +177,16 @@ watch(mouseInScreen, () => {
 				@mouseover="bothResizeTrigger"
 				@mouseout="exitResizeTrigger"
 			></div>
-			<textarea v-model="textValue"></textarea>
-			<div>
+			<template v-if="LoadedApp">
+				<LoadedApp />
+			</template>
+			<template v-else>
 				<input
 					type="text"
 					:key="textValue"
 				/>
-			</div>
+				<textarea v-model="textValue"></textarea>
+			</template>
 		</div>
 	</Draggable>
 </template>
