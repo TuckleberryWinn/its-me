@@ -214,8 +214,8 @@ watch(mouseInScreen, () => {
 	border-radius: 15px 15px 0 0;
 	display: flex;
 	flex-direction: column;
-	min-height: 50px;
-	min-width: 200px;
+	min-height: 140px;
+	min-width: 240px;
 	filter: blur(0px);
 	transition-duration: filter 200ms ease-in;
 }
