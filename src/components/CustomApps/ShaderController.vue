@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onLongPress } from '@vueuse/core';
 import { ref, watch } from 'vue';
+import { store } from '@/store/store';
 
 const colorChannels = ref({
 	R: 0,
@@ -8,8 +9,16 @@ const colorChannels = ref({
 	B: 0,
 });
 
+const targetColor = ref('');
+targetColor.value = 'rgb(60, 60, 60)';
+console.log(store);
 watch(colorChannels.value, (newVal, oldVal) => {
-	console.log(newVal.R, newVal.G, newVal.B);
+	colorChannels.value.R = Number(newVal.R);
+	colorChannels.value.G = Number(newVal.G);
+	colorChannels.value.B = Number(newVal.B);
+
+	targetColor.value = `rgb(${colorChannels.value.R}, ${colorChannels.value.G}, ${colorChannels.value.B})`;
+	console.log(targetColor.value);
 });
 </script>
 
@@ -28,6 +37,7 @@ watch(colorChannels.value, (newVal, oldVal) => {
 							type="range"
 							min="0"
 							max="255"
+							step="1"
 							v-model="colorChannels[channel]"
 						/>
 						<div class="channel-value">{{ colorChannels[channel] }}</div>
@@ -59,10 +69,10 @@ watch(colorChannels.value, (newVal, oldVal) => {
 }
 
 .color-output {
-	background-color: rgba(102, 214, 11, 0.744);
+	background-color: v-bind(targetColor);
 	box-shadow:
-		0px 0px 2px 2px rgb(103, 214, 11, 0.4),
-		0px 0px 4px 3px rgb(103, 214, 11, 0.4);
+		0px 0px 2px 2px v-bind(targetColor),
+		0px 0px 4px 3px v-bind(targetColor);
 	align-self: center;
 	justify-self: center;
 	height: 70%;
