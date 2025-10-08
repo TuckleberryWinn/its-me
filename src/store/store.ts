@@ -1,22 +1,18 @@
 import { reactive, ref, toValue } from 'vue';
 
 export type Store = {
-	userName: string;
-	shaderData: ShaderData;
+	UserName: string;
+	BlurryGlass: ShaderData;
 };
 
 export type ShaderData = {
-	R: number;
-	G: number;
-	B: number;
+	PrimaryColor: string;
 };
 
 const defaultGameState: Store = {
-	userName: 'Yung Tuckabeezy 😎',
-	shaderData: {
-		R: 32,
-		G: 201,
-		B: 243,
+	UserName: 'Yung Tuckabeezy 😎',
+	BlurryGlass: {
+		PrimaryColor: 'rgb(152, 255, 230)',
 	},
 };
 
@@ -38,8 +34,14 @@ export function resetSaveAndReload() {
 
 export const store = reactive<Store>(loadedState || defaultGameState);
 
+let lastSaveString: string = '';
+
 setInterval(() => {
-	localStorage.setItem(SAVE_KEY, JSON.stringify(store));
-}, 10000); // autosave every 10 sec
+	const currentString = JSON.stringify(store);
+	if (lastSaveString !== currentString) {
+		localStorage.setItem(SAVE_KEY, currentString);
+		lastSaveString = currentString;
+	}
+}, 2000); // checks to save changes every 2 seconds
 
 setInterval(function () {}, 200); // 200ms = 5 ticks per second for updates that don't need to happen as frequently.

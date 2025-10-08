@@ -9,7 +9,20 @@ const colorChannels = ref({
 });
 
 const targetColor = ref('');
-targetColor.value = 'rgb(60, 60, 60)';
+targetColor.value = store.BlurryGlass.PrimaryColor;
+
+const setUpChannels = (() => {
+	const colorValues: Array<string> = targetColor.value
+		.replace(/[^0-9]/g, ' ')
+		.split(' ')
+		.filter((x) => x);
+
+	colorChannels.value.R = Number(colorValues[0]);
+	colorChannels.value.G = Number(colorValues[1]);
+	colorChannels.value.B = Number(colorValues[2]);
+	console.log(colorValues);
+})();
+
 console.log(store);
 watch(colorChannels.value, (newVal, oldVal) => {
 	colorChannels.value.R = Number(newVal.R);
@@ -17,6 +30,9 @@ watch(colorChannels.value, (newVal, oldVal) => {
 	colorChannels.value.B = Number(newVal.B);
 
 	targetColor.value = `rgb(${colorChannels.value.R}, ${colorChannels.value.G}, ${colorChannels.value.B})`;
+	console.log(store.BlurryGlass.PrimaryColor);
+	store.BlurryGlass.PrimaryColor = targetColor.value;
+	console.log(store.BlurryGlass.PrimaryColor);
 });
 </script>
 
