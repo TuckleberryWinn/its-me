@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onLongPress } from '@vueuse/core';
 import { ref, watch } from 'vue';
 import { store } from '@/store/store';
 
@@ -18,7 +17,6 @@ watch(colorChannels.value, (newVal, oldVal) => {
 	colorChannels.value.B = Number(newVal.B);
 
 	targetColor.value = `rgb(${colorChannels.value.R}, ${colorChannels.value.G}, ${colorChannels.value.B})`;
-	console.log(targetColor.value);
 });
 </script>
 
@@ -106,6 +104,38 @@ watch(colorChannels.value, (newVal, oldVal) => {
 	margin-left: min(10px, 5%);
 	margin-right: min(10px, 5%);
 	width: 100%;
+	appearance: none;
+	background: transparent;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+	background: linear-gradient(
+		to bottom,
+		#0b0451 0%,
+		#0b0451 35%,
+		#22d6ff 50%,
+		#0b0451 65%,
+		#0b0451 100%
+	);
+	border: 2px solid #22d6ff;
+	height: 1rem;
+	border-radius: 0.45rem;
+}
+
+input[type='range']::-moz-range-track {
+	background-color: #000;
+	border: 2px solid #22d6ff;
+	height: 1rem;
+	border-radius: 0.45rem;
+}
+input[type='range']::-webkit-slider-thumb {
+	appearance: none;
+	background: transparent;
+	border: 4px solid #5f0b80;
+	box-shadow: 0px 0px 3px 2px rgb(57, 1, 77);
+	height: calc(0.8rem - 1px);
+	width: max(7%, 1.5rem);
+	border-radius: 0.3rem;
 }
 
 .channel-icon,
