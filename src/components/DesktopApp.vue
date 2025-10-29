@@ -14,10 +14,10 @@ const dragWindow = useTemplateRef<HTMLElement>('dragWindow');
 
 const { x, y } = useDrag(handle, {
 	onStart() {
-		tryBringWindowToFront(props.appData.appID);
+		tryBringWindowToFront(props.appID);
 	},
 	onEnd() {
-		updateWindowPosition(props.appData.appID, x.value, y.value);
+		updateWindowPosition(props.appID, x.value, y.value);
 	},
 });
 
