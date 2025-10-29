@@ -84,12 +84,15 @@ watch(colorChannels.value, (newVal, oldVal) => {
 	display: flex;
 	width: 1rem;
 	font-size: 0.76rem;
-	color: rgba(255, 255, 255, 0.157);
+	color: rgba(255, 255, 255, 0.527);
 	text-shadow:
-		0px 1px 1.7px #0b0451,
-		0px 1px 1.7px #0b0451,
-		2px 1px 1.7px #0b0451,
-		2px 1px 1.7px #0a0451;
+		0px 1px 0.5px #0b0451,
+		0px 1px 0.5px #0b0451,
+		2px 1px 0.5px #0b0451,
+		2px 1px 0.5px #0a0451;
+	text-align: center;
+	font-family: 'Times New Roman', Times, serif;
+	letter-spacing: 0.15rem;
 }
 
 .color-output input {
@@ -100,6 +103,7 @@ watch(colorChannels.value, (newVal, oldVal) => {
 
 .color-channel-slider {
 	grid-area: color-picker-box;
+	min-width: 9rem;
 }
 
 .color-channel {
@@ -123,7 +127,8 @@ input[type='range']::-webkit-slider-runnable-track {
 		to bottom,
 		#0b0451 0%,
 		#0b0451 35%,
-		#22d6ff 50%,
+		#22d6ff 45%,
+		#22d6ff 55%,
 		#0b0451 65%,
 		#0b0451 100%
 	);
@@ -137,7 +142,8 @@ input[type='range']::-moz-range-track {
 		to bottom,
 		#0b0451 0%,
 		#0b0451 35%,
-		#22d6ff 50%,
+		#22d6ff 45%,
+		#22d6ff 55%,
 		#0b0451 65%,
 		#0b0451 100%
 	);
@@ -147,12 +153,24 @@ input[type='range']::-moz-range-track {
 }
 input[type='range']::-webkit-slider-thumb {
 	appearance: none;
-	background: rgba(213, 18, 243, 0.177);
-	border: 4px solid #5f0b80ad;
-	box-shadow: 0px 0px 3px 2px rgba(150, 5, 203, 0.941);
-	height: calc(1.1rem - 3px);
-	transform: translateY(1px);
-	width: max(7%, 1.5rem);
+	border-top: 4px solid #5f0b80ad;
+	border-bottom: 4px solid #5f0b80ad;
+	border-left: 3px solid #5f0b80ad;
+	border-right: 3px solid #5f0b80ad;
+	box-shadow:
+		0px 0px 1px 1px rgb(191, 13, 255),
+		0px 0px 1px 1px rgb(191, 13, 255),
+		0px 0px 1px 1px rgb(191, 13, 255),
+		0px 0px 2px 2px rgba(0, 0, 0, 0.941),
+		0px 0px 2px 2px rgba(0, 0, 0, 0.941),
+		0px 0px 2px 2px rgba(0, 0, 0, 0.941),
+		0px 0px 2.25px 3px rgba(204, 65, 255),
+		0px 0px 2.25px 3px rgba(204, 65, 255),
+		0px 0px 2.25px 3px rgba(204, 65, 255);
+	height: calc(1.1rem - 5px);
+	transform: translateY(2px);
+	min-width: max(7%, 1.25rem);
+	width: 2rem;
 	border-radius: 0.3rem;
 }
 
