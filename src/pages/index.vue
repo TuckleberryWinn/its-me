@@ -4,7 +4,7 @@ import Taskbar from '@/components/Taskbar.vue';
 import useWindowManager from '@/composables/useWindowManager';
 const { windows, taskbarTabs, appList } = useWindowManager();
 
-import DesktopApp from '@/components/DesktopAppAlt.vue';
+import DesktopApp from '@/components/DesktopApp.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
 import ScanlineShader from '@/components/ScanlineShader.vue';
 

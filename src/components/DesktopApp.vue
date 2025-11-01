@@ -2,37 +2,48 @@
 import useWindowManager, { type DesktopWindow } from '@/composables/useWindowManager';
 import { UseDraggable as Draggable } from '@vueuse/components';
 import { useDraggable as useDrag } from '@vueuse/core';
-import { ref, useTemplateRef } from 'vue';
+import { computed, defineAsyncComponent, ref, useTemplateRef, watch, type Component } from 'vue';
 
-const { closeWindowByID, tryBringWindowToFront, updateWindowPosition } = useWindowManager();
+const {
+	closeWindowByID,
+	tryBringWindowToFront,
+	updateWindowPosition,
+	minimizeWindowByID,
+	mouseInScreen,
+} = useWindowManager();
+
+//PERFORMANCE: eagerly loading all apps could grow to unreasonable. Potential loading screen
+const appLoader = import.meta.glob<Component>('./CustomApps/*.vue');
+
+const LoadedApp = computed(() => {
+	if (!props.componentName) {
+		console.warn(`Component is undefined.`);
+		return;
+	}
+	const path = `./CustomApps/${props.componentName}.vue`;
+	const targetApp = appLoader[path];
+
+	if (!targetApp) {
+		console.warn(`"${path}" is a broken path.`);
+		return null;
+	}
+	return defineAsyncComponent(targetApp);
+});
 
 const handle = useTemplateRef<HTMLElement>('handle');
 
+const textValue = ref('');
 const props = defineProps<DesktopWindow>();
-
-const dragWindow = useTemplateRef<HTMLElement>('dragWindow');
 
 const { x, y } = useDrag(handle, {
 	onStart() {
 		tryBringWindowToFront(props.appID);
 	},
+	onMove(pos, event) {},
 	onEnd() {
 		updateWindowPosition(props.appID, x.value, y.value);
 	},
 });
-
-x.value = props.xPos;
-y.value = props.yPos;
-
-const startingWidth = (function () {
-	if (innerWidth * 0.5 < innerHeight * 1.5) {
-		return innerWidth * 0.5 + 'px';
-	} else {
-		return innerHeight * 1.5 + 'px';
-	}
-})();
-
-const textValue = ref('');
 
 enum ResizeContext {
 	none = 'none',
@@ -40,97 +51,236 @@ enum ResizeContext {
 	vertical = 'vertical',
 	diagnal = 'diagnal',
 }
-const resizeContext = ref('none');
+const resizeContext = ref<ResizeContext>(ResizeContext.none);
+const mouseDown = ref(false);
 
 const horizontalResizeTrigger = () => {
+	if (mouseDown.value) return;
 	resizeContext.value = ResizeContext.horizontal;
-	console.log('123123');
 };
+const verticalResizeTrigger = () => {
+	if (mouseDown.value) return;
+	resizeContext.value = ResizeContext.vertical;
+};
+const bothResizeTrigger = () => {
+	if (mouseDown.value) return;
+	resizeContext.value = ResizeContext.diagnal;
+};
+const exitResizeTrigger = () => {
+	if (mouseDown.value) return;
+	resizeContext.value = ResizeContext.none;
+};
+
+const styleObject = ref({
+	width: '',
+	height: '',
+});
+
+window.addEventListener('mousedown', () => {
+	mouseDown.value = true;
+});
+window.addEventListener('mouseup', () => {
+	mouseDown.value = false;
+});
+window.addEventListener('mousemove', (e) => {
+	//Calc width between window start and cursor
+
+	if (!mouseDown.value) return;
+	const xOffset: number = e.clientX - x.value;
+	const yOffset: number = e.clientY - y.value;
+
+	if (
+		resizeContext.value == ResizeContext.horizontal ||
+		resizeContext.value == ResizeContext.diagnal
+	) {
+		styleObject.value.width = `${xOffset}px`;
+	}
+
+	if (
+		resizeContext.value == ResizeContext.vertical ||
+		resizeContext.value == ResizeContext.diagnal
+	) {
+		styleObject.value.height = `${yOffset}px`;
+	}
+});
+
+//Mirrors initial position to drag values for pre-drag edge cases
+
+const initDragValues = () => {
+	x.value = props.xPos;
+	y.value = props.yPos;
+	console.log(props.xPos, props.yPos);
+};
+initDragValues();
+
+const startingWidth = (() => {
+	if (innerWidth * 0.5 < innerHeight * 1.5) {
+		return innerWidth * 0.5 + 'px';
+	} else {
+		return innerHeight * 1.5 + 'px';
+	}
+})();
+
+watch(mouseInScreen, () => {
+	exitResizeTrigger();
+	mouseDown.value = false;
+});
 </script>
 
 <template>
 	<Draggable
 		class="app-window"
 		v-slot="{ x, y }"
-		ref="dragWindow"
 		:handle="handle"
 		:initial-value="{ x: xPos, y: yPos }"
-		:class="appData.appID"
+		:class="{ 'app-id': appID, 'inactive-window': !isTopWindow, 'is-minimized': isMinimized }"
+		:style="{ width: styleObject.width, height: styleObject.height }"
 	>
 		<div
 			class="app-header draggable"
 			ref="handle"
 		>
 			<div class="app-title draggable">
-				<h1 class="draggable">{{ appData.appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
+				<h1 class="draggable font-vt323">{{ appName }} {{ Math.round(x) }}, {{ Math.round(y) }}</h1>
 			</div>
-			<div class="control-buttons">
-				<div class="control-minimize clickable">-</div>
+			<div class="control-buttons draggable">
+				<div
+					class="control-minimize clickable"
+					@click="minimizeWindowByID(appID)"
+				></div>
 				<div
 					class="control-close clickable"
-					@click="closeWindowByID(appData.appID)"
-				>
-					X
-				</div>
+					@click="closeWindowByID(appID)"
+				></div>
 			</div>
 		</div>
-		<div class="app-body">
+		<div class="app-divider"></div>
+		<div
+			ref="appBody"
+			class="app-body"
+		>
 			<div
 				class="resize resizeEW d-side"
-				@mouseenter="horizontalResizeTrigger"
+				@mousedown="tryBringWindowToFront(props.appID)"
+				@mouseover="horizontalResizeTrigger"
+				@mouseout="exitResizeTrigger"
 			></div>
-			<div class="resize resizeNS d-bottom"></div>
-			<div class="resize resizeSE d-corner"></div>
-			<textarea v-model="textValue"></textarea>
-			<div>
+			<div
+				class="resize resizeNS d-bottom"
+				@mousedown="tryBringWindowToFront(props.appID)"
+				@mouseover="verticalResizeTrigger"
+				@mouseout="exitResizeTrigger"
+			></div>
+			<div
+				class="resize resizeSE d-corner"
+				@mousedown="tryBringWindowToFront(props.appID)"
+				@mouseover="bothResizeTrigger"
+				@mouseout="exitResizeTrigger"
+			></div>
+			<template v-if="LoadedApp">
+				<LoadedApp />
+			</template>
+			<template v-else>
 				<input
 					type="text"
 					:key="textValue"
 				/>
-			</div>
+				<textarea v-model="textValue"></textarea>
+			</template>
 		</div>
 	</Draggable>
 </template>
 
 <style scoped>
+* {
+	--header-background: 31, 22, 51;
+	--outer-border: 60, 110, 166;
+	--inner-border: 17, 69, 81;
+	--title: 211, 45, 207;
+	--title-accent: 211, 45, 207;
+	--title-accent: 232, 131, 234;
+	--control-button: 232, 131, 234;
+	--close-button: 211, 45, 207;
+
+	--blue-white: 215, 233, 254;
+}
+
 .app-window {
 	width: v-bind(startingWidth);
-	min-width: 16rem;
-	min-height: 9rem;
-	height: auto;
-	background-color: grey;
-	border: 0.155rem solid #00ffd4;
-	border-radius: 0.5rem 0.5rem 0 0;
+	background-color: rgba(0, 0, 0, 0.922);
 	position: fixed;
+	border: 2px solid rgb(var(--outer-border));
+	overflow: visible;
+	border-radius: 15px 15px 0 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 140px;
+	min-width: 240px;
+	filter: blur(0px);
+	transition-duration: filter 200ms ease-in;
 }
+
+.app-window.is-minimized {
+	display: none;
+}
+
 .app-header {
+	border-radius: 12.5px 12.5px 0 0;
 	height: 40px;
-	background: linear-gradient(
-		0deg,
-		rgb(90, 0, 138) 8%,
-		rgb(66, 145, 214) 35%,
-		rgb(0, 255, 212) 65%,
-		rgb(0, 255, 212) 100%
-	);
+	background-color: rgb(var(--header-background));
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	cursor: move;
+	border: 3px solid rgb(var(--inner-border));
+}
+.app-divider {
+	border-bottom: 2px solid rgb(var(--outer-border));
+}
+
+.control-buttons {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	min-width: 64px;
 }
 
 .control-buttons > div {
 	display: inline-block;
-	height: 28px;
+	height: 24px;
+	margin-right: 8px;
 	aspect-ratio: 1;
-	border: 2px solid rgb(79, 7, 142);
-	border-radius: 0.4rem;
-	margin-right: 6px;
-	background-color: rgba(1, 110, 187, 0.7);
-	cursor: default;
+}
+
+.control-buttons > .control-minimize {
+	background-color: rgba(var(--control-button), 0.25);
+	border: 1px solid rgb(var(--control-button));
+	background-image: url('@/assets/ui/24x_MinimizeIcon.png');
+	image-rendering: crisp-edges;
+	background-size: cover;
+	background-position: center;
+}
+.control-buttons > .control-minimize:hover {
+	background-color: rgba(var(--control-button), 0.4);
+}
+.control-buttons > .control-minimize:active {
+	background-color: rgba(var(--control-button), 0.7);
 }
 
 .control-buttons > .control-close {
-	background-color: #f826fc;
+	background-color: rgba(var(--close-button), 0.25);
+	border: 1px solid rgb(var(--close-button));
+	background-image: url('@/assets/ui/24x_CloseIcon.png');
+	image-rendering: crisp-edge0;
+	background-size: cover;
+	background-position: center;
+}
+
+.control-buttons > .control-close:hover {
+	background-color: rgba(var(--close-button), 0.4);
+}
+.control-buttons > .control-close:active {
+	background-color: rgba(var(--close-button), 0.7);
 }
 
 .app-title {
@@ -141,66 +291,66 @@ const horizontalResizeTrigger = () => {
 h1 {
 	font-weight: 600;
 	text-shadow:
-		-1px 1px 1px #9de0f9,
-		-2px 2px 1px #9de0f9,
-		1px -1px 1px #9de0f9,
-		2px -2px 1px #9de0f9,
-		1px 1px 1px #6bd7ff,
-		2px 2px 1px #6bd7ff,
-		-1px -1px 1px #6bd7ff,
-		-2px -2px 1px #6bd7ff;
+		-0px 0px 1.5px #000,
+		-0px 0px 1.5px #000,
+		0px -0px 1.5px #000,
+		0px -0px 1.5px #000,
+		0px 0px 1.5px #000,
+		0px 0px 1.5px #000,
+		-0px -0px 1.5px #000,
+		-0px -0px 1.5px #000,
+		-0px 0px 5px rgba(var(--title-accent), 0.15),
+		-0px 0px 5px rgba(var(--title-accent), 0.15),
+		0px -0px 5px rgba(var(--title-accent), 0.15),
+		0px -0px 5px rgba(var(--title-accent), 0.15),
+		0px 0px 5px rgba(var(--title-accent), 0.15),
+		0px 0px 5px rgba(var(--title-accent), 0.15),
+		-0px -0px 5px rgba(var(--title-accent), 0.15),
+		-0px -0px 5px rgba(var(--title-accent), 0.15);
 	overflow: visible;
-	color: #f826fc;
+	color: rgba(var(--title), 1);
 	font-size: 24px;
+	line-height: 34px;
+	white-space: nowrap;
+	font-family:
+		'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana,
+		sans-serif;
 }
 
 .app-body {
-	aspect-ratio: 16 / 9;
+	height: calc(100% - 42.5px);
+	border: 3px solid rgb(var(--inner-border));
 }
 
 .resize {
-	background-color: #ff0eb7;
 	position: absolute;
 }
 
 .d-side {
-	background: linear-gradient(
-		270deg,
-		rgba(255, 14, 183, 1) 0%,
-		rgba(248, 24, 178, 1) 29%,
-		rgba(66, 255, 255, 0.49) 37%,
-		rgba(66, 255, 255, 0) 42%,
-		rgba(199, 87, 147, 0) 100%
-	);
-	width: 10px;
+	position: absolute;
+	width: 16px;
 	height: calc(100% - 55px);
-	right: 0;
+	right: -8px;
 }
 .d-bottom {
-	height: 10px;
+	height: 16px;
 	width: calc(100% - 15px);
-	bottom: 0;
-	background: linear-gradient(
-		0deg,
-		rgba(255, 14, 183, 1) 0%,
-		rgba(248, 24, 178, 1) 29%,
-		rgba(66, 255, 255, 0.49) 37%,
-		rgba(66, 255, 255, 0) 42%,
-		rgba(199, 87, 147, 0) 100%
-	);
+	bottom: -8px;
 }
 .d-corner {
-	height: 20px;
-	width: 20px;
-	bottom: 0;
-	right: 0;
+	height: 23px;
+	width: 23px;
+	bottom: -8px;
+	right: -8px;
 	background: linear-gradient(
 		315deg,
-		rgba(255, 14, 183, 1) 0%,
-		rgba(248, 24, 178, 1) 29%,
-		rgba(66, 255, 255, 0.49) 37%,
-		rgba(66, 255, 255, 0) 42%,
-		rgba(199, 87, 147, 0) 100%
+		rgba(var(--title-accent), 1) 0%,
+		rgba(var(--title-accent), 1) 40%,
+		rgba(var(--title-accent), 0) 41%
 	);
+}
+.inactive-window {
+	transition-duration: 2000ms;
+	filter: blur(2.2px);
 }
 </style>
