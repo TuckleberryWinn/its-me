@@ -57,7 +57,7 @@ watch(colorChannels.value, (newVal, oldVal) => {
 				</div>
 			</template>
 		</div>
-		<div class="color-output">0 0 0 0 0 0</div>
+		<div class="color-output">_ _ _ _ _</div>
 	</div>
 </template>
 

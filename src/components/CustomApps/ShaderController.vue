@@ -2,6 +2,26 @@
 import { ref, watch } from 'vue';
 import { store } from '@/store/store';
 import ThreeChannelColorPicker from '../ShaderController/ThreeChannelColorPicker.vue';
+
+const shaderList = [
+	{
+		Name: 'Block City',
+		DefaultSetting: {
+			PrimaryColor: '#FF0000',
+			SecondaryColor: '#FF0000',
+		},
+		UserSetting: {
+			PrimaryColor: '#BB3300',
+			SecondaryColor: '#BB3300',
+		},
+	},
+	{
+		Name: 'Block City2',
+	},
+	{
+		Name: 'Block City3',
+	},
+];
 </script>
 
 <template>
@@ -12,15 +32,19 @@ import ThreeChannelColorPicker from '../ShaderController/ThreeChannelColorPicker
 				name="myDropdown"
 				id="myDropdown"
 			>
-				<option value="option1">Option 1</option>
-				<option value="option2">Option 2</option>
-				<option value="option3">Option 3</option>
+				<option
+					value="option1"
+					v-for="shader in shaderList"
+				>
+					{{ shader.Name }}
+				</option>
 			</select>
 			<button>--></button>
 		</div>
 		<div>-----------------</div>
 		<div class="shader-control-panel">
 			<template v-for="n in 3">
+				123123
 				<div class="panel-wrapper">
 					<ThreeChannelColorPicker />
 				</div>
@@ -61,11 +85,9 @@ import ThreeChannelColorPicker from '../ShaderController/ThreeChannelColorPicker
 	background-color: rgba(14, 50, 84, 0.4);
 	margin: auto;
 	width: calc(100% - 14px);
-	border: 7px outset rgba(14, 50, 84, 0.25);
+	border-top: 7px outset rgba(14, 50, 84, 0.25);
 }
-.panel-wrapper div {
-	margin: 3px;
-}
+
 .gap-line {
 	height: 7px;
 }

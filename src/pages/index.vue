@@ -12,12 +12,6 @@ import Cursor from '@/components/Cursor.vue';
 import BlurryGlass from '@/components/AltShaders/BlurryGlass.vue';
 import BoxStyles from '@/components/AltShaders/BoxStyles.vue';
 
-const scramble = () => {
-	windows.value.sort(() => {
-		return Math.random() - 0.5;
-	});
-};
-
 addEventListener('click', (env) => {});
 </script>
 
