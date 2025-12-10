@@ -34,43 +34,45 @@ watch(width, () => {
 </script>
 
 <template>
-	<MobileBio class="view-mobile" />
-	<div class="view-full">
-		<main class="main">
-			<BlurryGlass />
-			<BoxStyles />
-			<DesktopIcon
-				v-for="app in appList"
-				:key="app.appID"
-				v-bind="app"
-			/>
-			<div id="desktop-app-container">
-				<h1
-					style="color: white"
-					v-for="window in windows"
-				>
-					{{ window }}
-				</h1>
-				<DesktopApp
-					v-for="window in windows"
-					:key="window.appID"
-					v-bind="window"
-				>
-				</DesktopApp>
-			</div>
-			<Taskbar>
-				<div id="taskbar-app-container">
-					<TaskbarApp
-						v-for="tab in taskbarTabs"
-						:key="tab.appID"
-						v-bind="tab"
-					></TaskbarApp>
+	<div id="top-level">
+		<MobileBio class="view-mobile"></MobileBio> />
+		<div class="view-full">
+			<main class="main">
+				<BlurryGlass />
+				<BoxStyles />
+				<DesktopIcon
+					v-for="app in appList"
+					:key="app.appID"
+					v-bind="app"
+				/>
+				<div id="desktop-app-container">
+					<h1
+						style="color: white"
+						v-for="window in windows"
+					>
+						{{ window }}
+					</h1>
+					<DesktopApp
+						v-for="window in windows"
+						:key="window.appID"
+						v-bind="window"
+					>
+					</DesktopApp>
 				</div>
-			</Taskbar>
-		</main>
-		<Cursor />
+				<Taskbar>
+					<div id="taskbar-app-container">
+						<TaskbarApp
+							v-for="tab in taskbarTabs"
+							:key="tab.appID"
+							v-bind="tab"
+						></TaskbarApp>
+					</div>
+				</Taskbar>
+			</main>
+			<Cursor />
+		</div>
+		<ScanlineShader />
 	</div>
-	<ScanlineShader />
 </template>
 
 <style scoped>
@@ -91,6 +93,7 @@ watch(width, () => {
 }
 .view-mobile {
 	display: flex;
+	border: 2rem solid green;
 }
 
 @media (min-width: 640px) {

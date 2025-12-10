@@ -4,23 +4,25 @@ import BlurryGlass from './AltShaders/BlurryGlass.vue';
 </script>
 
 <template>
-	<div class="background"></div>
-	<BlurryGlass />
-	<div>
-		<div class="page-container">
-			<div class="content-container">
-				<h1>Tucker Bishop</h1>
-				<p>H</p>
+	<div id="mobile-bio">
+		<div class="background"></div>
+		<BlurryGlass />
+		<div>
+			<div class="page-container">
+				<div class="content-container">
+					<h1>Tucker Bishop</h1>
+					<p>H</p>
 
-				<button
-					v-for="n in 5"
-					class="link"
-				>
-					{{ n }}
-				</button>
+					<button
+						v-for="n in 5"
+						class="link"
+					>
+						{{ n }}
+					</button>
+				</div>
 			</div>
+			<div class="container-extra1"></div>
 		</div>
-		<div class="container-extra1"></div>
 	</div>
 </template>
 
