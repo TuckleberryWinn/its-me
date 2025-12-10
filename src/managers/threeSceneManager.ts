@@ -75,41 +75,14 @@ const resize = () => {
 	}
 };
 
-let windowFocused: boolean = true;
-
-const handleVisibilityChange = () => {
-	if (document.visibilityState === 'hidden') {
-		windowFocused = false;
-	} else {
-		windowFocused = true;
-	}
-	console.log('visibility change', windowFocused);
-};
-
 console.log(scene);
-
-const testClickEvent = (event: MouseEvent) => {
-	//	console.log('click 5', event);
-};
-
-export const startScene = () => {
-	const targetCanvas = renderer.domElement;
-	const pageRef = document.getElementById('pageContent');
-	targetCanvas.className = 'threeCanvas';
-	document.body.insertBefore(targetCanvas, pageRef);
-	document.addEventListener('click', testClickEvent);
-	document.addEventListener('visibilitychange', handleVisibilityChange);
-};
-
-export const endScene = () => {
-	console.log('reset scene');
-	document.removeEventListener('click', testClickEvent);
-	document.removeEventListener('visibilitychange', handleVisibilityChange);
-};
 
 const clock = new THREE.Clock();
 
+let isRendering = false;
 function animate(time: number) {
+	if (!isRendering) return;
+
 	const dt = Math.min(0.05, clock.getDelta());
 
 	resize();
@@ -130,6 +103,22 @@ function cubeDance(dt: number) {
 	// }
 	cube.rotation.y += speed * dt;
 }
-
-renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
+
+export const startScene = () => {
+	const targetCanvas = renderer.domElement;
+	const pageRef = document.getElementById('pageContent');
+	targetCanvas.className = 'threeCanvas';
+	document.body.insertBefore(targetCanvas, pageRef);
+	renderer.setSize(window.innerWidth, window.innerHeight);
+};
+
+export const playScene = () => {
+	console.log('play scene');
+	isRendering = true;
+};
+
+export const pauseScene = () => {
+	console.log('pause scene');
+	isRendering = false;
+};

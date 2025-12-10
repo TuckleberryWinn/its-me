@@ -1,13 +1,5 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import { startScene, endScene } from './managers/threeSceneManager';
-import { onUnmounted } from 'vue';
-
-startScene();
-
-onUnmounted(() => {
-	endScene();
-});
 </script>
 
 <template>
