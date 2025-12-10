@@ -36,14 +36,14 @@ p {
 	text-align: center;
 }
 
-.background {
+/* .background {
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	background-color: rgb(47, 1, 50);
-}
+} */
 
 @property --a {
 	syntax: '<percentage>';
