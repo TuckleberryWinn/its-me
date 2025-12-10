@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { activeCoords } from '@/composables/useGoats';
+import { activeCoords } from '@/managers/shaderStateManager';
 
 const boxStyles = ref<HTMLDivElement | null>(null);
 

@@ -1,40 +1,30 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { useWindowSize } from '@vueuse/core';
+import { computed, onUnmounted, ref } from 'vue';
+import { type Coordinate, activeCoords } from '@/managers/shaderStateManager';
+import useWindowData from '@/composables/useWindowData';
+const { height, width } = useWindowData();
 
-import { activeCoords } from '@/composables/useGoats';
-const { width, height } = useWindowSize();
-
-const rowSize = ref(0);
-const columnSize = ref(0);
-
-rowSize.value = Math.min(Math.ceil(width.value / 75), 30);
-columnSize.value = Math.min(Math.ceil(height.value / 75), 20);
-
-window.addEventListener('resize', () => {
-	rowSize.value = Math.min(Math.ceil(width.value / 75), 30);
-	columnSize.value = Math.min(Math.ceil(height.value / 75), 20);
-});
-
-type Coordinate = {
-	x: Number;
-	y: Number;
-};
+const rowCount = computed(() => Math.min(Math.ceil(height.value / 75), 30));
+const columnCount = computed(() => Math.min(Math.ceil(width.value / 75), 20));
 
 for (let i = 0; i < 10; i++) {
-	const localX = Math.ceil(Math.random() * rowSize.value);
-	const localY = Math.floor(Math.random() * columnSize.value);
+	const localX = Math.ceil(Math.random() * rowCount.value);
+	const localY = Math.floor(Math.random() * columnCount.value);
 	const newEntry: Coordinate = { x: localX, y: localY };
 	activeCoords.value.push(newEntry);
 }
 
 let offset = 0;
-setInterval(() => {
-	activeCoords.value[offset].x = Math.ceil(Math.random() * columnSize.value);
-	activeCoords.value[offset].y = Math.ceil(Math.random() * rowSize.value);
+const lightInterval = setInterval(() => {
+	activeCoords.value[offset].x = Math.ceil(Math.random() * columnCount.value);
+	activeCoords.value[offset].y = Math.ceil(Math.random() * rowCount.value);
 	offset += 1;
 	offset %= 10;
 }, 100);
+
+onUnmounted(() => {
+	clearInterval(lightInterval);
+});
 </script>
 
 <template>
@@ -44,11 +34,11 @@ setInterval(() => {
 		<div class="test-box2"></div>
 		<div
 			class="box-row"
-			v-for="x in columnSize"
+			v-for="y in rowCount"
 		>
 			<div
 				class="box-item"
-				v-for="y in rowSize"
+				v-for="x in columnCount"
 				:key="`box-${x}-${y}`"
 				:class="{
 					[`box-${x}-${y}`]: true,
@@ -62,9 +52,15 @@ setInterval(() => {
 <style scoped>
 .shader {
 	width: 100dvw;
-	height: calc(100dvh - 48px);
+	height: calc(100dvh);
 	position: absolute;
 	z-index: -1;
+}
+
+@media (min-width: 640px) {
+	.shader {
+		height: calc(100dvh - 48px);
+	}
 }
 .box-row {
 	display: flex;
