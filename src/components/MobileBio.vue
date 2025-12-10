@@ -1,16 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import BlurryGlass from './AltShaders/BlurryGlass.vue';
-// const innerRadius = ref(0);
-
-// setInterval(() => {
-// 	innerRadius.value = (innerRadius.value + 1) % 100;
-// }, 33);
 </script>
 
 <template>
+	<div class="background"></div>
+	<BlurryGlass />
 	<div>
-		<BlurryGlass />
 		<div class="page-container">
 			<div class="content-container">
 				<h1>Tucker Bishop</h1>
@@ -38,6 +34,15 @@ p {
 	font-size: 1rem;
 	color: rgb(5, 204, 42);
 	text-align: center;
+}
+
+.background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgb(47, 1, 50);
 }
 
 @property --a {

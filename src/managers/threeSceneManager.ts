@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { deltaTime } from 'three/tsl';
-import { render } from 'vue';
 
 const loadText = async (path: string): Promise<string> => {
 	return (await fetch(path)).text();
@@ -111,6 +109,7 @@ export const startScene = () => {
 	targetCanvas.className = 'threeCanvas';
 	document.body.insertBefore(targetCanvas, pageRef);
 	renderer.setSize(window.innerWidth, window.innerHeight);
+	isRendering = true;
 };
 
 export const playScene = () => {

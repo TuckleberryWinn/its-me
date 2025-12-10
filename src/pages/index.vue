@@ -19,6 +19,11 @@ import BlurryGlass from '@/components/AltShaders/BlurryGlass.vue';
 import BoxStyles from '@/components/AltShaders/BoxStyles.vue';
 
 startScene();
+if (width.value > 640) {
+	playScene();
+} else {
+	pauseScene();
+}
 watch(width, () => {
 	if (width.value > 640) {
 		playScene();
@@ -29,7 +34,6 @@ watch(width, () => {
 </script>
 
 <template>
-	<ScanlineShader />
 	<MobileBio class="view-mobile" />
 	<div class="view-full">
 		<main class="main">
@@ -66,6 +70,7 @@ watch(width, () => {
 		</main>
 		<Cursor />
 	</div>
+	<ScanlineShader />
 </template>
 
 <style scoped>
