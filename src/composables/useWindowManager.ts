@@ -10,28 +10,33 @@ export const appList = [
 		appName: 'ᗪ乇山爪',
 		iconURL: '/src/assets/ui/64xDewm.png',
 		appID: 'App:1',
-		componentName: 'Dewm',
+		componentName: 'UnderConstruction',
+		// componentName: 'Dewm',
 	},
 	{
 		appName: 'exe not found.exe',
 		iconURL: '/src/assets/ui/64xGithub.png',
 		appID: 'App:2',
-		componentName: 'ShaderController',
+		componentName: 'UnderConstruction',
+		// componentName: 'ShaderController',
 	},
 	{
 		appName: 'Shmoogle Dome',
 		iconURL: '/src/assets/ui/48xChrome.png',
 		appID: 'App:3',
+		componentName: 'UnderConstruction',
 	},
 	{
 		appName: 'KIDZ 101.1FM Radio Jungle',
 		iconURL: '/src/assets/ui/64xMusicPlayer.png',
 		appID: 'App:4',
+		componentName: 'UnderConstruction',
 	},
 	{
 		appName: 'Notes',
 		iconURL: '/src/assets/ui/64xNotes.png',
 		appID: 'App:5',
+		componentName: 'UnderConstruction',
 	},
 ];
 

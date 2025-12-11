@@ -13,6 +13,7 @@ import TaskbarApp from '@/components/TaskbarApp.vue';
 import DesktopIcon from '@/components/DesktopIcon.vue';
 import Taskbar from '@/components/Taskbar.vue';
 import ScanlineShader from '@/components/ScanlineShader.vue';
+import UnderConstruction from '@/components/UnderConstruction.vue';
 
 import Cursor from '@/components/Cursor.vue';
 import BlurryGlass from '@/components/AltShaders/BlurryGlass.vue';
