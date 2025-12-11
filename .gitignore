@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+/working_files/Aseprite/localRenders

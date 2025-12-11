@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import PageHeader from './components/PageHeader.vue';
 </script>
 
 <template>
-  <div class="page">
-    <PageHeader />
-    <RouterView />
-  </div>
+	<div class="page">
+		<RouterView />
+	</div>
 </template>
 
-<style scoped>
-.page {
-  background-color: rgb(133, 139, 142);
+<style>
+.threeCanvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: -5;
+	min-width: 100%;
+	min-height: 100%;
+	max-width: 100%;
+	max-height: 100%;
 }
 </style>
