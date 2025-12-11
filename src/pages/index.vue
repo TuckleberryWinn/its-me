@@ -35,7 +35,7 @@ watch(width, () => {
 
 <template>
 	<div id="top-level">
-		<MobileBio class="view-mobile"></MobileBio> />
+		<MobileBio class="view-mobile"></MobileBio>
 		<div class="view-full">
 			<main class="main">
 				<BlurryGlass />
@@ -93,7 +93,6 @@ watch(width, () => {
 }
 .view-mobile {
 	display: flex;
-	border: 2rem solid green;
 }
 
 @media (min-width: 640px) {

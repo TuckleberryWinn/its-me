@@ -13,7 +13,7 @@ import { RouterView } from 'vue-router';
 	position: absolute;
 	left: 0;
 	top: 0;
-	z-index: -2;
+	z-index: -5;
 	min-width: 100%;
 	min-height: 100%;
 	max-width: 100%;
