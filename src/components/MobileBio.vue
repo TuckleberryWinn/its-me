@@ -20,14 +20,21 @@ const { height, width } = useWindowData();
 
 		<div class="page-container">
 			<div class="content-container">
-				<h1>Tucker Bishop</h1>
-				<p>H</p>
-
-				<button
-					v-for="n in 5"
-					class="link"
-				>
-					{{ n }}
+				<h1 class="font-vt323">Tucker Bishop</h1>
+				<h2 class="font-vt323">Salt Lake City based:</h2>
+				<ul>
+					<li class="font-vt323">> Game developer</li>
+					<li class="font-vt323">> Musician</li>
+					<li class="font-vt323">> 3D artist</li>
+					<li class="font-vt323">> Oracle of edgy humor</li>
+				</ul>
+				<button class="link">
+					<div class="logo discord"></div>
+					<h4 class="font-vt323">tuckleberry_winn</h4>
+				</button>
+				<button class="link">
+					<div class="logo itch"></div>
+					<h4 class="font-vt323">tuckleberry-winn.itch.io</h4>
 				</button>
 			</div>
 		</div>
@@ -36,14 +43,36 @@ const { height, width } = useWindowData();
 
 <style scoped>
 h1 {
-	font-size: 2rem;
-	color: rgb(27, 169, 240);
-	text-align: center;
+	font-size: 3rem;
+	color: #d32836;
+	text-shadow:
+		0 0 2px #240003,
+		0 0 2px #240003,
+		0 0 10px #871c3e;
 }
-p {
-	font-size: 1rem;
-	color: rgb(25, 212, 237);
+h2 {
+	font-size: 2rem;
+	color: #d32836;
 	text-align: center;
+	text-shadow:
+		0 0 2px #240003,
+		0 0 2px #240003,
+		0 0 10px #871c3e,
+		0 0 10px #871c3e;
+}
+
+ul {
+	padding-bottom: 2rem;
+}
+
+ul li {
+	font-size: 1.25rem;
+	color: #d32836;
+	text-shadow:
+		0 0 2px #240003,
+		0 0 2px #240003,
+		0 0 6px #871c3e,
+		0 0 8px #871c3e;
 }
 
 @property --a {
@@ -57,8 +86,14 @@ p {
 	width: 100dvw;
 }
 
+.content-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .background {
-	background-color: rgb(47, 1, 50);
+	background-color: #0a202f;
 	height: 100%;
 	width: 100%;
 	z-index: -3;
@@ -87,24 +122,24 @@ p {
 	z-index: -2;
 	background: radial-gradient(
 		#00000000 calc(100% - var(--a)),
-		rgba(99, 3, 67, 0.722) calc(100% - var(--a) + 1%),
-		rgba(70, 4, 69, 0.81) calc(100% - var(--a) + 2%),
+		rgba(48, 45, 106, 0.5) calc(100% - var(--a) + 1%),
+		rgba(113, 1, 93, 0.5) calc(100% - var(--a) + 2%),
 		#00000000 calc(100% - var(--a) + 4%)
 	);
-	filter: blur(6px);
+	filter: blur(5px);
 }
 
 .extra1 {
-	animation: 1s cubic-bezier(0.29, 0.65, 0.4, 0.77) 0s infinite radialGrow;
+	animation: 3s cubic-bezier(0.29, 0.65, 0.4, 0.77) 0s infinite radialGrow;
 }
 .extra2 {
-	animation: 2s cubic-bezier(0.29, 0.65, 0.4, 0.77) 0s infinite radialGrow;
-}
-.extra3 {
 	animation: 4s cubic-bezier(0.29, 0.65, 0.4, 0.77) 0s infinite radialGrow;
 }
+.extra3 {
+	animation: 5s cubic-bezier(0.29, 0.65, 0.4, 0.77) 0s infinite radialGrow;
+}
 .extra4 {
-	animation: 8s cubic-bezier(0.29, 0.65, 0.4, 0.77) 0s infinite radialGrow;
+	animation: 6s cubic-bezier(0.29, 0.65, 0.4, 0.77) 0s infinite radialGrow;
 }
 
 .grid-container {
@@ -122,17 +157,17 @@ p {
 	background-image:
 		linear-gradient(
 			to bottom,
-			rgba(137, 5, 111, 0.845) 3%,
+			rgba(48, 45, 106, 0.845) 3%,
 			transparent 3%,
 			transparent 97%,
-			rgb(137, 5, 111, 0.845) 97%
+			rgb(48, 45, 106, 0.845) 97%
 		),
 		linear-gradient(
 			to left,
-			rgb(137, 5, 111, 0.845) 3%,
+			rgb(48, 45, 106, 0.845) 3%,
 			transparent 3%,
 			transparent 97%,
-			rgb(137, 5, 111, 0.845) 97%
+			rgb(48, 45, 106, 0.845) 97%
 		);
 	background-size: 20% 20dvh;
 }
@@ -163,25 +198,55 @@ p {
 }
 .grid-container .grid:nth-child(5):after {
 	box-shadow:
-		0px 0px 40px 12px rgba(117, 6, 72, 0.5),
-		0px 0px 50px 4px rgba(117, 6, 72, 0.5) inset;
+		0px 0px 40px 12px rgba(48, 45, 106, 0.5),
+		0px 0px 50px 4px rgba(48, 45, 106, 0.5) inset;
 }
 
-button.link {
-	display: block;
+button {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
 	max-width: 500px;
 	width: 75dvw;
 	min-width: 260px;
 	height: 3rem;
 	margin-bottom: 1rem;
-	background: linear-gradient(180deg, rgba(13, 56, 209, 0.358) 35%, rgba(7, 189, 199, 0.539) 85%);
-	border: 2px solid rgb(28, 185, 205);
+	background: linear-gradient(180deg, rgba(61, 2, 18, 0.486) 35%, rgba(103, 3, 21, 0.539) 85%);
+	border: 2px solid rgb(135, 2, 2);
 	border-radius: 1.25rem;
 }
 
-button.link {
-	font-size: 1.6rem;
-	color: rgb(255, 27, 198);
+button > h4 {
+	font-size: 1.3rem;
+	color: #d32836;
+	padding-left: 0.25rem;
+	text-align: left;
+	display: inline;
+	text-shadow:
+		0 0 2px #240003,
+		0 0 2px #240003,
+		0 0 6px #a9083b;
+}
+
+button .logo {
+	background-color: #3c0101;
+	height: 100%;
+	aspect-ratio: 1;
+	display: inline;
+}
+
+.logo.discord {
+	background-image: url(../assets/logos/discord.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 80% 80%;
+}
+
+.logo.itch {
+	background-image: url(../assets/logos/itch.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 90% 90%;
 }
 
 @keyframes radialGrow {
