@@ -2,39 +2,46 @@ import { ref, watch } from 'vue';
 import DesktopApp from '@/components/DesktopApp.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
 
+//image urls for app list
+import iconDewm from '@/assets/ui/64xDewm.png';
+import iconNotFound from '@/assets/ui/64xGithub.png';
+import iconShmoogle from '@/assets/ui/48xChrome.png';
+import iconRadioJungle from '@/assets/ui/64xMusicPlayer.png';
+import iconNotes from '@/assets/ui/64xNotes.png';
+
 let windowTarget = document.getElementById('desktop-app-container');
 let taskbarTabTarget = document.getElementById('taskbar-app-container');
 
 export const appList = [
 	{
 		appName: 'ᗪ乇山爪',
-		iconURL: '/src/assets/ui/64xDewm.png',
+		iconURL: iconDewm,
 		appID: 'App:1',
 		componentName: 'UnderConstruction',
 		// componentName: 'Dewm',
 	},
 	{
 		appName: 'exe not found.exe',
-		iconURL: '/src/assets/ui/64xGithub.png',
+		iconURL: iconNotFound,
 		appID: 'App:2',
 		componentName: 'UnderConstruction',
 		// componentName: 'ShaderController',
 	},
 	{
 		appName: 'Shmoogle Dome',
-		iconURL: '/src/assets/ui/48xChrome.png',
+		iconURL: iconShmoogle,
 		appID: 'App:3',
 		componentName: 'UnderConstruction',
 	},
 	{
 		appName: 'KIDZ 101.1FM Radio Jungle',
-		iconURL: '/src/assets/ui/64xMusicPlayer.png',
+		iconURL: iconRadioJungle,
 		appID: 'App:4',
 		componentName: 'UnderConstruction',
 	},
 	{
 		appName: 'Notes',
-		iconURL: '/src/assets/ui/64xNotes.png',
+		iconURL: iconNotes,
 		appID: 'App:5',
 		componentName: 'UnderConstruction',
 	},
