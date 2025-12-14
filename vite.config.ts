@@ -7,14 +7,15 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './',
-  plugins: [vue(), vueDevTools(), VueRouter({})],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
-  },
-  build: {
-    target: "esnext",
-  }
+	base: './',
+	plugins: [vue(), vueDevTools(), VueRouter({})],
+	resolve: {
+		alias: {
+			'@': fileURLToPath(new URL('./src', import.meta.url)),
+		},
+	},
+	build: {
+		target: 'esnext',
+		assetsInlineLimit: 0,
+	},
 });
