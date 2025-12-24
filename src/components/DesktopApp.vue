@@ -104,22 +104,12 @@ window.addEventListener('mousemove', (e) => {
 	}
 });
 
-//Mirrors initial position to drag values for pre-drag edge cases
-
 const initDragValues = () => {
 	x.value = props.xPos;
 	y.value = props.yPos;
 	console.log(props.xPos, props.yPos);
 };
 initDragValues();
-
-const startingWidth = (() => {
-	if (innerWidth * 0.5 < innerHeight * 1.5) {
-		return innerWidth * 0.5 + 'px';
-	} else {
-		return innerHeight * 1.5 + 'px';
-	}
-})();
 
 watch(mouseInScreen, () => {
 	exitResizeTrigger();
@@ -178,7 +168,7 @@ watch(mouseInScreen, () => {
 				@mouseout="exitResizeTrigger"
 			></div>
 			<template v-if="LoadedApp">
-				<LoadedApp />
+				<LoadedApp></LoadedApp>
 			</template>
 			<template v-else>
 				<input
@@ -206,7 +196,6 @@ watch(mouseInScreen, () => {
 }
 
 .app-window {
-	width: v-bind(startingWidth);
 	background-color: rgba(0, 0, 0, 0.922);
 	position: fixed;
 	border: 2px solid rgb(var(--outer-border));
@@ -214,10 +203,10 @@ watch(mouseInScreen, () => {
 	border-radius: 15px 15px 0 0;
 	display: flex;
 	flex-direction: column;
-	min-height: 140px;
-	min-width: 240px;
 	filter: blur(0px);
-	transition-duration: filter 200ms ease-in;
+	transition: filter 200ms ease-in;
+	min-width: fit-content;
+	min-height: fit-content;
 }
 
 .app-window.is-minimized {
@@ -318,7 +307,8 @@ h1 {
 }
 
 .app-body {
-	height: calc(100% - 42.5px);
+	display: flex;
+	flex-grow: 1;
 	border: 3px solid rgb(var(--inner-border));
 }
 
