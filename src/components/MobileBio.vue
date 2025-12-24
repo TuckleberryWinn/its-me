@@ -82,43 +82,35 @@ ul li {
 }
 
 #mobile-bio {
-	height: 100dvh;
-	width: 100dvw;
+	height: inherit;
+	width: inherit;
 }
 
 .content-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 }
 
 .background {
 	background-color: #0a202f;
-	height: 100%;
-	width: 100%;
 	z-index: -3;
 	position: absolute;
+	width: inherit;
+	height: inherit;
 }
 
 .page-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
 	z-index: 3;
+	margin: auto;
+	width: 100%;
 }
 
 .container-extra {
 	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	height: inherit;
+	width: inherit;
 	z-index: -2;
 	background: radial-gradient(
 		#00000000 calc(100% - var(--a)),
@@ -144,16 +136,16 @@ ul li {
 
 .grid-container {
 	position: absolute;
-	width: 100dvw;
-	height: 100dvh;
+	width: inherit;
+	height: inherit;
 	perspective: 1200px;
 	z-index: -1;
 }
 .grid-container .grid {
 	z-index: -1;
 	position: absolute;
-	width: 100dvw;
-	height: 100dvh;
+	width: inherit;
+	height: inherit;
 	background-image:
 		linear-gradient(
 			to bottom,
@@ -176,8 +168,8 @@ ul li {
 	z-index: -1;
 	position: absolute;
 	content: '';
-	width: 100dvw;
-	height: 100dvh;
+	width: inherit;
+	height: inherit;
 }
 .grid-container .grid:nth-child(1) {
 	transform: rotateX(90deg) translate3d(0, -50dvh, -50dvh);
@@ -206,8 +198,8 @@ button {
 	display: flex;
 	align-items: center;
 	flex-direction: row;
-	max-width: 500px;
-	width: 75dvw;
+	max-width: 360px;
+	width: 80%;
 	min-width: 260px;
 	height: 3rem;
 	margin-bottom: 1rem;
