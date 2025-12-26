@@ -17,21 +17,29 @@ const currentView = ref('mobile');
 </template>
 
 <style scoped>
+.emulator {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .control-panel {
 	height: 2.5rem;
-	background-color: aquamarine;
+  background: linear-gradient(180deg,
+  rgba(40, 27, 67, 1) 0%,
+  rgba(40, 27, 67, 0.4) 14%,
+  rgba(40, 27, 67, 0.5) 84%,
+  rgba(40, 27, 67, 1) 92%,
+  rgba(0, 255, 212, 1) 100%);
 }
 
 .app-container {
-	width: 100%;
-	height: 100%;
 	align-items: center;
+  margin: auto
 }
 
 .app-display {
-	/* background-color: rgba(18, 62, 100, 0.547); */
 	width: 360px;
 	height: 740px;
-	border: 2px solid blueviolet;
 }
 </style>
