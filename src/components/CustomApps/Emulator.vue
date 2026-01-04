@@ -15,7 +15,7 @@ const virtualPhones = [
 	},
 ];
 
-const currentView = ref(virtualPhones[1]);
+const currentView = ref(virtualPhones[0]);
 </script>
 
 <template>
@@ -32,7 +32,10 @@ const currentView = ref(virtualPhones[1]);
 					</option>
 				</optgroup>
 			</select>
-			<pre>currentView: {{ currentView }}</pre>
+			<div>
+				<p>Size: {{ currentView.width }}px x {{ currentView.height }}px</p>
+			</div>
+			<!-- <pre>currentView: {{ currentView }}</pre> -->
 		</div>
 		<div class="app-container">
 			<div class="app-display">
@@ -59,12 +62,28 @@ const currentView = ref(virtualPhones[1]);
 		rgba(40, 27, 67, 1) 92%,
 		rgba(0, 255, 212, 1) 100%
 	);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 .control-panel > select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 	background: none;
 	color: aqua;
-	height: 100%;
+	border-left: 3px solid aqua;
+	border-right: 3px solid aqua;
+	padding: 5px 1px 5px 10px;
+	font-size: 18px;
+	border-radius: 24px;
+	background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>');
+}
+
+.control-panel > div > p {
+	color: pink;
+	padding-left: 1rem;
 }
 
 .app-container {
@@ -73,7 +92,7 @@ const currentView = ref(virtualPhones[1]);
 }
 
 .app-display {
-	width: 360px;
-	height: 740px;
+	width: v-bind(currentView.width + 'px');
+	height: v-bind(currentView.height + 'px');
 }
 </style>
