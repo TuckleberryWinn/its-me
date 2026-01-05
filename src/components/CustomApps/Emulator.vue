@@ -38,7 +38,13 @@ const currentView = ref(virtualPhones[0]);
 			<!-- <pre>currentView: {{ currentView }}</pre> -->
 		</div>
 		<div class="app-container">
-			<div class="app-display">
+			<div
+				class="app-display"
+				:style="{
+					width: `${currentView.width}px`,
+					height: `${currentView.height}px`,
+				}"
+			>
 				<MobileView></MobileView>
 			</div>
 		</div>
@@ -89,10 +95,5 @@ const currentView = ref(virtualPhones[0]);
 .app-container {
 	align-items: center;
 	margin: auto;
-}
-
-.app-display {
-	width: v-bind(currentView.width + 'px');
-	height: v-bind(currentView.height + 'px');
 }
 </style>
