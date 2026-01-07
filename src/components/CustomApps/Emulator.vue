@@ -9,6 +9,11 @@ const virtualPhones = [
 		width: 360,
 	},
 	{
+		name: 'Spamdung Mini',
+		height: 460,
+		width: 340,
+	},
+	{
 		name: 'eyePWN',
 		height: 874,
 		width: 403,
@@ -45,7 +50,10 @@ const currentView = ref(virtualPhones[0]);
 					height: `${currentView.height}px`,
 				}"
 			>
-				<MobileView></MobileView>
+				<MobileView
+					:appWidth="currentView.width"
+					:appHeight="currentView.height"
+				></MobileView>
 			</div>
 		</div>
 	</div>

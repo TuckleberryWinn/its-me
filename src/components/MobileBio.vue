@@ -1,7 +1,14 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import useWindowData from '@/composables/useWindowData';
-const { height, width } = useWindowData();
+const props = defineProps({
+	appWidth: {
+		type: Number,
+		default: window.innerWidth, // Default value for a number
+	},
+	appHeight: {
+		type: Number,
+		default: window.innerHeight, // Default value for a number
+	},
+});
 </script>
 
 <template>
@@ -161,7 +168,7 @@ ul li {
 			transparent 97%,
 			rgb(48, 45, 106, 0.845) 97%
 		);
-	background-size: 20% 20dvh;
+	background-size: 25% 25dvh;
 }
 .grid-container .grid-container:before,
 .grid-container .grid:after {
@@ -178,12 +185,14 @@ ul li {
 	transform: rotateX(-90deg) translate3d(0, 50dvh, -50dvh);
 }
 .grid-container .grid:nth-child(3) {
-	transform: rotateY(90deg) translate3d(calc(50dvw * (v-bind(height) / v-bind(width))), 0, -50dvw)
-		scaleX(calc(v-bind(height) / v-bind(width)));
+	transform: rotateY(90deg)
+		translate3d(calc(50dvw * (v-bind(appHeight) / v-bind(appWidth))), 0, -50dvw)
+		scaleX(calc(v-bind(appHeight) / v-bind(appWidth)));
 }
 .grid-container .grid:nth-child(4) {
-	transform: rotateY(-90deg) translate3d(calc(-50dvw * (v-bind(height) / v-bind(width))), 0, -50dvw)
-		scaleX(calc(v-bind(height) / v-bind(width)));
+	transform: rotateY(-90deg)
+		translate3d(calc(-50dvw * (v-bind(appHeight) / v-bind(appWidth))), 0, -50dvw)
+		scaleX(calc(v-bind(appHeight) / v-bind(appWidth)));
 }
 .grid-container .grid:nth-child(5) {
 	transform: translate3d(0, 0, -100dvh);
