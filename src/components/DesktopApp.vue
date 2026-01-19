@@ -87,7 +87,9 @@ window.addEventListener('mousemove', (e) => {
 
 	if (!mouseDown.value) return;
 	const xOffset: number = e.clientX - x.value;
-	const yOffset: number = e.clientY - y.value;
+	//Prevents window from going below taskbar on resize
+	//TODO: move taskbar size to global CSS to avoid hardcoding
+	const yOffset: number = Math.min(e.clientY - y.value, window.innerHeight - y.value - 48);
 
 	if (
 		resizeContext.value == ResizeContext.horizontal ||
