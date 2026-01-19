@@ -1,7 +1,14 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import useWindowData from '@/composables/useWindowData';
-const { height, width } = useWindowData();
+const props = defineProps({
+	appWidth: {
+		type: Number,
+		default: window.innerWidth, // Default value for a number
+	},
+	appHeight: {
+		type: Number,
+		default: window.innerHeight, // Default value for a number
+	},
+});
 </script>
 
 <template>
@@ -82,43 +89,35 @@ ul li {
 }
 
 #mobile-bio {
-	height: 100dvh;
-	width: 100dvw;
+	height: inherit;
+	width: inherit;
 }
 
 .content-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 }
 
 .background {
 	background-color: #0a202f;
-	height: 100%;
-	width: 100%;
 	z-index: -3;
 	position: absolute;
+	width: inherit;
+	height: inherit;
 }
 
 .page-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
 	z-index: 3;
+	margin: auto;
+	width: 100%;
 }
 
 .container-extra {
 	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	height: inherit;
+	width: inherit;
 	z-index: -2;
 	background: radial-gradient(
 		#00000000 calc(100% - var(--a)),
@@ -144,16 +143,16 @@ ul li {
 
 .grid-container {
 	position: absolute;
-	width: 100dvw;
-	height: 100dvh;
+	width: inherit;
+	height: inherit;
 	perspective: 1200px;
 	z-index: -1;
 }
 .grid-container .grid {
 	z-index: -1;
 	position: absolute;
-	width: 100dvw;
-	height: 100dvh;
+	width: inherit;
+	height: inherit;
 	background-image:
 		linear-gradient(
 			to bottom,
@@ -169,15 +168,15 @@ ul li {
 			transparent 97%,
 			rgb(48, 45, 106, 0.845) 97%
 		);
-	background-size: 20% 20dvh;
+	background-size: 25% 25dvh;
 }
 .grid-container .grid-container:before,
 .grid-container .grid:after {
 	z-index: -1;
 	position: absolute;
 	content: '';
-	width: 100dvw;
-	height: 100dvh;
+	width: inherit;
+	height: inherit;
 }
 .grid-container .grid:nth-child(1) {
 	transform: rotateX(90deg) translate3d(0, -50dvh, -50dvh);
@@ -186,12 +185,14 @@ ul li {
 	transform: rotateX(-90deg) translate3d(0, 50dvh, -50dvh);
 }
 .grid-container .grid:nth-child(3) {
-	transform: rotateY(90deg) translate3d(calc(50dvw * (v-bind(height) / v-bind(width))), 0, -50dvw)
-		scaleX(calc(v-bind(height) / v-bind(width)));
+	transform: rotateY(90deg)
+		translate3d(calc(50dvw * (v-bind(appHeight) / v-bind(appWidth))), 0, -50dvw)
+		scaleX(calc(v-bind(appHeight) / v-bind(appWidth)));
 }
 .grid-container .grid:nth-child(4) {
-	transform: rotateY(-90deg) translate3d(calc(-50dvw * (v-bind(height) / v-bind(width))), 0, -50dvw)
-		scaleX(calc(v-bind(height) / v-bind(width)));
+	transform: rotateY(-90deg)
+		translate3d(calc(-50dvw * (v-bind(appHeight) / v-bind(appWidth))), 0, -50dvw)
+		scaleX(calc(v-bind(appHeight) / v-bind(appWidth)));
 }
 .grid-container .grid:nth-child(5) {
 	transform: translate3d(0, 0, -100dvh);
@@ -206,8 +207,8 @@ button {
 	display: flex;
 	align-items: center;
 	flex-direction: row;
-	max-width: 500px;
-	width: 75dvw;
+	max-width: 360px;
+	width: 80%;
 	min-width: 260px;
 	height: 3rem;
 	margin-bottom: 1rem;

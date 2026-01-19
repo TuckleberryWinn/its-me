@@ -88,6 +88,11 @@ watch(width, () => {
 	flex-wrap: nowrap;
 }
 
+#top-level {
+	height: 100dvh;
+	width: 100dvw;
+}
+
 .view-full {
 	display: none;
 }

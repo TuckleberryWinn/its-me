@@ -87,3 +87,11 @@
 	font-family: 'Examors-ObliqueOutline';
 	src: url('/fonts/Examors/ObliqueOutline.woff') format('woff');
 }
+@font-face {
+	font-family: 'ComicMono';
+	src: url('/fonts/ComicMono/Standard.tff') format('ttf');
+}
+@font-face {
+	font-family: 'ComicMono-Bold';
+	src: url('/fonts/ComicMono/Bold.tff') format('ttf');
+}

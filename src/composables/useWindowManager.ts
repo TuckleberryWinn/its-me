@@ -8,6 +8,7 @@ import iconNotFound from '@/assets/ui/64xGithub.png';
 import iconShmoogle from '@/assets/ui/48xChrome.png';
 import iconRadioJungle from '@/assets/ui/64xMusicPlayer.png';
 import iconNotes from '@/assets/ui/64xNotes.png';
+import iconEmulator from '@/assets/ui/64xEMUl8r.png';
 
 let windowTarget = document.getElementById('desktop-app-container');
 let taskbarTabTarget = document.getElementById('taskbar-app-container');
@@ -44,6 +45,12 @@ export const appList = [
 		iconURL: iconNotes,
 		appID: 'App:5',
 		componentName: 'UnderConstruction',
+	},
+	{
+		appName: 'EMU-l8r',
+		iconURL: iconEmulator,
+		appID: 'App:6',
+		componentName: 'Emulator',
 	},
 ];
 
