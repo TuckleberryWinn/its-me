@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import useWindowManager from '@/composables/useWindowManager';
 const { windows, taskbarTabs, appList } = useWindowManager();
-import { watch } from 'vue';
-
-import { startScene, playScene, pauseScene } from '@/managers/threeSceneManager';
-import useWindowData from '@/composables/useWindowData';
-const { width } = useWindowData();
 
 import MobileBio from '@/components/MobileBio.vue';
 import DesktopApp from '@/components/DesktopApp.vue';
@@ -17,20 +12,6 @@ import ScanlineShader from '@/components/ScanlineShader.vue';
 import Cursor from '@/components/Cursor.vue';
 import BlurryGlass from '@/components/AltShaders/BlurryGlass.vue';
 import BoxStyles from '@/components/AltShaders/BoxStyles.vue';
-
-startScene();
-if (width.value > 640) {
-	playScene();
-} else {
-	pauseScene();
-}
-watch(width, () => {
-	if (width.value > 640) {
-		playScene();
-	} else {
-		pauseScene();
-	}
-});
 </script>
 
 <template>
