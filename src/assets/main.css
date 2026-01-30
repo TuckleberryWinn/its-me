@@ -88,10 +88,10 @@
 	src: url('/fonts/Examors/ObliqueOutline.woff') format('woff');
 }
 @font-face {
-	font-family: 'ComicMono';
-	src: url('/fonts/ComicMono/Standard.tff') format('ttf');
+	font-family: 'Comic-Mono';
+	src: url('/fonts/ComicMono/Standard.tff') format('woff2');
 }
 @font-face {
-	font-family: 'ComicMono-Bold';
-	src: url('/fonts/ComicMono/Bold.tff') format('ttf');
+	font-family: 'Comic-Mono-Bold';
+	src: url('/fonts/ComicMono/Bold.ttf') format('woff');
 }

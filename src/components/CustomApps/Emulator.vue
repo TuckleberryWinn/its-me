@@ -38,7 +38,7 @@ const currentView = ref(virtualPhones[0]);
 				</optgroup>
 			</select>
 			<div>
-				<p>Size: {{ currentView.width }}px x {{ currentView.height }}px</p>
+				<p class="font-vt323">Size: {{ currentView.width }}px x {{ currentView.height }}px</p>
 			</div>
 			<!-- <pre>currentView: {{ currentView }}</pre> -->
 		</div>
@@ -67,7 +67,7 @@ const currentView = ref(virtualPhones[0]);
 }
 
 .control-panel {
-	height: 2.5rem;
+	height: 2.25rem;
 	background: linear-gradient(
 		180deg,
 		rgba(40, 27, 67, 1) 0%,
@@ -79,6 +79,7 @@ const currentView = ref(virtualPhones[0]);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: center;
 }
 
 .control-panel > select {
@@ -89,15 +90,38 @@ const currentView = ref(virtualPhones[0]);
 	color: aqua;
 	border-left: 3px solid aqua;
 	border-right: 3px solid aqua;
-	padding: 5px 1px 5px 10px;
+	padding-left: 10px;
 	font-size: 18px;
 	border-radius: 24px;
-	background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>');
+	/* background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>'); */
+	font-family: Comic-Mono-Bold;
 }
 
 .control-panel > div > p {
-	color: pink;
-	padding-left: 1rem;
+	color: rgb(188, 180, 199);
+	padding: 0 0.5rem;
+	line-height: 2rem;
+	font-size: 1.75rem;
+	letter-spacing: -2px;
+	word-spacing: -2px;
+}
+
+optgroup {
+	background-color: rgb(30, 3, 55);
+	font-family: Comic-Mono-Bold;
+}
+
+option {
+	background: #067aa45a;
+	font-family: Comic-Mono;
+}
+
+option:first-of-type {
+	border-radius: 8px 8px 0 0;
+}
+
+option:last-of-type {
+	border-radius: 0 0 8px 8px;
 }
 
 .app-container {
