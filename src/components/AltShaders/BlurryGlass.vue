@@ -4,8 +4,8 @@ import { type Coordinate, activeCoords } from '@/managers/shaderStateManager';
 import useWindowData from '@/composables/useWindowData';
 const { height, width } = useWindowData();
 
-const rowCount = computed(() => Math.min(Math.ceil(height.value / 75), 30));
-const columnCount = computed(() => Math.min(Math.ceil(width.value / 75), 20));
+const rowCount = computed(() => Math.ceil(height.value / 75));
+const columnCount = computed(() => Math.ceil(width.value / 75));
 
 for (let i = 0; i < 10; i++) {
 	const localX = Math.ceil(Math.random() * rowCount.value);
