@@ -91,10 +91,11 @@ const currentView = ref(virtualPhones[0]);
 	border-left: 3px solid aqua;
 	border-right: 3px solid aqua;
 	padding-left: 10px;
-	font-size: 18px;
+	font-size: 1.125rem;
 	border-radius: 24px;
 	/* background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>'); */
 	font-family: Comic-Mono-Bold;
+	width: 12rem;
 }
 
 .control-panel > div > p {
@@ -114,6 +115,7 @@ optgroup {
 option {
 	background: #067aa45a;
 	font-family: Comic-Mono;
+	font-size: 0.9rem;
 }
 
 option:first-of-type {
