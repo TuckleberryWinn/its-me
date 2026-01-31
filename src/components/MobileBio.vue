@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { transform } from 'typescript';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 const props = defineProps({
 	appWidth: {
 		type: Number,
@@ -12,20 +11,19 @@ const props = defineProps({
 	},
 });
 
-console.log(props.appWidth, props.appHeight);
-const gridCenter = { transform: `translate3d(0, 0, -${props.appHeight}px)` };
-const gridTop = {
+const gridCenter = computed(() => ({ transform: `translate3d(0, 0, -${props.appHeight}px)` }));
+const gridTop = computed(() => ({
 	transform: `rotateX(-90deg) translate3d(0, ${props.appHeight / 2}px, -${props.appHeight / 2}px)`,
-};
-const gridRight = {
+}));
+const gridRight = computed(() => ({
 	transform: `rotateY(-90deg) translate3d(-${props.appHeight / 2}px, 0, -${props.appWidth / 2}px) scaleX(${props.appHeight / props.appWidth})`,
-};
-const gridBottom = {
+}));
+const gridBottom = computed(() => ({
 	transform: `rotateX(90deg) translate3d(0, -${props.appHeight / 2}px, -${props.appHeight / 2}px)`,
-};
-const gridLeft = {
+}));
+const gridLeft = computed(() => ({
 	transform: `rotateY(90deg) translate3d(${props.appHeight / 2}px, 0, -${props.appWidth / 2}px) scaleX(${props.appHeight / props.appWidth})`,
-};
+}));
 </script>
 
 <template>
