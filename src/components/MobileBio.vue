@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { transform } from 'typescript';
+import { ref } from 'vue';
 const props = defineProps({
 	appWidth: {
 		type: Number,
@@ -9,6 +11,21 @@ const props = defineProps({
 		default: window.innerHeight, // Default value for a number
 	},
 });
+
+console.log(props.appWidth, props.appHeight);
+const gridCenter = { transform: `translate3d(0, 0, -${props.appHeight}px)` };
+const gridTop = {
+	transform: `rotateX(-90deg) translate3d(0, ${props.appHeight / 2}px, -${props.appHeight / 2}px)`,
+};
+const gridRight = {
+	transform: `rotateY(-90deg) translate3d(-${props.appHeight / 2}px, 0, -${props.appWidth / 2}px) scaleX(${props.appHeight / props.appWidth})`,
+};
+const gridBottom = {
+	transform: `rotateX(90deg) translate3d(0, -${props.appHeight / 2}px, -${props.appHeight / 2}px)`,
+};
+const gridLeft = {
+	transform: `rotateY(90deg) translate3d(${props.appHeight / 2}px, 0, -${props.appWidth / 2}px) scaleX(${props.appHeight / props.appWidth})`,
+};
 </script>
 
 <template>
@@ -17,7 +34,23 @@ const props = defineProps({
 		<div class="grid-container">
 			<span
 				class="grid"
-				v-for="n in 5"
+				:style="[gridCenter]"
+			></span>
+			<span
+				class="grid"
+				:style="[gridTop]"
+			></span>
+			<span
+				class="grid grid-right"
+				:style="[gridRight]"
+			></span>
+			<span
+				class="grid"
+				:style="[gridBottom]"
+			></span>
+			<span
+				class="grid"
+				:style="[gridLeft]"
 			></span>
 		</div>
 		<div class="container-extra extra1"></div>
@@ -112,6 +145,8 @@ ul li {
 	z-index: 3;
 	margin: auto;
 	width: 100%;
+	display: flex;
+	align-items: center;
 }
 
 .container-extra {
@@ -168,7 +203,7 @@ ul li {
 			transparent 97%,
 			rgb(48, 45, 106, 0.845) 97%
 		);
-	background-size: 25% 25dvh;
+	background-size: 25% 25%;
 }
 .grid-container .grid-container:before,
 .grid-container .grid:after {
@@ -178,26 +213,8 @@ ul li {
 	width: inherit;
 	height: inherit;
 }
-.grid-container .grid:nth-child(1) {
-	transform: rotateX(90deg) translate3d(0, -50dvh, -50dvh);
-}
-.grid-container .grid:nth-child(2) {
-	transform: rotateX(-90deg) translate3d(0, 50dvh, -50dvh);
-}
-.grid-container .grid:nth-child(3) {
-	transform: rotateY(90deg)
-		translate3d(calc(50dvw * (v-bind(appHeight) / v-bind(appWidth))), 0, -50dvw)
-		scaleX(calc(v-bind(appHeight) / v-bind(appWidth)));
-}
-.grid-container .grid:nth-child(4) {
-	transform: rotateY(-90deg)
-		translate3d(calc(-50dvw * (v-bind(appHeight) / v-bind(appWidth))), 0, -50dvw)
-		scaleX(calc(v-bind(appHeight) / v-bind(appWidth)));
-}
-.grid-container .grid:nth-child(5) {
-	transform: translate3d(0, 0, -100dvh);
-}
-.grid-container .grid:nth-child(5):after {
+
+.grid-container .grid:nth-child(1):after {
 	box-shadow:
 		0px 0px 40px 12px rgba(48, 45, 106, 0.5),
 		0px 0px 50px 4px rgba(48, 45, 106, 0.5) inset;
