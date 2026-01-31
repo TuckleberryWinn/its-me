@@ -143,6 +143,7 @@ ul li {
 	z-index: 3;
 	margin: auto;
 	width: 100%;
+	height: 100%;
 	display: flex;
 	align-items: center;
 }
