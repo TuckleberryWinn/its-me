@@ -1,54 +1,50 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-const props = defineProps({
-	appWidth: {
-		type: Number,
-		default: window.innerWidth, // Default value for a number
-	},
-	appHeight: {
-		type: Number,
-		default: window.innerHeight, // Default value for a number
-	},
-});
+import useWindowData from '@/composables/useWindowData';
+const gridContainerElement = ref();
+const { width, height } = useWindowData(gridContainerElement);
 
-const gridCenter = computed(() => ({ transform: `translate3d(0, 0, -${props.appHeight}px)` }));
+const gridCenter = computed(() => ({ transform: `translate3d(0, 0, -${height.value}px)` }));
 const gridTop = computed(() => ({
-	transform: `rotateX(-90deg) translate3d(0, ${props.appHeight / 2}px, -${props.appHeight / 2}px)`,
+	transform: `rotateX(-90deg) translate3d(0, ${height.value / 2}px, -${height.value / 2}px)`,
 }));
 const gridRight = computed(() => ({
-	transform: `rotateY(-90deg) translate3d(-${props.appHeight / 2}px, 0, -${props.appWidth / 2}px) scaleX(${props.appHeight / props.appWidth})`,
+	transform: `rotateY(-90deg) translate3d(-${height.value / 2}px, 0, -${width.value / 2}px) scaleX(${height.value / width.value})`,
 }));
 const gridBottom = computed(() => ({
-	transform: `rotateX(90deg) translate3d(0, -${props.appHeight / 2}px, -${props.appHeight / 2}px)`,
+	transform: `rotateX(90deg) translate3d(0, -${height.value / 2}px, -${height.value / 2}px)`,
 }));
 const gridLeft = computed(() => ({
-	transform: `rotateY(90deg) translate3d(${props.appHeight / 2}px, 0, -${props.appWidth / 2}px) scaleX(${props.appHeight / props.appWidth})`,
+	transform: `rotateY(90deg) translate3d(${height.value / 2}px, 0, -${width.value / 2}px) scaleX(${height.value / width.value})`,
 }));
 </script>
 
 <template>
 	<div id="mobile-bio">
 		<div class="background"></div>
-		<div class="grid-container">
+		<div
+			class="grid-container"
+			ref="gridContainerElement"
+		>
 			<span
 				class="grid"
-				:style="[gridCenter]"
+				:style="gridCenter"
 			></span>
 			<span
 				class="grid"
-				:style="[gridTop]"
+				:style="gridTop"
 			></span>
 			<span
 				class="grid grid-right"
-				:style="[gridRight]"
+				:style="gridRight"
 			></span>
 			<span
 				class="grid"
-				:style="[gridBottom]"
+				:style="gridBottom"
 			></span>
 			<span
 				class="grid"
-				:style="[gridLeft]"
+				:style="gridLeft"
 			></span>
 		</div>
 		<div class="container-extra extra1"></div>

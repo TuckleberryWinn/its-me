@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import { watch } from 'vue';
+import { watch, ref } from 'vue';
 import { startScene, playScene, pauseScene } from '@/managers/threeSceneManager';
 import useWindowData from '@/composables/useWindowData';
-const { width } = useWindowData();
+const { width } = useWindowData(ref(document.body));
 
 startScene();
 if (width.value > 640) {
