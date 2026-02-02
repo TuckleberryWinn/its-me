@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { ref, watch } from 'vue';
 
 const loadText = async (path: string): Promise<string> => {
 	return (await fetch(path)).text();
@@ -15,21 +16,40 @@ const customShaderChunks = {
 Object.assign(THREE.ShaderChunk, customShaderChunks);
 
 const scene = new THREE.Scene();
+
 const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 3000);
 
-camera.position.set(0, 1.12, 4.4);
+export const cameraData = ref({
+	currentFOV: 30,
+	position: [-2.6567, 1.23, -1.48],
+	rotation: [0, 1.5708, 0],
+});
 
-camera.rotation.set(-0.17, 0, 0);
+watch(cameraData.value, (newVal, oldVal) => {
+	camera.fov = cameraData.value.currentFOV;
+	const newPos = cameraData.value.position;
+	const newRot = cameraData.value.rotation;
+	camera.position.set(newPos[0], newPos[1], newPos[2]);
+	camera.rotation.set(newRot[0], newRot[1], newRot[2]);
+	console.log(camera);
+});
 
 const renderer = new THREE.WebGLRenderer();
 
 const loader = new GLTFLoader();
 
-loader.load('models/desktop_floor.glb', (gltf) => {
-	// scene.add(gltf.scene);
+loader.load('models/Blockout.glb', (gltf) => {
+	const mesh = gltf.scene.children;
+	const textureLoader = new THREE.TextureLoader();
+	const newTexture = textureLoader.load('textures/BlockoutMaterial.png');
+	newTexture.flipY = false;
+	mesh.forEach((model) => {
+		(model as THREE.Mesh).material.map = newTexture;
+	});
+	scene.add(gltf.scene);
 });
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
+const geometry = new THREE.BoxGeometry(0.2, 2.8, 4);
 const fragmentShader = await loadText('./shaders/test.frag');
 const vertexShader = await loadText('./shaders/worldSpace.vert');
 const uniforms = {
@@ -44,12 +64,14 @@ const material = new THREE.ShaderMaterial({
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
-const ambientLight = new THREE.AmbientLight(0xffffff);
-ambientLight.position.set(0, 0, 0);
-scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 60, 30, 2);
+pointLight.position.set(-0.2, 1.62, 1.1);
+scene.add(pointLight);
 
 let width;
 let height;
+const minimumFOV = Math.PI / 3.9;
+const maximumFOV = Math.PI / 6.78;
 
 // const deg = Math.PI / 180;
 const resize = () => {
@@ -61,11 +83,14 @@ const resize = () => {
 	height = clientHeight * dpr;
 	if (canvas.width !== width || canvas.height !== height) {
 		const aspect = width / height;
-		// const desiredMinimumFov = Math.PI / 4; //90 deg
-		// this ensures that I always have a 90deg square in the center of both landscape and portrait viewports
-		// camera.fov =
-		// 	(aspect >= 1 ? desiredMinimumFov : 2 * Math.atan(Math.tan(desiredMinimumFov / 2) / aspect)) /
-		// 	deg;
+		const currentAspect = window.innerWidth / window.innerHeight;
+		const fov =
+			(currentAspect >= 16 / 9
+				? maximumFOV
+				: 2 * Math.atan(Math.tan(minimumFOV / 2) / currentAspect)) /
+			(Math.PI / 180);
+		cameraData.value.currentFOV = fov;
+		console.log('current FOV', cameraData.value.currentFOV);
 		camera.aspect = aspect;
 		camera.updateProjectionMatrix();
 		renderer.setPixelRatio(dpr);
@@ -120,4 +145,36 @@ export const playScene = () => {
 export const pauseScene = () => {
 	console.log('pause scene');
 	isRendering = false;
+};
+
+type SceneData = {
+	path: string;
+	position: number[];
+	rotation: number[];
+};
+
+const DeskView: SceneData = {
+	path: '/',
+	position: [-2.21, 1.21, 4.03],
+	rotation: [0.01, -0.5, 0],
+};
+const ScreenView: SceneData = {
+	path: '/desktop-view',
+	position: [-3.6567, 1.23, -1.48],
+	rotation: [0, 1.5708, 0],
+};
+
+type SceneRecord = Record<string, SceneData>;
+
+const SceneIndex: SceneRecord = {
+	ScreenView,
+	DeskView,
+};
+
+export const swapScene = (targetScene: string) => {
+	const newPos = SceneIndex[targetScene].position;
+	const newRot = SceneIndex[targetScene].rotation;
+
+	camera.position.set(newPos[0], newPos[1], newPos[2]);
+	camera.rotation.set(newRot[0], newRot[1], newRot[2]);
 };
