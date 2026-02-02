@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import { watch, ref } from 'vue';
+import { watch, ref, computed } from 'vue';
+import Cursor from './components/Cursor.vue';
 import { startScene, playScene, pauseScene } from '@/managers/threeSceneManager';
 import useWindowData from '@/composables/useWindowData';
-const { width } = useWindowData(ref(document.body));
+const { width, height } = useWindowData(ref(document.body));
 
 startScene();
 if (width.value > 640) {
@@ -11,22 +12,52 @@ if (width.value > 640) {
 } else {
 	pauseScene();
 }
-watch(width, () => {
+
+watch([width, height], () => {
 	if (width.value > 640) {
 		playScene();
 	} else {
 		pauseScene();
 	}
 });
+
+//transform: `translate3d(200px, 0, -${height.value}px)`
+const targetAspectRatio = 16 / 9;
+const contentSpaceStyle = computed(() => ({
+	width:
+		width.value > height.value * targetAspectRatio
+			? `${height.value * targetAspectRatio}px`
+			: `${width.value}px`,
+	height:
+		width.value > height.value * targetAspectRatio
+			? `${height.value}px`
+			: `${width.value / targetAspectRatio}px`,
+}));
 </script>
 
 <template>
 	<div class="page">
-		<RouterView />
+		<div
+			class="content-space"
+			:style="contentSpaceStyle"
+		>
+			<RouterView />
+		</div>
+		<Cursor />
 	</div>
 </template>
 
 <style>
+.page {
+	height: 100dvh;
+	width: 100dvw;
+	display: flex;
+}
+.content-space {
+	/* background-color: rgba(240, 248, 255, 0.253); */
+	position: relative;
+	margin: auto auto;
+}
 .threeCanvas {
 	position: absolute;
 	left: 0;
