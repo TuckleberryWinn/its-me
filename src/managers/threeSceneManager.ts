@@ -17,21 +17,12 @@ Object.assign(THREE.ShaderChunk, customShaderChunks);
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 3000);
-
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
+camera.rotation.order = 'YXZ';
 export const cameraData = ref({
-	currentFOV: 30,
-	position: [-2.6567, 1.23, -1.48],
-	rotation: [0, 1.5708, 0],
-});
-
-watch(cameraData.value, (newVal, oldVal) => {
-	camera.fov = cameraData.value.currentFOV;
-	const newPos = cameraData.value.position;
-	const newRot = cameraData.value.rotation;
-	camera.position.set(newPos[0], newPos[1], newPos[2]);
-	camera.rotation.set(newRot[0], newRot[1], newRot[2]);
-	console.log(camera);
+	currentFOV: 45,
+	position: [-2, 1.6, -1.48],
+	rotation: [-0.3, 1.5708, 0],
 });
 
 const renderer = new THREE.WebGLRenderer();
@@ -155,8 +146,8 @@ type SceneData = {
 
 const DeskView: SceneData = {
 	path: '/',
-	position: [-2.21, 1.21, 4.03],
-	rotation: [0.01, -0.5, 0],
+	position: [-2.4, 1.7, -0.25],
+	rotation: [-0.3, 0.9, 0],
 };
 const ScreenView: SceneData = {
 	path: '/desktop-view',
@@ -167,8 +158,8 @@ const ScreenView: SceneData = {
 type SceneRecord = Record<string, SceneData>;
 
 const SceneIndex: SceneRecord = {
-	ScreenView,
 	DeskView,
+	ScreenView,
 };
 
 export const swapScene = (targetScene: string) => {
@@ -177,4 +168,6 @@ export const swapScene = (targetScene: string) => {
 
 	camera.position.set(newPos[0], newPos[1], newPos[2]);
 	camera.rotation.set(newRot[0], newRot[1], newRot[2]);
+
+	console.log('swapped to: ', targetScene);
 };

@@ -11,6 +11,9 @@ import ScanlineShader from '@/components/ScanlineShader.vue';
 
 import BlurryGlass from '@/components/AltShaders/BlurryGlass.vue';
 import BoxStyles from '@/components/AltShaders/BoxStyles.vue';
+
+import { swapScene } from '@/managers/threeSceneManager';
+swapScene(`ScreenView`);
 </script>
 
 <template>

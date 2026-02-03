@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { swapScene } from '@/managers/threeSceneManager';
+
+swapScene(`DeskView`);
 </script>
 
 <template>
