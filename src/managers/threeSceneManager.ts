@@ -144,10 +144,15 @@ type SceneData = {
 	rotation: number[];
 };
 
-const DeskView: SceneData = {
+const DeskCornerView: SceneData = {
 	path: '/',
 	position: [-2.4, 1.7, -0.25],
 	rotation: [-0.3, 0.9, 0],
+};
+const DeskView: SceneData = {
+	path: '/desktop-view',
+	position: [-3.6567, 1.23, -1.48],
+	rotation: [0, 1.5708, 0],
 };
 const ScreenView: SceneData = {
 	path: '/desktop-view',
@@ -158,6 +163,7 @@ const ScreenView: SceneData = {
 type SceneRecord = Record<string, SceneData>;
 
 const SceneIndex: SceneRecord = {
+	DeskCornerView,
 	DeskView,
 	ScreenView,
 };

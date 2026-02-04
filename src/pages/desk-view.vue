@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { swapScene } from '@/managers/threeSceneManager';
 
-swapScene(`DeskCornerView`);
+swapScene(`DeskView`);
 </script>
 
 <template>
 	<div class="about">
 		<h2>About</h2>
-		<RouterLink to="/desk-view"
-			><button @click="swapScene('DeskView')">Start Computer</button></RouterLink
+		<RouterLink to="/desktop-view"
+			><button @click="swapScene('ScreenView')">Start Computer</button></RouterLink
 		>
 	</div>
 </template>
