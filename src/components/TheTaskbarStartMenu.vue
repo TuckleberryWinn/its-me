@@ -6,6 +6,11 @@ const { x, y, isOutside } = useMouseInElement();
 import TheTitleColumn from './TheTaskbarStartMenu/TheTitleColumn.vue';
 import MenuItem from './TheTaskbarStartMenu/MenuItem.vue';
 import GridMenu from './TheTaskbarStartMenu/GridMenu.vue';
+import useWindowData from '@/composables/useWindowData';
+import { swapScene } from '@/managers/threeSceneManager';
+
+const startMenuList = ref();
+const { width, height } = useWindowData(startMenuList);
 
 type Menu = {
 	title: string;
@@ -57,7 +62,10 @@ const styleObject = ref({
 
 <template>
 	<div class="start-container">
-		<div class="pillar-list">
+		<div
+			class="pillar-list"
+			ref="startMenuList"
+		>
 			<TheTitleColumn />
 			<div
 				class="start-menu-list"
@@ -71,12 +79,20 @@ const styleObject = ref({
 					v-bind="{ activeMenu }"
 					@click="clickMenuItem(item.title)"
 				/>
-				<span
-					class="hover-effect"
-					:style="{ left: `${styleObject.left}px`, bottom: `${styleObject.bottom}px` }"
-					:class="{ hidden: !hoverEffectOnMouse }"
-				/>
+				<div class="system-buttons">
+					<RouterLink to="/desk-view">
+						<button
+							class="system-button-power"
+							@click="swapScene('DeskView')"
+						></button>
+					</RouterLink>
+				</div>
 			</div>
+			<!-- <span
+				class="hover-effect"
+				:style="{ left: `${styleObject.left}px`, bottom: `${styleObject.bottom}px` }"
+				:class="{ hidden: !hoverEffectOnMouse }"
+			/> -->
 		</div>
 		<GridMenu />
 	</div>
@@ -84,17 +100,13 @@ const styleObject = ref({
 
 <style scoped>
 .start-container {
-	display: flex;
-	flex-direction: row;
-	align-items: flex-end;
-	overflow: visible;
 }
 .pillar-list {
-	backdrop-filter: blur(10px);
+	backdrop-filter: blur(6px);
 	background-color: rgba(40, 27, 67, 0.621);
 	border-right: 5px groove rgba(0, 255, 212, 0.9);
 	border-top: 5px groove rgba(0, 255, 212, 0.9);
-	height: 300px;
+	height: 360px;
 	display: flex;
 }
 
@@ -103,13 +115,27 @@ const styleObject = ref({
 	background-color: rgba(137, 43, 226, 0.238);
 	position: relative;
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	overflow: visible;
 }
 
 .menu-item {
 	z-index: 3;
 	position: relative;
+}
+
+.system-button-power {
+	width: 2rem;
+	height: 2rem;
+	margin: 0.5rem;
+	border-radius: 0.3rem;
+	background-color: rgba(160, 6, 6, 0.808);
+	border: solid 0.2rem rgba(255, 0, 0, 0.836);
+}
+
+.system-button-power:hover {
+	background-color: rgb(218, 7, 7);
+	border: solid 0.2rem rgba(255, 0, 0);
 }
 
 .hover-effect {
