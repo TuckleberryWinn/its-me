@@ -63,6 +63,7 @@ let width;
 let height;
 const minimumFOV = Math.PI / 4;
 const maximumFOV = Math.PI / 6;
+const targetAR = 16 / 9;
 
 // const deg = Math.PI / 180;
 const resize = () => {
@@ -76,12 +77,13 @@ const resize = () => {
 		const aspect = width / height;
 		const currentAspect = window.innerWidth / window.innerHeight;
 		const fov =
-			(currentAspect >= 16 / 9
+			(currentAspect >= targetAR
 				? maximumFOV
-				: 2 * Math.atan(Math.tan(minimumFOV / 2) / currentAspect)) /
+				: 2 * Math.atan(Math.tan(minimumFOV / targetAR) / currentAspect)) /
 			(Math.PI / 180);
 		cameraData.value.currentFOV = fov;
-		// console.log('current FOV', cameraData.value.currentFOV);
+		console.log('current FOV', cameraData.value.currentFOV);
+		camera.fov = cameraData.value.currentFOV;
 		camera.aspect = aspect;
 		camera.updateProjectionMatrix();
 		renderer.setPixelRatio(dpr);
