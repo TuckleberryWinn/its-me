@@ -17,10 +17,10 @@ Object.assign(THREE.ShaderChunk, customShaderChunks);
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
+const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 500);
 camera.rotation.order = 'YXZ';
 export const cameraData = ref({
-	currentFOV: 45,
+	currentFOV: 30,
 	position: [-2, 1.6, -1.48],
 	rotation: [-0.3, 1.5708, 0],
 });
@@ -61,8 +61,8 @@ scene.add(pointLight);
 
 let width;
 let height;
-const minimumFOV = Math.PI / 3.9;
-const maximumFOV = Math.PI / 6.78;
+const minimumFOV = Math.PI / 4;
+const maximumFOV = Math.PI / 6;
 
 // const deg = Math.PI / 180;
 const resize = () => {
@@ -81,7 +81,7 @@ const resize = () => {
 				: 2 * Math.atan(Math.tan(minimumFOV / 2) / currentAspect)) /
 			(Math.PI / 180);
 		cameraData.value.currentFOV = fov;
-		console.log('current FOV', cameraData.value.currentFOV);
+		// console.log('current FOV', cameraData.value.currentFOV);
 		camera.aspect = aspect;
 		camera.updateProjectionMatrix();
 		renderer.setPixelRatio(dpr);
@@ -151,13 +151,13 @@ const DeskCornerView: SceneData = {
 };
 const DeskView: SceneData = {
 	path: '/desktop-view',
-	position: [-3.6567, 1.23, -1.48],
+	position: [-3, 1.23, -1.48],
 	rotation: [0, 1.5708, 0],
 };
 const ScreenView: SceneData = {
 	path: '/desktop-view',
-	position: [-3.6567, 1.23, -1.48],
-	rotation: [0, 1.5708, 0],
+	position: [-3.765, 1.3, -1.48],
+	rotation: [-0.1, 1.5708, 0],
 };
 
 type SceneRecord = Record<string, SceneData>;
@@ -175,5 +175,5 @@ export const swapScene = (targetScene: string) => {
 	camera.position.set(newPos[0], newPos[1], newPos[2]);
 	camera.rotation.set(newRot[0], newRot[1], newRot[2]);
 
-	console.log('swapped to: ', targetScene);
+	console.log('swapped to: ', targetScene, camera);
 };
