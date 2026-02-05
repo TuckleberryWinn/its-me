@@ -6,15 +6,25 @@ swapScene(`DeskCornerView`);
 
 <template>
 	<div class="about">
-		<h2>About</h2>
-		<RouterLink to="/desk-view"
-			><button @click="swapScene('DeskView')">Start Computer</button></RouterLink
-		>
+		<RouterLink to="/desk-view">
+			<button
+				class="scene-nav-button button-sit-down"
+				@click="swapScene('DeskView')"
+			>
+				Sit Down
+			</button>
+		</RouterLink>
 	</div>
 </template>
 
-<style>
+<style scoped>
 .about {
-	background-color: rgba(92, 83, 83, 0.489);
+	height: 100%;
+}
+
+a > .button-sit-down {
+	position: absolute;
+	top: 60%;
+	right: 20%;
 }
 </style>

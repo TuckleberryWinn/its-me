@@ -7,14 +7,36 @@ swapScene(`DeskView`);
 <template>
 	<div class="about">
 		<h2>About</h2>
-		<RouterLink to="/desktop-view"
-			><button @click="swapScene('ScreenView')">Start Computer</button></RouterLink
-		>
+		<RouterLink to="/">
+			<button
+				class="scene-nav-button button-get-up"
+				@click="swapScene('DeskView')"
+			>
+				Get Up
+			</button>
+		</RouterLink>
+		<RouterLink to="/desktop-view">
+			<button
+				class="scene-nav-button button-start-pc"
+				@click="swapScene('ScreenView')"
+			>
+				Start Computer
+			</button>
+		</RouterLink>
 	</div>
 </template>
 
 <style>
 .about {
-	background-color: rgba(92, 83, 83, 0.489);
+}
+a > .button-start-pc {
+	position: absolute;
+	top: 50%;
+	right: 45%;
+}
+a > .button-get-up {
+	position: absolute;
+	bottom: 5%;
+	left: 10%;
 }
 </style>
