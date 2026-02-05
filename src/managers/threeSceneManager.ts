@@ -113,10 +113,6 @@ function cubeDance(dt: number) {
 	if (cube.rotation.y > 1) {
 		speed = -1;
 	}
-
-	// if (cube.rotation.y <= 0) {
-	// 	speed = 5;
-	// }
 	cube.rotation.y += speed * dt;
 }
 renderer.setAnimationLoop(animate);
@@ -158,7 +154,7 @@ const DeskView: SceneData = {
 };
 const ScreenView: SceneData = {
 	path: '/desktop-view',
-	position: [-3.765, 1.3, -1.48],
+	position: [-3.775, 1.2975, -1.48],
 	rotation: [-0.1, 1.5708, 0],
 };
 
