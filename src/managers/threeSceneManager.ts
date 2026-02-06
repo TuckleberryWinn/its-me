@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import type { ThisExpression } from 'typescript';
 import { ref, watch } from 'vue';
 
 const loadText = async (path: string): Promise<string> => {
@@ -35,7 +36,7 @@ loader.load('models/Blockout.glb', (gltf) => {
 	const newTexture = textureLoader.load('textures/BlockoutMaterial.png');
 	newTexture.flipY = false;
 	mesh.forEach((model) => {
-		(model as THREE.Mesh).material.map = newTexture;
+		((model as THREE.Mesh).material as THREE.MeshStandardMaterial).map = newTexture;
 	});
 	scene.add(gltf.scene);
 });
@@ -175,3 +176,21 @@ export const swapScene = (targetScene: string) => {
 
 	console.log('swapped to: ', targetScene, camera);
 };
+
+const rayCaster = new THREE.Raycaster();
+const tryCastRay = (ev: MouseEvent) => {
+	console.log(ev.clientX, window.innerHeight - ev.clientY);
+	const coords = new THREE.Vector2(
+		(ev.clientX / renderer.domElement.clientWidth) * 2 - 1,
+		((window.innerHeight - ev.clientY) / renderer.domElement.clientHeight) * 2 - 1,
+	);
+	rayCaster.setFromCamera(coords, camera);
+
+	const intersections = rayCaster.intersectObjects(scene.children, true);
+	if (intersections.length > 0) {
+		const nearTarget = intersections[0].object;
+		nearTarget.position.x += 0.25;
+	}
+};
+
+document.addEventListener('mousedown', tryCastRay);
