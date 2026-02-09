@@ -81,10 +81,7 @@ const styleObject = ref({
 				/>
 				<div class="system-buttons">
 					<RouterLink to="/desk-view">
-						<button
-							class="system-button-power"
-							@click="swapScene('DeskView')"
-						></button>
+						<button class="system-button-power"></button>
 					</RouterLink>
 				</div>
 			</div>

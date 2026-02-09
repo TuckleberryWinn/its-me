@@ -7,20 +7,10 @@ swapScene(`DeskView`);
 <template>
 	<div class="about">
 		<RouterLink to="/">
-			<button
-				class="scene-nav-button button-get-up"
-				@click="swapScene('DeskView')"
-			>
-				Get Up
-			</button>
+			<button class="scene-nav-button button-get-up">Get Up</button>
 		</RouterLink>
 		<RouterLink to="/desktop-view">
-			<button
-				class="scene-nav-button button-start-pc"
-				@click="swapScene('ScreenView')"
-			>
-				Start Computer
-			</button>
+			<button class="scene-nav-button button-start-pc">Start Computer</button>
 		</RouterLink>
 	</div>
 </template>

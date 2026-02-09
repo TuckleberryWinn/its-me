@@ -7,12 +7,7 @@ swapScene(`DeskDresserView`);
 <template>
 	<div class="about">
 		<RouterLink to="/">
-			<button
-				class="scene-nav-button button-to-computer"
-				@click="swapScene('DeskCornerView')"
-			>
-				Towards PC
-			</button>
+			<button class="scene-nav-button button-to-computer">Towards PC</button>
 		</RouterLink>
 	</div>
 </template>
