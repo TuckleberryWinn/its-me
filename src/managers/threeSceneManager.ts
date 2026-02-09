@@ -83,7 +83,7 @@ const resize = () => {
 				: 2 * Math.atan(Math.tan(minimumFOV / targetAR) / currentAspect)) /
 			(Math.PI / 180);
 		cameraData.value.currentFOV = fov;
-		console.log('current FOV', cameraData.value.currentFOV);
+		// console.log('current FOV', cameraData.value.currentFOV);
 		camera.fov = cameraData.value.currentFOV;
 		camera.aspect = aspect;
 		camera.updateProjectionMatrix();
@@ -189,8 +189,26 @@ const tryCastRay = (ev: MouseEvent) => {
 	const intersections = rayCaster.intersectObjects(scene.children, true);
 	if (intersections.length > 0) {
 		const nearTarget = intersections[0].object;
-		nearTarget.position.x += 0.25;
+		// nearTarget.position.x += 0.25;
+		console.log(nearTarget);
 	}
 };
 
 document.addEventListener('mousedown', tryCastRay);
+
+//Mouse movement visuals
+const mouseModel = scene.getObjectByName('Computer_Mouse001');
+const mouseOrigin = mouseModel!.position.clone();
+
+window.addEventListener('mousemove', (ev: MouseEvent) => {
+	const canvas = renderer.domElement;
+	const clientWidth = canvas.clientWidth;
+	const clientHeight = canvas.clientHeight;
+	const mouseX = ev.clientX / clientWidth - 0.5;
+	const mouseY = ev.clientY / clientHeight - 0.5;
+	console.log(mouseOrigin);
+
+	mouseModel!.position.x = mouseOrigin!.x + mouseY * 0.075;
+	mouseModel!.position.z = mouseOrigin!.z - mouseX * 0.075;
+});
+console.log(mouseModel);
