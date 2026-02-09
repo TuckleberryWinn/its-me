@@ -6,7 +6,6 @@ swapScene(`DeskView`);
 
 <template>
 	<div class="about">
-		<h2>About</h2>
 		<RouterLink to="/">
 			<button
 				class="scene-nav-button button-get-up"

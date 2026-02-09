@@ -14,6 +14,14 @@ swapScene(`DeskCornerView`);
 				Sit Down
 			</button>
 		</RouterLink>
+		<RouterLink to="/desk-dresser-view">
+			<button
+				class="scene-nav-button button-step-back"
+				@click="swapScene('DeskDresserView')"
+			>
+				Step Back
+			</button>
+		</RouterLink>
 	</div>
 </template>
 
@@ -24,7 +32,12 @@ swapScene(`DeskCornerView`);
 
 a > .button-sit-down {
 	position: absolute;
-	top: 60%;
+	bottom: 30%;
 	right: 20%;
+}
+a > .button-step-back {
+	position: absolute;
+	bottom: 5%;
+	left: 35%;
 }
 </style>

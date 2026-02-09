@@ -41,7 +41,7 @@ loader.load('models/Blockout.glb', (gltf) => {
 	scene.add(gltf.scene);
 });
 
-const geometry = new THREE.BoxGeometry(0.2, 2.8, 4);
+const geometry = new THREE.BoxGeometry(0.35, 1.25, 0.35);
 const fragmentShader = await loadText('./shaders/test.frag');
 const vertexShader = await loadText('./shaders/worldSpace.vert');
 const uniforms = {
@@ -54,6 +54,7 @@ const material = new THREE.ShaderMaterial({
 	uniforms,
 });
 const cube = new THREE.Mesh(geometry, material);
+cube.position.set(-1.9, 1.6, -2.25);
 scene.add(cube);
 
 const pointLight = new THREE.PointLight(0xffffff, 60, 30, 2);
@@ -158,6 +159,11 @@ const ScreenView: SceneData = {
 	position: [-3.775, 1.2975, -1.48],
 	rotation: [-0.1, 1.5708, 0],
 };
+const DeskDresserView: SceneData = {
+	path: '/desktop-dresser-view',
+	position: [-2.4, 1.8, 2.6],
+	rotation: [-0.3, 0.2, 0],
+};
 
 type SceneRecord = Record<string, SceneData>;
 
@@ -165,6 +171,7 @@ const SceneIndex: SceneRecord = {
 	DeskCornerView,
 	DeskView,
 	ScreenView,
+	DeskDresserView,
 };
 
 export const swapScene = (targetScene: string) => {
@@ -189,7 +196,6 @@ const tryCastRay = (ev: MouseEvent) => {
 	const intersections = rayCaster.intersectObjects(scene.children, true);
 	if (intersections.length > 0) {
 		const nearTarget = intersections[0].object;
-		// nearTarget.position.x += 0.25;
 		console.log(nearTarget);
 	}
 };
@@ -206,7 +212,6 @@ window.addEventListener('mousemove', (ev: MouseEvent) => {
 	const clientHeight = canvas.clientHeight;
 	const mouseX = ev.clientX / clientWidth - 0.5;
 	const mouseY = ev.clientY / clientHeight - 0.5;
-	console.log(mouseOrigin);
 
 	mouseModel!.position.x = mouseOrigin!.x + mouseY * 0.075;
 	mouseModel!.position.z = mouseOrigin!.z - mouseX * 0.075;
