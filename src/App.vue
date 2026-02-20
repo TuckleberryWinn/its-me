@@ -3,8 +3,11 @@ import { RouterView } from 'vue-router';
 import { watch, ref, computed } from 'vue';
 import Cursor from './components/Cursor.vue';
 import { startScene, playScene, pauseScene } from '@/managers/threeSceneManager';
+import { setRaycastListeners } from './composables/useSceneRaycaster';
 import useWindowData from '@/composables/useWindowData';
 const { width, height } = useWindowData(ref(document.body));
+
+setRaycastListeners();
 
 startScene();
 if (width.value > 640) {

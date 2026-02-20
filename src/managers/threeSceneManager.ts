@@ -16,9 +16,14 @@ const customShaderChunks = {
 
 Object.assign(THREE.ShaderChunk, customShaderChunks);
 
-const scene = new THREE.Scene();
+export const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 500);
+export const camera = new THREE.PerspectiveCamera(
+	30,
+	window.innerWidth / window.innerHeight,
+	0.1,
+	500,
+);
 camera.rotation.order = 'YXZ';
 export const cameraData = ref({
 	currentFOV: 30,
@@ -26,7 +31,7 @@ export const cameraData = ref({
 	rotation: [-0.3, 1.5708, 0],
 });
 
-const renderer = new THREE.WebGLRenderer();
+export const renderer = new THREE.WebGLRenderer();
 
 const loader = new GLTFLoader();
 
@@ -184,36 +189,36 @@ export const swapScene = (targetScene: string) => {
 	console.log('swapped to: ', targetScene, camera);
 };
 
-const rayCaster = new THREE.Raycaster();
-const tryCastRay = (ev: MouseEvent) => {
-	console.log(ev.clientX, window.innerHeight - ev.clientY);
-	const coords = new THREE.Vector2(
-		(ev.clientX / renderer.domElement.clientWidth) * 2 - 1,
-		((window.innerHeight - ev.clientY) / renderer.domElement.clientHeight) * 2 - 1,
-	);
-	rayCaster.setFromCamera(coords, camera);
+// const rayCaster = new THREE.Raycaster();
+// const tryCastRay = (ev: MouseEvent) => {
+// 	console.log(ev.clientX, window.innerHeight - ev.clientY);
+// 	const coords = new THREE.Vector2(
+// 		(ev.clientX / renderer.domElement.clientWidth) * 2 - 1,
+// 		((window.innerHeight - ev.clientY) / renderer.domElement.clientHeight) * 2 - 1,
+// 	);
+// 	rayCaster.setFromCamera(coords, camera);
 
-	const intersections = rayCaster.intersectObjects(scene.children, true);
-	if (intersections.length > 0) {
-		const nearTarget = intersections[0].object;
-		console.log(nearTarget);
-	}
-};
+// 	const intersections = rayCaster.intersectObjects(scene.children, true);
+// 	if (intersections.length > 0) {
+// 		const nearTarget = intersections[0].object;
+// 		console.log(nearTarget);
+// 	}
+// };
 
-document.addEventListener('mousedown', tryCastRay);
+// document.addEventListener('mousedown', tryCastRay);
 
 //Mouse movement visuals
-const mouseModel = scene.getObjectByName('Computer_Mouse001');
-const mouseOrigin = mouseModel!.position.clone();
+// const mouseModel = scene.getObjectByName('Computer_Mouse001');
+// const mouseOrigin = mouseModel!.position.clone();
 
-window.addEventListener('mousemove', (ev: MouseEvent) => {
-	const canvas = renderer.domElement;
-	const clientWidth = canvas.clientWidth;
-	const clientHeight = canvas.clientHeight;
-	const mouseX = ev.clientX / clientWidth - 0.5;
-	const mouseY = ev.clientY / clientHeight - 0.5;
+// window.addEventListener('mousemove', (ev: MouseEvent) => {
+// 	const canvas = renderer.domElement;
+// 	const clientWidth = canvas.clientWidth;
+// 	const clientHeight = canvas.clientHeight;
+// 	const mouseX = ev.clientX / clientWidth - 0.5;
+// 	const mouseY = ev.clientY / clientHeight - 0.5;
 
-	mouseModel!.position.x = mouseOrigin!.x + mouseY * 0.075;
-	mouseModel!.position.z = mouseOrigin!.z - mouseX * 0.075;
-});
-console.log(mouseModel);
+// 	mouseModel!.position.x = mouseOrigin!.x + mouseY * 0.075;
+// 	mouseModel!.position.z = mouseOrigin!.z - mouseX * 0.075;
+// });
+// console.log(mouseModel);
