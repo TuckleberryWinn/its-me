@@ -6,7 +6,53 @@ export const mouseOverObject = ref<string>('');
 export const leftClickSnapshot = ref<string>('');
 export const rightClickSnapshot = ref<string>('');
 
-export const rayCaster = new THREE.Raycaster();
+type RaycastCallback = {
+	[key: string]: () => void;
+};
+
+type CallbackLibrary = {
+	onFocus: RaycastCallback;
+	onUnfocus: RaycastCallback;
+	onLeftMouseDown: RaycastCallback;
+	onLeftMouseUp: RaycastCallback;
+	onRightMouseDown: RaycastCallback;
+	onRightMouseUp: RaycastCallback;
+};
+
+const activeObjectCallbacks: CallbackLibrary = {
+	onFocus: {
+		Floor017: () => {
+			console.log('Gain Focus');
+		},
+	},
+	onUnfocus: {
+		Floor017: () => {
+			console.log('Lose Focus');
+		},
+	},
+	onLeftMouseDown: {
+		Floor017: () => {
+			console.log('L Mouse Down');
+		},
+	},
+	onLeftMouseUp: {
+		Floor017: () => {
+			console.log('L Mouse Up');
+		},
+	},
+	onRightMouseDown: {
+		Floor017: () => {
+			console.log('R Mouse Down');
+		},
+	},
+	onRightMouseUp: {
+		Floor017: () => {
+			console.log('R Mouse Up');
+		},
+	},
+};
+
+const rayCaster = new THREE.Raycaster();
 
 const hoverRaycast = (ev: MouseEvent) => {
 	const coords = new THREE.Vector2(
@@ -20,26 +66,56 @@ const hoverRaycast = (ev: MouseEvent) => {
 		mouseOverObject.value = intersections[0].object.name;
 	}
 };
+
 const clickDownRaycast = (ev: MouseEvent) => {
 	if (ev.button == 0) {
 		//left click
 		leftClickSnapshot.value = mouseOverObject.value;
+		if (leftClickSnapshot.value in activeObjectCallbacks.onLeftMouseDown) {
+			activeObjectCallbacks.onLeftMouseDown[leftClickSnapshot.value]();
+		}
 	} else if (ev.button == 2) {
 		//right click
 		rightClickSnapshot.value = mouseOverObject.value;
+		if (rightClickSnapshot.value in activeObjectCallbacks.onRightMouseDown) {
+			activeObjectCallbacks.onRightMouseDown[rightClickSnapshot.value]();
+		}
 	}
 };
+
 const clickUpRaycast = (ev: MouseEvent) => {
-	let clickedObjects: string = '';
 	if (ev.button == 0 && leftClickSnapshot.value == mouseOverObject.value) {
 		//left click
+		if (leftClickSnapshot.value in activeObjectCallbacks.onLeftMouseUp) {
+			activeObjectCallbacks.onLeftMouseUp[leftClickSnapshot.value]();
+		}
 		leftClickSnapshot.value = '';
 	} else if (ev.button == 2 && rightClickSnapshot.value == mouseOverObject.value) {
 		//right click
+		if (rightClickSnapshot.value in activeObjectCallbacks.onRightMouseUp) {
+			activeObjectCallbacks.onRightMouseUp[rightClickSnapshot.value]();
+		}
 		rightClickSnapshot.value = '';
 	}
-	console.log(ev.button, clickedObjects);
 };
+
+const onObjectFocus = (object: string) => {
+	if (object in activeObjectCallbacks.onFocus) {
+		activeObjectCallbacks.onFocus[object]();
+	}
+};
+
+const onObjectDefocus = (object: string) => {
+	if (object in activeObjectCallbacks.onUnfocus) {
+		activeObjectCallbacks.onUnfocus[object]();
+	}
+};
+
+//Watches the objects under mouse raycast and sends updates when focus is gained/lost in 3D space
+watch(mouseOverObject, (newVal, oldVal) => {
+	onObjectDefocus(oldVal);
+	onObjectFocus(newVal);
+});
 
 export const setRaycastListeners = () => {
 	window.addEventListener('mousemove', hoverRaycast);
@@ -49,19 +125,6 @@ export const setRaycastListeners = () => {
 		ev.preventDefault();
 	});
 };
-
-export const onObjectFocus = (object: string) => {
-	console.log('add to tracked: ', object);
-};
-export const onObjectDefocus = (object: string) => {
-	console.log('mark untracked: ', object);
-};
-
-//Watches the objects under mouse raycast and sends updates when focus is gained/lost in 3D space
-watch(mouseOverObject, (newVal, oldVal) => {
-	onObjectDefocus(oldVal);
-	onObjectFocus(newVal);
-});
 
 const mouseModel = scene.getObjectByName('Computer_Mouse001');
 const mouseOrigin = mouseModel!.position.clone();
@@ -76,4 +139,5 @@ window.addEventListener('mousemove', (ev: MouseEvent) => {
 	mouseModel!.position.x = mouseOrigin!.x + mouseY * 0.075;
 	mouseModel!.position.z = mouseOrigin!.z - mouseX * 0.075;
 });
+
 console.log(mouseModel);
