@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import { ref, watch } from 'vue';
 import { camera, renderer, scene } from '../managers/threeSceneManager';
 
-export const mouseOverObject = ref<string[]>([]);
-export const leftClickSnapshot = ref<string[]>([]);
-export const rightClickSnapshot = ref<string[]>([]);
+export const mouseOverObject = ref<string>('');
+export const leftClickSnapshot = ref<string>('');
+export const rightClickSnapshot = ref<string>('');
 
 export const rayCaster = new THREE.Raycaster();
 
@@ -16,8 +16,8 @@ const hoverRaycast = (ev: MouseEvent) => {
 	rayCaster.setFromCamera(coords, camera);
 
 	const intersections = rayCaster.intersectObjects(scene.children, true);
-	if (intersections) {
-		mouseOverObject.value = [...new Set(intersections.map((x) => x.object.name))];
+	if (intersections.length > 0) {
+		mouseOverObject.value = intersections[0].object.name;
 	}
 };
 const clickDownRaycast = (ev: MouseEvent) => {
@@ -30,16 +30,13 @@ const clickDownRaycast = (ev: MouseEvent) => {
 	}
 };
 const clickUpRaycast = (ev: MouseEvent) => {
-	let clickedObjects: string[] = [];
-	const hoverSet = new Set(mouseOverObject.value);
-	if (ev.button == 0) {
+	let clickedObjects: string = '';
+	if (ev.button == 0 && leftClickSnapshot.value == mouseOverObject.value) {
 		//left click
-		clickedObjects = [...new Set(leftClickSnapshot.value.filter((x) => hoverSet.has(x)))];
-		leftClickSnapshot.value = [];
-	} else if (ev.button == 2) {
+		leftClickSnapshot.value = '';
+	} else if (ev.button == 2 && rightClickSnapshot.value == mouseOverObject.value) {
 		//right click
-		clickedObjects = [...new Set(rightClickSnapshot.value.filter((x) => hoverSet.has(x)))];
-		rightClickSnapshot.value = [];
+		rightClickSnapshot.value = '';
 	}
 	console.log(ev.button, clickedObjects);
 };
@@ -61,19 +58,9 @@ export const onObjectDefocus = (object: string) => {
 };
 
 //Watches the objects under mouse raycast and sends updates when focus is gained/lost in 3D space
-watch(mouseOverObject, (oldVal, newVal) => {
-	const gainedFocus = oldVal.filter((x) => !newVal.includes(x));
-	if (gainedFocus.length > 0) {
-		gainedFocus.forEach((x) => {
-			onObjectFocus(x);
-		});
-	}
-	const lostFocus = newVal.filter((x) => !oldVal.includes(x));
-	if (lostFocus.length > 0) {
-		lostFocus.forEach((x) => {
-			onObjectDefocus(x);
-		});
-	}
+watch(mouseOverObject, (newVal, oldVal) => {
+	onObjectDefocus(oldVal);
+	onObjectFocus(newVal);
 });
 
 const mouseModel = scene.getObjectByName('Computer_Mouse001');
