@@ -1,7 +1,22 @@
 <script lang="ts" setup>
-import { swapScene } from '@/managers/threeSceneManager';
+import { type SceneData, swapScene } from '@/managers/threeSceneManager';
+import { type CallbackLibrary, setNewSceneCallbacks } from '@/composables/useSceneRaycaster';
 
-swapScene(`DeskView`);
+const SceneCallbacks: CallbackLibrary = {
+	onFocus: {},
+	onUnfocus: {},
+	onLeftMouseDown: {},
+	onLeftMouseUp: {},
+	onRightMouseDown: {},
+	onRightMouseUp: {},
+};
+setNewSceneCallbacks(SceneCallbacks);
+
+const CameraData: SceneData = {
+	position: [-3, 1.23, -1.48],
+	rotation: [0, 1.5708, 0],
+};
+swapScene(CameraData);
 </script>
 
 <template>
@@ -16,8 +31,6 @@ swapScene(`DeskView`);
 </template>
 
 <style>
-.about {
-}
 a > .button-start-pc {
 	position: absolute;
 	top: 50%;

@@ -24,7 +24,6 @@ watch([width, height], () => {
 	}
 });
 
-//transform: `translate3d(200px, 0, -${height.value}px)`
 const targetAspectRatio = 16 / 9;
 const contentSpaceStyle = computed(() => ({
 	width:

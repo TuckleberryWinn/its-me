@@ -12,8 +12,24 @@ import ScanlineShader from '@/components/ScanlineShader.vue';
 import BlurryGlass from '@/components/AltShaders/BlurryGlass.vue';
 import BoxStyles from '@/components/AltShaders/BoxStyles.vue';
 
-import { swapScene } from '@/managers/threeSceneManager';
-swapScene(`ScreenView`);
+import { type SceneData, swapScene } from '@/managers/threeSceneManager';
+import { type CallbackLibrary, setNewSceneCallbacks } from '@/composables/useSceneRaycaster';
+
+const SceneCallbacks: CallbackLibrary = {
+	onFocus: {},
+	onUnfocus: {},
+	onLeftMouseDown: {},
+	onLeftMouseUp: {},
+	onRightMouseDown: {},
+	onRightMouseUp: {},
+};
+setNewSceneCallbacks(SceneCallbacks);
+
+const CameraData: SceneData = {
+	position: [-3.775, 1.2975, -1.48],
+	rotation: [-0.1, 1.5708, 0],
+};
+swapScene(CameraData);
 </script>
 
 <template>

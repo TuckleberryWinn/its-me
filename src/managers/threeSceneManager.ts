@@ -143,82 +143,17 @@ export const pauseScene = () => {
 	isRendering = false;
 };
 
-type SceneData = {
-	path: string;
+export type SceneData = {
 	position: number[];
 	rotation: number[];
 };
 
-const DeskCornerView: SceneData = {
-	path: '/',
-	position: [-2.4, 1.7, -0.25],
-	rotation: [-0.3, 0.9, 0],
-};
-const DeskView: SceneData = {
-	path: '/desktop-view',
-	position: [-3, 1.23, -1.48],
-	rotation: [0, 1.5708, 0],
-};
-const ScreenView: SceneData = {
-	path: '/desktop-view',
-	position: [-3.775, 1.2975, -1.48],
-	rotation: [-0.1, 1.5708, 0],
-};
-const DeskDresserView: SceneData = {
-	path: '/desktop-dresser-view',
-	position: [-2.4, 1.8, 2.6],
-	rotation: [-0.3, 0.2, 0],
-};
-
-type SceneRecord = Record<string, SceneData>;
-
-const SceneIndex: SceneRecord = {
-	DeskCornerView,
-	DeskView,
-	ScreenView,
-	DeskDresserView,
-};
-
-export const swapScene = (targetScene: string) => {
-	const newPos = SceneIndex[targetScene].position;
-	const newRot = SceneIndex[targetScene].rotation;
+export const swapScene = (targetScene: SceneData) => {
+	const newPos = targetScene.position;
+	const newRot = targetScene.rotation;
 
 	camera.position.set(newPos[0], newPos[1], newPos[2]);
 	camera.rotation.set(newRot[0], newRot[1], newRot[2]);
 
 	console.log('swapped to: ', targetScene, camera);
 };
-
-// const rayCaster = new THREE.Raycaster();
-// const tryCastRay = (ev: MouseEvent) => {
-// 	console.log(ev.clientX, window.innerHeight - ev.clientY);
-// 	const coords = new THREE.Vector2(
-// 		(ev.clientX / renderer.domElement.clientWidth) * 2 - 1,
-// 		((window.innerHeight - ev.clientY) / renderer.domElement.clientHeight) * 2 - 1,
-// 	);
-// 	rayCaster.setFromCamera(coords, camera);
-
-// 	const intersections = rayCaster.intersectObjects(scene.children, true);
-// 	if (intersections.length > 0) {
-// 		const nearTarget = intersections[0].object;
-// 		console.log(nearTarget);
-// 	}
-// };
-
-// document.addEventListener('mousedown', tryCastRay);
-
-//Mouse movement visuals
-// const mouseModel = scene.getObjectByName('Computer_Mouse001');
-// const mouseOrigin = mouseModel!.position.clone();
-
-// window.addEventListener('mousemove', (ev: MouseEvent) => {
-// 	const canvas = renderer.domElement;
-// 	const clientWidth = canvas.clientWidth;
-// 	const clientHeight = canvas.clientHeight;
-// 	const mouseX = ev.clientX / clientWidth - 0.5;
-// 	const mouseY = ev.clientY / clientHeight - 0.5;
-
-// 	mouseModel!.position.x = mouseOrigin!.x + mouseY * 0.075;
-// 	mouseModel!.position.z = mouseOrigin!.z - mouseX * 0.075;
-// });
-// console.log(mouseModel);

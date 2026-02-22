@@ -1,7 +1,22 @@
 <script lang="ts" setup>
-import { swapScene } from '@/managers/threeSceneManager';
+import { type CallbackLibrary, setNewSceneCallbacks } from '@/composables/useSceneRaycaster';
+import { type SceneData, swapScene } from '@/managers/threeSceneManager';
 
-swapScene(`DeskDresserView`);
+const SceneCallbacks: CallbackLibrary = {
+	onFocus: {},
+	onUnfocus: {},
+	onLeftMouseDown: {},
+	onLeftMouseUp: {},
+	onRightMouseDown: {},
+	onRightMouseUp: {},
+};
+setNewSceneCallbacks(SceneCallbacks);
+
+const CameraData: SceneData = {
+	position: [-2.4, 1.8, 2.6],
+	rotation: [-0.3, 0.2, 0],
+};
+swapScene(CameraData);
 </script>
 
 <template>
@@ -13,10 +28,6 @@ swapScene(`DeskDresserView`);
 </template>
 
 <style scoped>
-.about {
-	height: 100%;
-}
-
 a > .button-to-computer {
 	position: absolute;
 	bottom: 30%;

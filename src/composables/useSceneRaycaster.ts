@@ -6,11 +6,11 @@ export const mouseOverObject = ref<string>('');
 export const leftClickSnapshot = ref<string>('');
 export const rightClickSnapshot = ref<string>('');
 
-type RaycastCallback = {
+export type RaycastCallback = {
 	[key: string]: () => void;
 };
 
-type CallbackLibrary = {
+export type CallbackLibrary = {
 	onFocus: RaycastCallback;
 	onUnfocus: RaycastCallback;
 	onLeftMouseDown: RaycastCallback;
@@ -19,7 +19,7 @@ type CallbackLibrary = {
 	onRightMouseUp: RaycastCallback;
 };
 
-const activeObjectCallbacks: CallbackLibrary = {
+let activeObjectCallbacks: CallbackLibrary = {
 	onFocus: {
 		Floor017: () => {
 			console.log('Gain Focus');
@@ -124,6 +124,10 @@ export const setRaycastListeners = () => {
 	window.addEventListener('contextmenu', (ev: MouseEvent) => {
 		ev.preventDefault();
 	});
+};
+
+export const setNewSceneCallbacks = (sceneLibrary: CallbackLibrary) => {
+	activeObjectCallbacks = sceneLibrary;
 };
 
 const mouseModel = scene.getObjectByName('Computer_Mouse001');
