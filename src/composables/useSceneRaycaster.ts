@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { ref, watch } from 'vue';
-import { camera, renderer, scene } from '../managers/threeSceneManager';
+import { camera, renderer, activeScene } from '../managers/threeSceneManager';
 
 export const mouseOverObject = ref<string>('');
 export const leftClickSnapshot = ref<string>('');
@@ -61,7 +61,7 @@ const hoverRaycast = (ev: MouseEvent) => {
 	);
 	rayCaster.setFromCamera(coords, camera);
 
-	const intersections = rayCaster.intersectObjects(scene.children, true);
+	const intersections = rayCaster.intersectObjects(activeScene.children, true);
 	if (intersections.length > 0) {
 		mouseOverObject.value = intersections[0].object.name;
 	}
@@ -130,7 +130,7 @@ export const setNewSceneCallbacks = (sceneLibrary: CallbackLibrary) => {
 	activeObjectCallbacks = sceneLibrary;
 };
 
-const mouseModel = scene.getObjectByName('Computer_Mouse001');
+const mouseModel = activeScene.getObjectByName('Computer_Mouse001');
 const mouseOrigin = mouseModel!.position.clone();
 
 window.addEventListener('mousemove', (ev: MouseEvent) => {

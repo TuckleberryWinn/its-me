@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import type { ThisExpression } from 'typescript';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
+import { loadedObjects } from '@/composables/useSceneObjects';
 
 const loadText = async (path: string): Promise<string> => {
 	return (await fetch(path)).text();
@@ -16,7 +16,7 @@ const customShaderChunks = {
 
 Object.assign(THREE.ShaderChunk, customShaderChunks);
 
-export const scene = new THREE.Scene();
+export const activeScene = new THREE.Scene();
 
 export const camera = new THREE.PerspectiveCamera(
 	30,
@@ -25,10 +25,20 @@ export const camera = new THREE.PerspectiveCamera(
 	500,
 );
 camera.rotation.order = 'YXZ';
-export const cameraData = ref({
+
+export type SceneData = {
+	position: number[];
+	rotation: number[];
+};
+
+type CameraData = SceneData & {
+	currentFOV: number;
+};
+
+export const cameraData = ref<CameraData>({
+	position: [],
+	rotation: [],
 	currentFOV: 30,
-	position: [-2, 1.6, -1.48],
-	rotation: [-0.3, 1.5708, 0],
 });
 
 export const renderer = new THREE.WebGLRenderer();
@@ -43,13 +53,13 @@ loader.load('models/Blockout.glb', (gltf) => {
 	mesh.forEach((model) => {
 		((model as THREE.Mesh).material as THREE.MeshStandardMaterial).map = newTexture;
 	});
-	scene.add(gltf.scene);
+	activeScene.add(gltf.scene);
 });
 
 const geometry = new THREE.BoxGeometry(0.35, 1.25, 0.35);
 const fragmentShader = await loadText('./shaders/test.frag');
 const vertexShader = await loadText('./shaders/worldSpace.vert');
-const uniforms = {
+export const uniforms = {
 	iTime: { value: 0 },
 	iResolution: { value: new THREE.Vector3() },
 };
@@ -60,11 +70,11 @@ const material = new THREE.ShaderMaterial({
 });
 const cube = new THREE.Mesh(geometry, material);
 cube.position.set(-1.9, 1.6, -2.25);
-scene.add(cube);
+activeScene.add(cube);
 
 const pointLight = new THREE.PointLight(0xffffff, 60, 30, 2);
 pointLight.position.set(-0.2, 1.62, 1.1);
-scene.add(pointLight);
+activeScene.add(pointLight);
 
 let width;
 let height;
@@ -98,9 +108,21 @@ const resize = () => {
 	}
 };
 
-console.log(scene);
+console.log(activeScene);
 
 const clock = new THREE.Clock();
+
+export type FrameRequest = {
+	[key: string]: (arg: number) => void;
+};
+let renderingQueue: FrameRequest = {};
+
+export const addToRenderingQueue = (name: string, animation: (arg: number) => void) => {
+	renderingQueue[name] = animation;
+};
+export const removeFromRenderingQueue = (name: string) => {
+	delete renderingQueue[name];
+};
 
 let isRendering = false;
 function animate(time: number) {
@@ -111,7 +133,11 @@ function animate(time: number) {
 	resize();
 	uniforms.iResolution.value.set(1, 1, 1);
 	uniforms.iTime.value = time / 1000;
-	renderer.render(scene, camera);
+	renderer.render(activeScene, camera);
+	for (const object in renderingQueue) {
+		renderingQueue[object](dt);
+		console.log(object);
+	}
 	cubeDance(dt);
 }
 
@@ -143,15 +169,16 @@ export const pauseScene = () => {
 	isRendering = false;
 };
 
-export type SceneData = {
-	position: number[];
-	rotation: number[];
+const clearLoadedObjects = () => {
+	for (const object in loadedObjects) {
+		loadedObjects[object]();
+	}
 };
 
 export const swapScene = (targetScene: SceneData) => {
 	const newPos = targetScene.position;
 	const newRot = targetScene.rotation;
-
+	clearLoadedObjects();
 	camera.position.set(newPos[0], newPos[1], newPos[2]);
 	camera.rotation.set(newRot[0], newRot[1], newRot[2]);
 

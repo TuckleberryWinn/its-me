@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { type CallbackLibrary, setNewSceneCallbacks } from '@/composables/useSceneRaycaster';
 import { type SceneData, swapScene } from '@/managers/threeSceneManager';
+import { loadDresserShaderCube } from '@/composables/useSceneObjects';
+import { onUnmounted } from 'vue';
 
 const SceneCallbacks: CallbackLibrary = {
 	onFocus: {},
@@ -17,6 +19,7 @@ const CameraData: SceneData = {
 	rotation: [-0.3, 0.2, 0],
 };
 swapScene(CameraData);
+loadDresserShaderCube();
 </script>
 
 <template>
