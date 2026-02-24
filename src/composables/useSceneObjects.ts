@@ -21,6 +21,7 @@ Object.assign(THREE.ShaderChunk, customShaderChunks);
 
 const geometry = new THREE.BoxGeometry(0.35, 1.25, 0.35);
 const fragmentShader = await loadText('./shaders/test.frag');
+// const fragmentShader = await loadText('./shaders/wolfenstein.frag');
 const vertexShader = await loadText('./shaders/worldSpace.vert');
 // const uniforms = {
 // 	iTime: { value: 0 },
@@ -43,9 +44,13 @@ export const loadDresserShaderCube = () => {
 		uniforms,
 	});
 	const cube = new THREE.Mesh(geometry, material);
+	const cube2 = new THREE.Mesh(geometry, material);
+
 	cube.name = DRESSER_CUBE_NAME;
+	cube2.name = DRESSER_CUBE_NAME + '2';
 	cube.position.set(-3.9, 1.6, -2.25);
-	activeScene.add(cube);
+	cube2.position.set(-1.9, 1.6, -2.25);
+	activeScene.add(cube, cube2);
 
 	loadedObjects[cube.name] = () => unloadMesh(cube);
 	let speed = 1;
@@ -54,7 +59,11 @@ export const loadDresserShaderCube = () => {
 			if (cube.rotation.y > 1) {
 				speed = -1;
 			}
-			cube.rotation.y += speed * dt;
+			if (cube.rotation.y < -1) {
+				speed = 1;
+			}
+			cube.rotation.y += (speed / 10) * dt;
+			cube2.rotation.y -= (speed / 10) * dt;
 		}
 	});
 };

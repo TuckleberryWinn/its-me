@@ -56,21 +56,12 @@ loader.load('models/Blockout.glb', (gltf) => {
 	activeScene.add(gltf.scene);
 });
 
-const geometry = new THREE.BoxGeometry(0.35, 1.25, 0.35);
 const fragmentShader = await loadText('./shaders/test.frag');
 const vertexShader = await loadText('./shaders/worldSpace.vert');
 export const uniforms = {
 	iTime: { value: 0 },
 	iResolution: { value: new THREE.Vector3() },
 };
-const material = new THREE.ShaderMaterial({
-	fragmentShader,
-	vertexShader,
-	uniforms,
-});
-const cube = new THREE.Mesh(geometry, material);
-cube.position.set(-1.9, 1.6, -2.25);
-activeScene.add(cube);
 
 const pointLight = new THREE.PointLight(0xffffff, 60, 30, 2);
 pointLight.position.set(-0.2, 1.62, 1.1);
@@ -104,7 +95,7 @@ const resize = () => {
 		camera.aspect = aspect;
 		camera.updateProjectionMatrix();
 		renderer.setPixelRatio(dpr);
-		renderer.setSize(clientWidth, clientHeight, false);
+		renderer.setSize(clientWidth / 8, clientHeight / 8, false);
 	}
 };
 
@@ -138,16 +129,8 @@ function animate(time: number) {
 		renderingQueue[object](dt);
 		console.log(object);
 	}
-	cubeDance(dt);
 }
 
-let speed = 1;
-function cubeDance(dt: number) {
-	if (cube.rotation.y > 1) {
-		speed = -1;
-	}
-	cube.rotation.y += speed * dt;
-}
 renderer.setAnimationLoop(animate);
 
 export const startScene = () => {
