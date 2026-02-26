@@ -90,16 +90,14 @@ const resize = () => {
 				: 2 * Math.atan(Math.tan(minimumFOV / targetAR) / currentAspect)) /
 			(Math.PI / 180);
 		cameraData.value.currentFOV = fov;
-		// console.log('current FOV', cameraData.value.currentFOV);
+
 		camera.fov = cameraData.value.currentFOV;
 		camera.aspect = aspect;
 		camera.updateProjectionMatrix();
 		renderer.setPixelRatio(dpr);
-		renderer.setSize(clientWidth / 8, clientHeight / 8, false);
+		renderer.setSize(clientWidth / 4, clientHeight / 4, true);
 	}
 };
-
-console.log(activeScene);
 
 const clock = new THREE.Clock();
 
