@@ -67,8 +67,9 @@ export const loadDresserShaderCube = () => {
 		}
 	});
 };
+
 const unloadMesh = (targetObject: THREE.Mesh) => {
 	removeFromRenderingQueue(targetObject.name);
 	activeScene.remove(targetObject);
-	console.log('unloading: ', DRESSER_CUBE_NAME);
+	console.log('unloading: ', targetObject);
 };
