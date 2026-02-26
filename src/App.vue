@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router';
 import { watch, ref, computed } from 'vue';
 import Cursor from './components/Cursor.vue';
+import MobileBio from '@/components/MobileBio.vue';
 import { startScene, playScene, pauseScene } from '@/managers/threeSceneManager';
 import { setRaycastListeners } from './composables/useSceneRaycaster';
 import useWindowData from '@/composables/useWindowData';
@@ -39,8 +40,9 @@ const contentSpaceStyle = computed(() => ({
 
 <template>
 	<div class="page">
+		<MobileBio class="view-mobile"></MobileBio>
 		<div
-			class="content-space"
+			class="content-space view-full"
 			:style="contentSpaceStyle"
 		>
 			<RouterView />
@@ -69,5 +71,22 @@ const contentSpaceStyle = computed(() => ({
 	min-height: 100%;
 	max-width: 100%;
 	max-height: 100%;
+}
+
+.view-full {
+	display: none;
+}
+.view-mobile {
+	display: flex;
+	height: 100%;
+}
+
+@media (min-width: 640px) {
+	.view-full {
+		display: block;
+	}
+	.view-mobile {
+		display: none;
+	}
 }
 </style>

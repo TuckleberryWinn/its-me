@@ -2,7 +2,6 @@
 import useWindowManager from '@/composables/useWindowManager';
 const { windows, taskbarTabs, appList } = useWindowManager();
 
-import MobileBio from '@/components/MobileBio.vue';
 import DesktopApp from '@/components/DesktopApp.vue';
 import TaskbarApp from '@/components/TaskbarApp.vue';
 import DesktopIcon from '@/components/DesktopIcon.vue';
@@ -34,7 +33,6 @@ swapScene(CameraData);
 
 <template>
 	<div id="top-level">
-		<MobileBio class="view-mobile"></MobileBio>
 		<div class="view-full">
 			<main class="main">
 				<BlurryGlass />
@@ -89,21 +87,5 @@ swapScene(CameraData);
 #top-level {
 	height: 100dvh;
 	width: 100dvw;
-}
-
-.view-full {
-	display: none;
-}
-.view-mobile {
-	display: flex;
-}
-
-@media (min-width: 640px) {
-	.view-full {
-		display: block;
-	}
-	.view-mobile {
-		display: none;
-	}
 }
 </style>
