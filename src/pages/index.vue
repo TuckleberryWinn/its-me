@@ -1,36 +1,37 @@
 <script lang="ts" setup>
-import { type SceneData, swapScene } from '@/managers/threeSceneManager';
+import { activeScene, type SceneData, swapScene } from '@/managers/threeSceneManager';
 import { type CallbackLibrary, setNewSceneCallbacks } from '@/composables/useSceneRaycaster';
 
 const SceneCallbacks: CallbackLibrary = {
 	onFocus: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('~Gain Focus');
 		},
 	},
 	onUnfocus: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('~Lose Focus');
 		},
 	},
 	onLeftMouseDown: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('~L Mouse Down');
 		},
 	},
 	onLeftMouseUp: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('~L Mouse Up');
 		},
 	},
 	onRightMouseDown: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('~R Mouse Down');
 		},
 	},
 	onRightMouseUp: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('~R Mouse Up');
+			// activeScene.getObjectByName('Bedroom_Floor');
 		},
 	},
 };

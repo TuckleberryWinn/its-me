@@ -21,32 +21,32 @@ export type CallbackLibrary = {
 
 let activeObjectCallbacks: CallbackLibrary = {
 	onFocus: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('Gain Focus');
 		},
 	},
 	onUnfocus: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('Lose Focus');
 		},
 	},
 	onLeftMouseDown: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('L Mouse Down');
 		},
 	},
 	onLeftMouseUp: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('L Mouse Up');
 		},
 	},
 	onRightMouseDown: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('R Mouse Down');
 		},
 	},
 	onRightMouseUp: {
-		Floor017: () => {
+		Bedroom_Floor: () => {
 			console.log('R Mouse Up');
 		},
 	},
@@ -130,8 +130,8 @@ export const setNewSceneCallbacks = (sceneLibrary: CallbackLibrary) => {
 	activeObjectCallbacks = sceneLibrary;
 };
 
-const mouseModel = activeScene.getObjectByName('Computer_Mouse001');
-const mouseOrigin = mouseModel!.position.clone();
+const mouseModel = activeScene.getObjectByName('Computer_Mouse');
+const mouseOrigin = mouseModel.position.clone();
 
 window.addEventListener('mousemove', (ev: MouseEvent) => {
 	const canvas = renderer.domElement;
