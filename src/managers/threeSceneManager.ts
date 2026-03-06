@@ -2,9 +2,10 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { ref } from 'vue';
 import { loadedObjects } from '@/composables/useSceneObjects';
-import { EffectComposer } from 'three/examples/jsm/Addons.js';
+import { EffectComposer, ShaderPass } from 'three/examples/jsm/Addons.js';
 import { RenderPass } from 'three/examples/jsm/Addons.js';
 import { OutlinePass } from 'three/examples/jsm/Addons.js';
+import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 
 const loadText = async (path: string): Promise<string> => {
 	return (await fetch(path)).text();
@@ -54,6 +55,8 @@ renderer.setClearColor(0xffffff, 0);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const composer = new EffectComposer(renderer);
+composer.setPixelRatio(window.devicePixelRatio);
+composer.setSize(window.innerWidth, window.innerHeight);
 
 const renderPass = new RenderPass(activeScene, camera);
 composer.addPass(renderPass);
@@ -63,15 +66,19 @@ export let outlinePass = new OutlinePass(
 	activeScene,
 	camera,
 );
+
 outlinePass.selectedObjects = [];
 outlinePass.edgeStrength = 5;
 outlinePass.edgeGlow = 0.9;
 outlinePass.edgeThickness = 4;
-outlinePass.pulsePeriod = 9;
+outlinePass.pulsePeriod = 6;
 outlinePass.visibleEdgeColor.set('#2e65e6');
-outlinePass.hiddenEdgeColor.set('#06d9c0');
+outlinePass.hiddenEdgeColor.set('#06d9c08a');
 
 composer.addPass(outlinePass);
+
+const gammaPass = new ShaderPass(GammaCorrectionShader);
+composer.addPass(gammaPass);
 
 const loader = new GLTFLoader();
 
@@ -93,7 +100,7 @@ export const uniforms = {
 	iResolution: { value: new THREE.Vector3() },
 };
 
-const pointLight = new THREE.PointLight(0xffffff, 60, 30, 2);
+const pointLight = new THREE.PointLight(0xffffff, 75, 30, 2);
 pointLight.position.set(-0.2, 1.62, 1.1);
 activeScene.add(pointLight);
 
@@ -125,7 +132,7 @@ const resize = () => {
 		camera.aspect = aspect;
 		camera.updateProjectionMatrix();
 		renderer.setPixelRatio(dpr);
-		renderer.setSize(clientWidth / 4, clientHeight / 4, true);
+		renderer.setSize(clientWidth / 3, clientHeight / 3, true);
 		outlinePass = new OutlinePass(
 			new THREE.Vector2(window.innerWidth, window.innerHeight),
 			activeScene,
