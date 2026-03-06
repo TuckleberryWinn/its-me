@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { ref } from 'vue';
 import { loadedObjects } from '@/composables/useSceneObjects';
+import { EffectComposer } from 'three/examples/jsm/Addons.js';
+import { RenderPass } from 'three/examples/jsm/Addons.js';
+import { OutlinePass } from 'three/examples/jsm/Addons.js';
 
 const loadText = async (path: string): Promise<string> => {
 	return (await fetch(path)).text();
@@ -42,6 +45,33 @@ export const cameraData = ref<CameraData>({
 });
 
 export const renderer = new THREE.WebGLRenderer();
+renderer.shadowMap.enabled = true;
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.toneMapping = 0;
+renderer.toneMappingExposure = 1;
+renderer.toneMapping = THREE.NoToneMapping;
+renderer.setClearColor(0xffffff, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const composer = new EffectComposer(renderer);
+
+const renderPass = new RenderPass(activeScene, camera);
+composer.addPass(renderPass);
+
+export let outlinePass = new OutlinePass(
+	new THREE.Vector2(window.innerWidth, window.innerHeight),
+	activeScene,
+	camera,
+);
+outlinePass.selectedObjects = [];
+outlinePass.edgeStrength = 5;
+outlinePass.edgeGlow = 0.9;
+outlinePass.edgeThickness = 4;
+outlinePass.pulsePeriod = 9;
+outlinePass.visibleEdgeColor.set('#2e65e6');
+outlinePass.hiddenEdgeColor.set('#06d9c0');
+
+composer.addPass(outlinePass);
 
 const loader = new GLTFLoader();
 
@@ -96,6 +126,11 @@ const resize = () => {
 		camera.updateProjectionMatrix();
 		renderer.setPixelRatio(dpr);
 		renderer.setSize(clientWidth / 4, clientHeight / 4, true);
+		outlinePass = new OutlinePass(
+			new THREE.Vector2(window.innerWidth, window.innerHeight),
+			activeScene,
+			camera,
+		);
 	}
 };
 
@@ -127,6 +162,7 @@ function animate(time: number) {
 		renderingQueue[object](dt);
 		console.log(object);
 	}
+	composer.render();
 }
 
 renderer.setAnimationLoop(animate);
@@ -136,7 +172,7 @@ export const startScene = () => {
 	const pageRef = document.getElementById('pageContent');
 	targetCanvas.className = 'threeCanvas';
 	document.body.insertBefore(targetCanvas, pageRef);
-	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setSize(window.innerWidth / 4, window.innerHeight / 4);
 	isRendering = true;
 };
 
