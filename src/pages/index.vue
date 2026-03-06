@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { activeScene, type SceneData, swapScene } from '@/managers/threeSceneManager';
 import { type CallbackLibrary, setNewSceneCallbacks } from '@/composables/useSceneRaycaster';
+import { testFunction } from '@/composables/useContextMaterials';
 
 const SceneCallbacks: CallbackLibrary = {
 	onFocus: {
@@ -31,7 +32,7 @@ const SceneCallbacks: CallbackLibrary = {
 	onRightMouseUp: {
 		Bedroom_Floor: () => {
 			console.log('~R Mouse Up');
-			// activeScene.getObjectByName('Bedroom_Floor');
+			testFunction();
 		},
 	},
 };
