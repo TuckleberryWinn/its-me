@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { ref, watch } from 'vue';
 import { camera, renderer, activeScene } from '../managers/threeSceneManager';
 import { outlinePass } from '../managers/threeSceneManager';
+import { updateOutlineShader } from './useContextMaterials';
 
 export const mouseOverObject = ref<string>('');
 export const leftClickSnapshot = ref<string>('');
@@ -64,7 +65,7 @@ const hoverRaycast = (ev: MouseEvent) => {
 
 	const intersections = rayCaster.intersectObjects(activeScene.children, true);
 	if (intersections.length > 0) {
-		outlinePass.selectedObjects = [intersections[0].object];
+		updateOutlineShader(intersections[0].object);
 		mouseOverObject.value = intersections[0].object.name;
 	}
 };
