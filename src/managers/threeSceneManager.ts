@@ -47,19 +47,19 @@ export const cameraData = ref<CameraData>({
 
 export const renderer = new THREE.WebGLRenderer();
 renderer.shadowMap.enabled = true;
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(1);
 renderer.toneMapping = 0;
 renderer.toneMappingExposure = 1;
 renderer.toneMapping = THREE.NoToneMapping;
 renderer.setClearColor(0xffffff, 0);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-const composer = new EffectComposer(renderer);
-composer.setPixelRatio(window.devicePixelRatio);
+export const composer = new EffectComposer(renderer);
+composer.setPixelRatio(1);
 composer.setSize(window.innerWidth, window.innerHeight);
 
 const renderPass = new RenderPass(activeScene, camera);
-composer.addPass(renderPass);
+const gammaPass = new ShaderPass(GammaCorrectionShader);
 
 export let outlinePass = new OutlinePass(
 	new THREE.Vector2(window.innerWidth, window.innerHeight),
@@ -68,17 +68,16 @@ export let outlinePass = new OutlinePass(
 );
 
 outlinePass.selectedObjects = [];
-outlinePass.edgeStrength = 5;
-outlinePass.edgeGlow = 0.9;
-outlinePass.edgeThickness = 4;
+outlinePass.edgeStrength = 12;
+outlinePass.edgeGlow = 0.5;
+outlinePass.edgeThickness = 8;
 outlinePass.pulsePeriod = 6;
 outlinePass.visibleEdgeColor.set('#2e65e6');
-outlinePass.hiddenEdgeColor.set('#06d9c08a');
+outlinePass.hiddenEdgeColor.set('#05143c');
 
-composer.addPass(outlinePass);
-
-const gammaPass = new ShaderPass(GammaCorrectionShader);
+composer.addPass(renderPass);
 composer.addPass(gammaPass);
+composer.addPass(outlinePass);
 
 const loader = new GLTFLoader();
 
@@ -111,14 +110,15 @@ const maximumFOV = Math.PI / 6;
 const targetAR = 16 / 9;
 
 // const deg = Math.PI / 180;
-const resize = () => {
+const resize = (forceRunAll: boolean, crunchScale: number) => {
 	const canvas = renderer.domElement;
 	const clientWidth = canvas.clientWidth;
 	const clientHeight = canvas.clientHeight;
-	const dpr = window.devicePixelRatio;
-	width = clientWidth * dpr;
-	height = clientHeight * dpr;
-	if (canvas.width !== width || canvas.height !== height) {
+	const dpr = 1;
+	width = Math.floor(clientWidth * dpr);
+	height = Math.floor(clientHeight * dpr);
+	if (canvas.width !== width || canvas.height !== height || forceRunAll) {
+		console.log('resize', forceRunAll, canvas.width, width, canvas.height, height);
 		const aspect = width / height;
 		const currentAspect = window.innerWidth / window.innerHeight;
 		const fov =
@@ -132,12 +132,7 @@ const resize = () => {
 		camera.aspect = aspect;
 		camera.updateProjectionMatrix();
 		renderer.setPixelRatio(dpr);
-		renderer.setSize(clientWidth / 3, clientHeight / 3, true);
-		outlinePass = new OutlinePass(
-			new THREE.Vector2(window.innerWidth, window.innerHeight),
-			activeScene,
-			camera,
-		);
+		renderer.setSize(clientWidth / crunchScale, clientHeight / crunchScale, true);
 	}
 };
 
@@ -156,12 +151,20 @@ export const removeFromRenderingQueue = (name: string) => {
 };
 
 let isRendering = false;
+let firstPass = true;
+const crunchScale: number = 1;
 function animate(time: number) {
+	if (firstPass) {
+		resize(true, crunchScale);
+		firstPass = false;
+		console.log('first pass');
+	}
+
 	if (!isRendering) return;
 
 	const dt = Math.min(0.05, clock.getDelta());
 
-	resize();
+	resize(false, crunchScale);
 	uniforms.iResolution.value.set(1, 1, 1);
 	uniforms.iTime.value = time / 1000;
 	renderer.render(activeScene, camera);
@@ -179,7 +182,7 @@ export const startScene = () => {
 	const pageRef = document.getElementById('pageContent');
 	targetCanvas.className = 'threeCanvas';
 	document.body.insertBefore(targetCanvas, pageRef);
-	renderer.setSize(window.innerWidth / 4, window.innerHeight / 4);
+	renderer.setSize(window.innerWidth, window.innerHeight);
 	isRendering = true;
 };
 
