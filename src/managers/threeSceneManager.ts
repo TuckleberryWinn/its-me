@@ -3,9 +3,9 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { ref } from 'vue';
 import { loadedObjects } from '@/composables/useSceneObjects';
 import { EffectComposer, ShaderPass } from 'three/examples/jsm/Addons.js';
-import { RenderPass } from 'three/examples/jsm/Addons.js';
-import { OutlinePass } from 'three/examples/jsm/Addons.js';
+import { RenderPass, OutlinePass } from 'three/examples/jsm/Addons.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
+import { RenderPixelatedPass } from 'three/addons/postprocessing/RenderPixelatedPass.js';
 
 const loadText = async (path: string): Promise<string> => {
 	return (await fetch(path)).text();
@@ -21,6 +21,7 @@ const customShaderChunks = {
 Object.assign(THREE.ShaderChunk, customShaderChunks);
 
 export const activeScene = new THREE.Scene();
+activeScene.background = new THREE.Color().set('#280231');
 
 export const camera = new THREE.PerspectiveCamera(
 	30,
@@ -61,23 +62,22 @@ composer.setSize(window.innerWidth, window.innerHeight);
 const renderPass = new RenderPass(activeScene, camera);
 const gammaPass = new ShaderPass(GammaCorrectionShader);
 
-export let outlinePass = new OutlinePass(
+const renderPixelatedPass = new RenderPixelatedPass(3, activeScene, camera);
+renderPixelatedPass.depthEdgeStrength = 0;
+renderPixelatedPass.normalEdgeStrength = 0;
+
+export let navOutlinePass = new OutlinePass(
 	new THREE.Vector2(window.innerWidth, window.innerHeight),
 	activeScene,
 	camera,
 );
 
-outlinePass.selectedObjects = [];
-outlinePass.edgeStrength = 12;
-outlinePass.edgeGlow = 0.5;
-outlinePass.edgeThickness = 8;
-outlinePass.pulsePeriod = 6;
-outlinePass.visibleEdgeColor.set('#2e65e6');
-outlinePass.hiddenEdgeColor.set('#05143c');
+navOutlinePass.selectedObjects = [];
 
 composer.addPass(renderPass);
+composer.addPass(renderPixelatedPass);
 composer.addPass(gammaPass);
-composer.addPass(outlinePass);
+composer.addPass(navOutlinePass);
 
 const loader = new GLTFLoader();
 
@@ -170,7 +170,6 @@ function animate(time: number) {
 	renderer.render(activeScene, camera);
 	for (const object in renderingQueue) {
 		renderingQueue[object](dt);
-		console.log(object);
 	}
 	composer.render();
 }

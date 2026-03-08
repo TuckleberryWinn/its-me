@@ -50,6 +50,8 @@ export const loadDresserShaderCube = () => {
 	cube2.name = DRESSER_CUBE_NAME + '2';
 	cube.position.set(-3.9, 1.6, -2.25);
 	cube2.position.set(-1.9, 1.6, -2.25);
+	cube.parent = activeScene;
+	cube2.parent = activeScene;
 	activeScene.add(cube, cube2);
 
 	loadedObjects[cube.name] = () => unloadMesh(cube);
