@@ -25,17 +25,28 @@ watch([width, height], () => {
 	}
 });
 
+const useFixedAspectRatio = ref(true);
+
 const targetAspectRatio = 16 / 9;
-const contentSpaceStyle = computed(() => ({
-	width:
-		width.value > height.value * targetAspectRatio
-			? `${height.value * targetAspectRatio}px`
-			: `${width.value}px`,
-	height:
-		width.value > height.value * targetAspectRatio
-			? `${height.value}px`
-			: `${width.value / targetAspectRatio}px`,
-}));
+const contentSpaceStyle = computed(() => {
+	if (useFixedAspectRatio.value) {
+		return {
+			width:
+				width.value > height.value * targetAspectRatio
+					? `${height.value * targetAspectRatio}px`
+					: `${width.value}px`,
+			height:
+				width.value > height.value * targetAspectRatio
+					? `${height.value}px`
+					: `${width.value / targetAspectRatio}px`,
+		};
+	} else {
+		return {
+			width: 'inherit',
+			height: 'inherit',
+		};
+	}
+});
 </script>
 
 <template>
