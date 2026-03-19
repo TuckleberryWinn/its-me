@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import { watch, ref, computed } from 'vue';
-import Cursor from './components/Cursor.vue';
-import MobileBio from '@/components/MobileBio.vue';
 import { startScene, playScene, pauseScene } from '@/managers/threeSceneManager';
 import { setRaycastListeners } from './composables/useSceneRaycaster';
 import useWindowData from '@/composables/useWindowData';
 const { width, height } = useWindowData(ref(document.body));
+import { useFixedAspectRatio } from './managers/sceneGlobals';
 
+import Cursor from './components/Cursor.vue';
+import MobileBio from '@/components/MobileBio.vue';
 setRaycastListeners();
 
 startScene();
@@ -24,8 +25,6 @@ watch([width, height], () => {
 		pauseScene();
 	}
 });
-
-const useFixedAspectRatio = ref(true);
 
 const targetAspectRatio = 16 / 9;
 const contentSpaceStyle = computed(() => {

@@ -80,7 +80,7 @@ const styleObject = ref({
 					@click="clickMenuItem(item.title)"
 				/>
 				<div class="system-buttons">
-					<RouterLink to="/desk-view">
+					<RouterLink to="/desktop-view">
 						<button class="system-button-power"></button>
 					</RouterLink>
 				</div>
