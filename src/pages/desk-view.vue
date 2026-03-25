@@ -13,7 +13,7 @@ const SceneCallbacks: CallbackLibrary = {
 setNewSceneCallbacks(SceneCallbacks);
 
 const CameraData: SceneData = {
-	position: [-3, 1.23, -1.48],
+	position: [-2.6, 1.23, -1.48],
 	rotation: [0, 1.5708, 0],
 };
 swapScene(CameraData);

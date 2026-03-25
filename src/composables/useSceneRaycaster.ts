@@ -148,3 +148,7 @@ window.addEventListener('mousemove', (ev: MouseEvent) => {
 });
 
 console.log(mouseModel);
+
+export const hoverNavigation = (partName: string) => {};
+export const hoverInspect = (partName: string) => {};
+export const hoverInteract = (partName: string) => {};

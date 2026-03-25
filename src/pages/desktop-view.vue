@@ -23,6 +23,9 @@ swapScene(CameraData);
 	<RouterLink to="/screen-emulator-view">
 		<button class="scene-nav-button button-login">Start Computer</button>
 	</RouterLink>
+	<RouterLink to="/desk-view">
+		<button class="scene-nav-button button-back-to-desk">Back to Desk</button>
+	</RouterLink>
 </template>
 
 <style scoped>
@@ -30,5 +33,10 @@ swapScene(CameraData);
 	position: absolute;
 	left: 40%;
 	top: 50%;
+}
+.button-back-to-desk {
+	position: absolute;
+	bottom: 5%;
+	left: 10%;
 }
 </style>
