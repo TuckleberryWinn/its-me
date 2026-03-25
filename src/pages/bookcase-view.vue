@@ -15,8 +15,8 @@ const SceneCallbacks: CallbackLibrary = {
 setNewSceneCallbacks(SceneCallbacks);
 
 const CameraData: SceneData = {
-	position: [-2.4, 1.8, 2.6],
-	rotation: [-0.3, 0.2, 0],
+	position: [-1.2, 1.8, 1.9],
+	rotation: [-0.25, 1.488, 0],
 };
 swapScene(CameraData);
 loadDresserShaderCube();
@@ -24,11 +24,8 @@ loadDresserShaderCube();
 
 <template>
 	<div class="about">
-		<RouterLink to="/">
+		<RouterLink to="/desk-dresser-view">
 			<button class="scene-nav-button button-to-computer">Towards PC</button>
-		</RouterLink>
-		<RouterLink to="/bookcase-view">
-			<button class="scene-nav-button button-to-bookcase">Towards Bookcase</button>
 		</RouterLink>
 	</div>
 </template>
@@ -36,12 +33,7 @@ loadDresserShaderCube();
 <style scoped>
 a > .button-to-computer {
 	position: absolute;
-	bottom: 50%;
-	left: 30%;
-}
-a > .button-to-bookcase {
-	position: absolute;
 	bottom: 30%;
-	left: 10%;
+	right: 10%;
 }
 </style>
