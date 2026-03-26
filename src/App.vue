@@ -9,6 +9,7 @@ import { useFixedAspectRatio } from './managers/sceneGlobals';
 
 import Cursor from './components/Cursor.vue';
 import MobileBio from '@/components/MobileBio.vue';
+import HoverTooltip from './components/HoverTooltip.vue';
 setRaycastListeners();
 
 startScene();
@@ -58,6 +59,7 @@ const contentSpaceStyle = computed(() => {
 			<RouterView />
 		</div>
 		<Cursor />
+		<HoverTooltip></HoverTooltip>
 	</div>
 </template>
 
@@ -71,6 +73,7 @@ const contentSpaceStyle = computed(() => {
 	/* background-color: rgba(240, 248, 255, 0.253); */
 	position: relative;
 	margin: auto auto;
+	overflow: visible;
 }
 .threeCanvas {
 	position: absolute;

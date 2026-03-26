@@ -2,7 +2,7 @@
 import { type CallbackLibrary, setNewSceneCallbacks } from '@/composables/useSceneRaycaster';
 import { type SceneData, swapScene } from '@/managers/threeSceneManager';
 import { loadDresserShaderCube } from '@/composables/useSceneObjects';
-import { onUnmounted } from 'vue';
+import ScreenEdgeNavigation from '@/components/ScreenEdgeNavigation.vue';
 
 const SceneCallbacks: CallbackLibrary = {
 	onFocus: {},
@@ -25,12 +25,16 @@ loadDresserShaderCube();
 <template>
 	<div class="about">
 		<RouterLink to="/desk-dresser-view">
+			<ScreenEdgeNavigation direction="bottom"></ScreenEdgeNavigation>
 			<button class="scene-nav-button button-to-computer">Towards PC</button>
 		</RouterLink>
 	</div>
 </template>
 
 <style scoped>
+.about {
+	overflow: visible;
+}
 a > .button-to-computer {
 	position: absolute;
 	bottom: 30%;
