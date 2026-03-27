@@ -13,6 +13,8 @@ const tooltipHalfWidth = ref(0);
 const tooltipOffsetHeight = ref(0);
 const tooltipRef = ref<HTMLElement | null>(null);
 
+const tooltipIsActive = ref(false);
+
 watch(
 	() => props.content,
 	(newVal, oldVal) => {
@@ -32,6 +34,7 @@ onMounted(() => {
 	<div
 		class="tooltip"
 		ref="tooltipRef"
+		v-show="tooltipIsActive"
 		:style="{
 			left: `${xCursorOffset - tooltipHalfWidth}px`,
 			top: `${yCursorOffset - tooltipOffsetHeight}px`,
