@@ -48,5 +48,4 @@ export const updateOutlineShader = (target: THREE.Object3D<THREE.Object3DEventMa
 	} else {
 		setNavShader('none');
 	}
-	console.log(navOutlinePass.selectedObjects, currentCheck);
 };

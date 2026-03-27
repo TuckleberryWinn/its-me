@@ -16,7 +16,7 @@ const props = defineProps({
 <style scoped>
 .hover-region {
 	position: absolute;
-	background-color: black;
+	background-color: rgba(0, 0, 0, 0.244);
 }
 .right {
 	inset: -100dvh 75% -100dvh -100dvw;

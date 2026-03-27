@@ -64,7 +64,6 @@ const hoverRaycast = (ev: MouseEvent) => {
 
 	const intersections = rayCaster.intersectObjects(activeScene.children, true);
 	if (intersections.length > 0 && intersections[0].object.name != mouseOverObject.value) {
-		console.log(intersections[0].object.name);
 		updateOutlineShader(intersections[0].object);
 		mouseOverObject.value = intersections[0].object.name;
 	}
