@@ -18,7 +18,7 @@ const props = defineProps({
 	position: absolute;
 	background-color: rgba(0, 0, 0, 0.244);
 }
-.right {
+.left {
 	inset: -100dvh 75% -100dvh -100dvw;
 }
 
@@ -26,7 +26,7 @@ const props = defineProps({
 	inset: 75% -100dvw -100dvh -100dvw;
 }
 
-.left {
+.right {
 	inset: -100dvh -100dvw -100dvh 75%;
 }
 
