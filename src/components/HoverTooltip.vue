@@ -1,23 +1,22 @@
 <script lang="ts" setup>
 import { xCursorOffset, yCursorOffset } from '@/managers/sceneGlobals';
-import { computed, onMounted, ref, watch } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 import * as useTooltip from '@/composables/useTooltip';
 
 const tooltipRef = ref<HTMLElement | null>(null);
 
+const widthOffset = ref(0);
+const heightOffset = ref(0);
+
 watch(
 	() => useTooltip.textPrompt.value,
-	(newVal, oldVal) => {
-		useTooltip.widthOffset.value = tooltipRef.value!.clientWidth / 2;
-		useTooltip.heightOffset.value = tooltipRef.value!.clientHeight + 20;
-		console.log(useTooltip.widthOffset.value);
+	async (newVal, oldVal) => {
+		await nextTick();
+		widthOffset.value = tooltipRef.value!.clientWidth / 2;
+		heightOffset.value = tooltipRef.value!.clientHeight + 20;
+		console.log(oldVal, newVal);
 	},
 );
-onMounted(() => {
-	useTooltip.widthOffset.value = tooltipRef.value!.clientWidth / 2;
-	useTooltip.heightOffset.value = tooltipRef.value!.clientHeight + 20;
-	console.log(useTooltip.widthOffset.value);
-});
 </script>
 
 <template>
@@ -26,8 +25,8 @@ onMounted(() => {
 		ref="tooltipRef"
 		v-show="useTooltip.isActive"
 		:style="{
-			left: `${xCursorOffset - useTooltip.widthOffset.value}px`,
-			top: `${yCursorOffset - useTooltip.heightOffset.value}px`,
+			left: `${xCursorOffset - widthOffset}px`,
+			top: `${yCursorOffset - heightOffset}px`,
 		}"
 	>
 		{{ useTooltip.textPrompt }}
