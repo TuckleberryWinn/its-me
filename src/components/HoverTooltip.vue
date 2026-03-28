@@ -1,32 +1,22 @@
 <script lang="ts" setup>
 import { xCursorOffset, yCursorOffset } from '@/managers/sceneGlobals';
 import { computed, onMounted, ref, watch } from 'vue';
-const props = defineProps({
-	style: String,
-	content: {
-		type: String,
-		default: 'If you see this, shit is fucked :<',
-	},
-});
+import * as useTooltip from '@/composables/useTooltip';
 
-const tooltipHalfWidth = ref(0);
-const tooltipOffsetHeight = ref(0);
 const tooltipRef = ref<HTMLElement | null>(null);
 
-const tooltipIsActive = ref(false);
-
 watch(
-	() => props.content,
+	() => useTooltip.textPrompt.value,
 	(newVal, oldVal) => {
-		tooltipHalfWidth.value = tooltipRef.value!.clientWidth / 2;
-		tooltipOffsetHeight.value = tooltipRef.value!.clientHeight + 20;
-		console.log(tooltipHalfWidth.value);
+		useTooltip.widthOffset.value = tooltipRef.value!.clientWidth / 2;
+		useTooltip.heightOffset.value = tooltipRef.value!.clientHeight + 20;
+		console.log(useTooltip.widthOffset.value);
 	},
 );
 onMounted(() => {
-	tooltipHalfWidth.value = tooltipRef.value!.clientWidth / 2;
-	tooltipOffsetHeight.value = tooltipRef.value!.clientHeight + 20;
-	console.log(tooltipHalfWidth.value);
+	useTooltip.widthOffset.value = tooltipRef.value!.clientWidth / 2;
+	useTooltip.heightOffset.value = tooltipRef.value!.clientHeight + 20;
+	console.log(useTooltip.widthOffset.value);
 });
 </script>
 
@@ -34,13 +24,13 @@ onMounted(() => {
 	<div
 		class="tooltip"
 		ref="tooltipRef"
-		v-show="tooltipIsActive"
+		v-show="useTooltip.isActive"
 		:style="{
-			left: `${xCursorOffset - tooltipHalfWidth}px`,
-			top: `${yCursorOffset - tooltipOffsetHeight}px`,
+			left: `${xCursorOffset - useTooltip.widthOffset.value}px`,
+			top: `${yCursorOffset - useTooltip.heightOffset.value}px`,
 		}"
 	>
-		{{ props.content }}
+		{{ useTooltip.textPrompt }}
 	</div>
 </template>
 

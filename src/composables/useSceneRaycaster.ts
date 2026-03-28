@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { ref, watch } from 'vue';
 import { camera, renderer, activeScene } from '../managers/threeSceneManager';
 import { updateOutlineShader } from './useContextMaterials';
+import * as useTooltip from './useTooltip';
 
 export const mouseOverObject = ref<string>('');
 export const leftClickSnapshot = ref<string>('');
@@ -116,6 +117,7 @@ const onObjectDefocus = (object: string) => {
 //Watches the objects under mouse raycast and sends updates when focus is gained/lost in 3D space
 watch(mouseOverObject, (newVal, oldVal) => {
 	onObjectDefocus(oldVal);
+	useTooltip.textPrompt.value = newVal;
 	onObjectFocus(newVal);
 });
 
