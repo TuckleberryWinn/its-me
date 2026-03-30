@@ -14,7 +14,7 @@ watch(
 		await nextTick();
 		widthOffset.value = tooltipRef.value!.clientWidth / 2;
 		heightOffset.value = tooltipRef.value!.clientHeight + 20;
-		console.log(oldVal, newVal);
+		console.log(oldVal, newVal, useTooltip.isActive.value);
 	},
 );
 </script>
@@ -23,7 +23,7 @@ watch(
 	<div
 		class="tooltip"
 		ref="tooltipRef"
-		v-show="useTooltip.isActive"
+		v-show="useTooltip.isActive.value"
 		:style="{
 			left: `${xCursorOffset - widthOffset}px`,
 			top: `${yCursorOffset - heightOffset}px`,
