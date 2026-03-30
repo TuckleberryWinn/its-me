@@ -19,11 +19,11 @@ export const textPrompt = ref(errorTextValue);
 
 watch(activePrompts.value, (newVal, oldVal) => {
 	if (newVal.scenePrompt != '') {
+		isActive.value = true;
 		textPrompt.value = newVal.scenePrompt;
-		isActive.value = true;
 	} else if (newVal.uiPrompt != '') {
-		textPrompt.value = newVal.uiPrompt;
 		isActive.value = true;
+		textPrompt.value = newVal.uiPrompt;
 	} else {
 		textPrompt.value = errorTextValue;
 		isActive.value = false;
@@ -42,4 +42,9 @@ export const addUIPrompt = (prompt: string) => {
 };
 export const removeUIPrompt = () => {
 	activePrompts.value.uiPrompt = '';
+};
+
+export const newSceneReset = () => {
+	removeUIPrompt();
+	removeScenPrompt();
 };
