@@ -6,28 +6,31 @@ export const testFunction = () => {
 };
 
 const interactables: Record<string, Function> = {
-	Computer_CRT: () => setNavShader('sceneNavigation'),
-	Computer_Chair: () => setNavShader('sceneNavigation'),
-	Dresser_Short: () => setNavShader('sceneNavigation'),
-	Painting_Desk1: () => setNavShader('objectInspect'),
-	Painting_Desk2: () => setNavShader('objectInspect'),
-	Painting_Desk3: () => setNavShader('objectInspect'),
+	Computer_CRT: () => setOutlineShader('sceneNavigation'),
+	Computer_Chair: () => setOutlineShader('sceneNavigation'),
+	Dresser_Short: () => setOutlineShader('sceneNavigation'),
+	Painting_Desk1: () => setOutlineShader('objectInspect'),
+	Painting_Desk2: () => setOutlineShader('objectInspect'),
+	Painting_Desk3: () => setOutlineShader('objectInspect'),
 };
 
 navOutlinePass.edgeStrength = 12;
 navOutlinePass.edgeGlow = 0.8;
-navOutlinePass.edgeThickness = 8;
-navOutlinePass.pulsePeriod = 6;
+navOutlinePass.edgeThickness = 4;
+navOutlinePass.pulsePeriod = 3;
 navOutlinePass.downSampleRatio = 2.25;
-navOutlinePass.visibleEdgeColor.set('#2e65e6');
-navOutlinePass.hiddenEdgeColor.set('#001d60');
-const setNavShader = (context: string) => {
+
+const setOutlineShader = (context: string) => {
 	switch (context) {
 		case 'sceneNavigation':
-			navOutlinePass.edgeStrength = 12;
+			navOutlinePass.edgeStrength = 8;
+			navOutlinePass.visibleEdgeColor.set('#2e65e6');
+			navOutlinePass.hiddenEdgeColor.set('#001d60');
 			break;
 		case 'objectInspect':
-			navOutlinePass.edgeStrength = 40;
+			navOutlinePass.edgeStrength = 10;
+			navOutlinePass.visibleEdgeColor.set('#4ee52c');
+			navOutlinePass.hiddenEdgeColor.set('#4ee52c');
 			break;
 		default:
 			navOutlinePass.edgeStrength = 0;
@@ -46,6 +49,6 @@ export const updateOutlineShader = (target: THREE.Object3D<THREE.Object3DEventMa
 	if (currentCheck.name in interactables) {
 		interactables[currentCheck.name]();
 	} else {
-		setNavShader('none');
+		setOutlineShader('none');
 	}
 };
