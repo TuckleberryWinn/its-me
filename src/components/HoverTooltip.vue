@@ -13,8 +13,7 @@ watch(
 	async (newVal, oldVal) => {
 		await nextTick();
 		widthOffset.value = tooltipRef.value!.clientWidth / 2;
-		heightOffset.value = tooltipRef.value!.clientHeight + 20;
-		console.log(oldVal, newVal, useTooltip.isActive.value);
+		heightOffset.value = tooltipRef.value!.clientHeight + 40;
 	},
 );
 </script>

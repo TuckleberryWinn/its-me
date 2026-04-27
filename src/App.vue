@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
+import { useRoute, RouterView } from 'vue-router';
 import { watch, ref, computed } from 'vue';
 import { startScene, playScene, pauseScene } from '@/managers/threeSceneManager';
 import { setRaycastListeners } from './composables/useSceneRaycaster';
@@ -7,7 +7,8 @@ import useWindowData from '@/composables/useWindowData';
 const { width, height } = useWindowData(ref(document.body));
 import { useFixedAspectRatio } from './managers/sceneGlobals';
 
-import Cursor from './components/Cursor.vue';
+import DesktopCursor from './components/DesktopCursor.vue';
+import GlobalCursor from './components/GlobalCursor.vue';
 import MobileBio from '@/components/MobileBio.vue';
 import HoverTooltip from './components/HoverTooltip.vue';
 setRaycastListeners();
@@ -47,6 +48,10 @@ const contentSpaceStyle = computed(() => {
 		};
 	}
 });
+
+//Watches for url to toggle which cursor to use
+const route = useRoute();
+const isDesktopView = computed(() => route.path === '/screen-emulator-view');
 </script>
 
 <template>
@@ -59,7 +64,8 @@ const contentSpaceStyle = computed(() => {
 			<RouterView />
 		</div>
 		<HoverTooltip></HoverTooltip>
-		<Cursor />
+		<DesktopCursor v-if="isDesktopView" />
+		<GlobalCursor v-else></GlobalCursor>
 	</div>
 </template>
 

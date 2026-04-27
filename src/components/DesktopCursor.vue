@@ -1,15 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { xCursorOffset, yCursorOffset } from '@/managers/sceneGlobals';
-import cursorSheet from '@/assets/ui/32x_cursorSheet.png';
 import cursorAcid from '@/assets/ui/48xCursorSet-Sheet.png';
-
-const cursorFrame = ref('');
-cursorFrame.value = cursorSheet;
 
 const frameInterval = ref(0);
 
-const cursorAnimator = setInterval(() => {
+setInterval(() => {
 	frameInterval.value += 1;
 	frameInterval.value %= 8;
 }, 125);
