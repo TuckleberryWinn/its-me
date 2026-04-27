@@ -25,7 +25,10 @@ loadDresserShaderCube();
 <template>
 	<div class="about">
 		<RouterLink to="/desk-dresser-view">
-			<ScreenEdgeNavigation direction="right"></ScreenEdgeNavigation>
+			<ScreenEdgeNavigation
+				direction="right"
+				prompt="Look towards desk"
+			></ScreenEdgeNavigation>
 		</RouterLink>
 	</div>
 </template>

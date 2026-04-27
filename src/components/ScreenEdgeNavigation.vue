@@ -6,16 +6,23 @@ const hoverRegion = ref();
 const { width, height } = useWindowData(hoverRegion);
 
 const props = defineProps({
-	direction: String,
+	prompt: {
+		type: String,
+		default: 'No tooltip provided!',
+	},
+	direction: {
+		type: String,
+		default: 'Error',
+	},
 });
 const gridCenter = computed(() => ({ transform: `translate3d(0, 0, -${height.value}px)` }));
 console.log(props.direction);
 const directionalLayout = computed(() => {
-	if (props.direction == 'top') {
+	if (props.direction == 'up') {
 		return `rotateX(-90deg) translate3d(0, ${height.value / 2}px, -${height.value / 2}px)`;
 	} else if (props.direction == 'right') {
 		return `rotateY(-90deg) translate3d(-${height.value / 2}px, 0, -${width.value / 2}px) scaleX(${height.value / width.value})`;
-	} else if (props.direction == 'bottom') {
+	} else if (props.direction == 'down') {
 		return `rotateX(90deg) translate3d(0, -${height.value / 2}px, -${height.value / 2}px)`;
 	} else if (props.direction == 'left') {
 		return `rotateY(90deg) translate3d(${height.value / 2}px, 0, -${width.value / 2}px) scaleX(${height.value / width.value})`;
@@ -37,7 +44,7 @@ const directionalLayout = computed(() => {
 		<div
 			:class="direction"
 			:style="{ transform: directionalLayout }"
-			@mouseenter="useTooltip.addUIPrompt('Look Towards Desk')"
+			@mouseenter="useTooltip.addUIPrompt(prompt, direction)"
 			@mouseleave="useTooltip.removeUIPrompt()"
 		></div>
 	</div>
