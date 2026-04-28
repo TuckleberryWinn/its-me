@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { type CallbackLibrary, setNewSceneCallbacks } from '@/composables/useSceneRaycaster';
 import { type SceneData, swapScene } from '@/managers/threeSceneManager';
-import { loadDresserShaderCube } from '@/composables/useSceneObjects';
 import ScreenEdgeNavigation from '@/components/ScreenEdgeNavigation.vue';
 
 const SceneCallbacks: CallbackLibrary = {
@@ -19,7 +18,6 @@ const CameraData: SceneData = {
 	rotation: [-0.15, 3.6, 0],
 };
 swapScene(CameraData);
-loadDresserShaderCube();
 </script>
 
 <template>
