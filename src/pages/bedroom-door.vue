@@ -15,8 +15,8 @@ const SceneCallbacks: CallbackLibrary = {
 setNewSceneCallbacks(SceneCallbacks);
 
 const CameraData: SceneData = {
-	position: [-1.2, 1.8, 1.9],
-	rotation: [-0.25, 1.488, 0],
+	position: [-4.2, 1.8, -1.1],
+	rotation: [-0.15, 3.6, 0],
 };
 swapScene(CameraData);
 loadDresserShaderCube();
@@ -24,22 +24,10 @@ loadDresserShaderCube();
 
 <template>
 	<div class="about">
-		<RouterLink to="/desk-dresser-view">
+		<RouterLink to="/bookcase-view">
 			<ScreenEdgeNavigation
 				direction="right"
-				prompt="Look towards desk"
-			></ScreenEdgeNavigation>
-		</RouterLink>
-		<RouterLink to="/bedroom-door">
-			<ScreenEdgeNavigation
-				direction="down"
-				prompt="Look towards door"
-			></ScreenEdgeNavigation>
-		</RouterLink>
-		<RouterLink to="/bedroom-door">
-			<ScreenEdgeNavigation
-				direction="left"
-				prompt="Look towards door"
+				prompt="Look towards bookcase"
 			></ScreenEdgeNavigation>
 		</RouterLink>
 	</div>
