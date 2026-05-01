@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import * as useTooltip from '@/composables/useTooltip';
-import { ref, computed, useTemplateRef } from 'vue';
+import { hoverInteractableUI, unhoverInteractableUI } from '@/managers/interactablesManager';
+import { ref, computed } from 'vue';
 import useWindowData from '@/composables/useWindowData';
 const hoverRegion = ref();
 const { width, height } = useWindowData(hoverRegion);
@@ -44,8 +44,8 @@ const directionalLayout = computed(() => {
 		<div
 			:class="direction"
 			:style="{ transform: directionalLayout }"
-			@mouseenter="useTooltip.addUIPrompt(prompt, direction)"
-			@mouseleave="useTooltip.removeUIPrompt()"
+			@mouseenter="hoverInteractableUI(prompt, direction)"
+			@mouseleave="unhoverInteractableUI(prompt, direction)"
 		></div>
 	</div>
 </template>
