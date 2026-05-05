@@ -9,7 +9,8 @@ import * as useTooltip from '@/composables/useTooltip';
 // [1] == {	debug | default | inspect | arrow_right | arrow_left | arrow_up | arrow_down }
 
 const interactables: Record<string, string[]> = {
-	Computer_CRT: ['sceneNavigation', 'arrow_up'],
+	Computer_CRT: ['sceneNavigation', 'arrow_up', 'Start PC'],
+	Painting_Desk1: ['objectInspect', 'inspect', 'Look at painting'],
 };
 
 const focusInteractable = () => {};
