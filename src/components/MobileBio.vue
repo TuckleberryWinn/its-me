@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
+import MobileBioLink from './MobileBioLink.vue';
 import useWindowData from '@/composables/useWindowData';
 const gridContainerElement = ref();
 const { width, height } = useWindowData(gridContainerElement);
@@ -17,6 +18,39 @@ const gridBottom = computed(() => ({
 const gridLeft = computed(() => ({
 	transform: `rotateY(90deg) translate3d(${height.value / 2}px, 0, -${width.value / 2}px) scaleX(${height.value / width.value})`,
 }));
+
+const bioLinks = [
+	{
+		link: 'Discord',
+		displayText: 'Tuckleberry_Winn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_discord.png',
+	},
+	{
+		link: 'Github',
+		displayText: 'Tuckleberry_Winn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_github.png',
+	},
+	{
+		link: 'Instagram',
+		displayText: 'Tuckleberry_Winn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_instagram.png',
+	},
+	{
+		link: 'Itch',
+		displayText: 'Tuckleberry_Winn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_itch.png',
+	},
+	{
+		link: 'Twitter',
+		displayText: 'Tuckleberry_Winn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_twitter.png',
+	},
+];
 </script>
 
 <template>
@@ -62,14 +96,11 @@ const gridLeft = computed(() => ({
 					<li class="font-vt323">> 3D artist</li>
 					<li class="font-vt323">> Oracle of edgy humor</li>
 				</ul>
-				<button class="link">
-					<div class="logo discord"></div>
-					<h4 class="font-vt323">tuckleberry_winn</h4>
-				</button>
-				<button class="link">
-					<div class="logo itch"></div>
-					<h4 class="font-vt323">tuckleberry-winn.itch.io</h4>
-				</button>
+				<MobileBioLink
+					v-for="n in bioLinks"
+					:key="n.link"
+					v-bind="n"
+				></MobileBioLink>
 			</div>
 		</div>
 	</div>
@@ -213,53 +244,6 @@ ul li {
 	box-shadow:
 		0px 0px 40px 12px rgba(48, 45, 106, 0.5),
 		0px 0px 50px 4px rgba(48, 45, 106, 0.5) inset;
-}
-
-button {
-	display: flex;
-	align-items: center;
-	flex-direction: row;
-	max-width: 360px;
-	width: 80%;
-	min-width: 260px;
-	height: 3rem;
-	margin-bottom: 1rem;
-	background: linear-gradient(180deg, rgba(61, 2, 18, 0.486) 35%, rgba(103, 3, 21, 0.539) 85%);
-	border: 2px solid rgb(135, 2, 2);
-	border-radius: 1.25rem;
-}
-
-button > h4 {
-	font-size: 1.3rem;
-	color: #d32836;
-	padding-left: 0.25rem;
-	text-align: left;
-	display: inline;
-	text-shadow:
-		0 0 2px #240003,
-		0 0 2px #240003,
-		0 0 6px #a9083b;
-}
-
-button .logo {
-	background-color: #3c0101;
-	height: 100%;
-	aspect-ratio: 1;
-	display: inline;
-}
-
-.logo.discord {
-	background-image: url(../assets/logos/discord.svg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 80% 80%;
-}
-
-.logo.itch {
-	background-image: url(../assets/logos/itch.svg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 90% 90%;
 }
 
 @keyframes radialGrow {
