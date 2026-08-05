@@ -1,23 +1,84 @@
 <script lang="ts" setup>
-const props = defineProps({
-	appWidth: {
-		type: Number,
-		default: window.innerWidth, // Default value for a number
+import { ref, computed } from 'vue';
+import MobileBioLink from './MobileBioLink.vue';
+import useWindowData from '@/composables/useWindowData';
+const gridContainerElement = ref();
+const { width, height } = useWindowData(gridContainerElement);
+
+const gridCenter = computed(() => ({ transform: `translate3d(0, 0, -${height.value}px)` }));
+const gridTop = computed(() => ({
+	transform: `rotateX(-90deg) translate3d(0, ${height.value / 2}px, -${height.value / 2}px)`,
+}));
+const gridRight = computed(() => ({
+	transform: `rotateY(-90deg) translate3d(-${height.value / 2}px, 0, -${width.value / 2}px) scaleX(${height.value / width.value})`,
+}));
+const gridBottom = computed(() => ({
+	transform: `rotateX(90deg) translate3d(0, -${height.value / 2}px, -${height.value / 2}px)`,
+}));
+const gridLeft = computed(() => ({
+	transform: `rotateY(90deg) translate3d(${height.value / 2}px, 0, -${width.value / 2}px) scaleX(${height.value / width.value})`,
+}));
+
+const bioLinks = [
+	{
+		link: 'Discord',
+		displayText: 'tuckleberry_winn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_discord.png',
 	},
-	appHeight: {
-		type: Number,
-		default: window.innerHeight, // Default value for a number
+	{
+		link: 'https://github.com/TuckleberryWinn',
+		displayText: 'TuckleberryWinn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_github.png',
 	},
-});
+	{
+		link: 'https://www.instagram.com/tuckleberry_winn/',
+		displayText: 'tuckleberry_winn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_instagram.png',
+	},
+	{
+		link: 'https://tuckleberry-winn.itch.io/',
+		displayText: 'Tuckleberry Winn',
+		url: 'javascript:;',
+		logo: '/logos/sheet_itch.png',
+	},
+	{
+		link: 'https://x.com/Tuckergg',
+		displayText: 'Tuckergg',
+		url: 'javascript:;',
+		logo: '/logos/sheet_twitter.png',
+	},
+];
 </script>
 
 <template>
 	<div id="mobile-bio">
 		<div class="background"></div>
-		<div class="grid-container">
+		<div
+			class="grid-container"
+			ref="gridContainerElement"
+		>
 			<span
 				class="grid"
-				v-for="n in 5"
+				:style="gridCenter"
+			></span>
+			<span
+				class="grid"
+				:style="gridTop"
+			></span>
+			<span
+				class="grid grid-right"
+				:style="gridRight"
+			></span>
+			<span
+				class="grid"
+				:style="gridBottom"
+			></span>
+			<span
+				class="grid"
+				:style="gridLeft"
 			></span>
 		</div>
 		<div class="container-extra extra1"></div>
@@ -35,14 +96,11 @@ const props = defineProps({
 					<li class="font-vt323">> 3D artist</li>
 					<li class="font-vt323">> Oracle of edgy humor</li>
 				</ul>
-				<button class="link">
-					<div class="logo discord"></div>
-					<h4 class="font-vt323">tuckleberry_winn</h4>
-				</button>
-				<button class="link">
-					<div class="logo itch"></div>
-					<h4 class="font-vt323">tuckleberry-winn.itch.io</h4>
-				</button>
+				<MobileBioLink
+					v-for="n in bioLinks"
+					:key="n.link"
+					v-bind="n"
+				></MobileBioLink>
 			</div>
 		</div>
 	</div>
@@ -112,6 +170,9 @@ ul li {
 	z-index: 3;
 	margin: auto;
 	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
 }
 
 .container-extra {
@@ -168,7 +229,7 @@ ul li {
 			transparent 97%,
 			rgb(48, 45, 106, 0.845) 97%
 		);
-	background-size: 25% 25dvh;
+	background-size: 25% 25%;
 }
 .grid-container .grid-container:before,
 .grid-container .grid:after {
@@ -178,76 +239,11 @@ ul li {
 	width: inherit;
 	height: inherit;
 }
-.grid-container .grid:nth-child(1) {
-	transform: rotateX(90deg) translate3d(0, -50dvh, -50dvh);
-}
-.grid-container .grid:nth-child(2) {
-	transform: rotateX(-90deg) translate3d(0, 50dvh, -50dvh);
-}
-.grid-container .grid:nth-child(3) {
-	transform: rotateY(90deg)
-		translate3d(calc(50dvw * (v-bind(appHeight) / v-bind(appWidth))), 0, -50dvw)
-		scaleX(calc(v-bind(appHeight) / v-bind(appWidth)));
-}
-.grid-container .grid:nth-child(4) {
-	transform: rotateY(-90deg)
-		translate3d(calc(-50dvw * (v-bind(appHeight) / v-bind(appWidth))), 0, -50dvw)
-		scaleX(calc(v-bind(appHeight) / v-bind(appWidth)));
-}
-.grid-container .grid:nth-child(5) {
-	transform: translate3d(0, 0, -100dvh);
-}
-.grid-container .grid:nth-child(5):after {
+
+.grid-container .grid:nth-child(1):after {
 	box-shadow:
 		0px 0px 40px 12px rgba(48, 45, 106, 0.5),
 		0px 0px 50px 4px rgba(48, 45, 106, 0.5) inset;
-}
-
-button {
-	display: flex;
-	align-items: center;
-	flex-direction: row;
-	max-width: 360px;
-	width: 80%;
-	min-width: 260px;
-	height: 3rem;
-	margin-bottom: 1rem;
-	background: linear-gradient(180deg, rgba(61, 2, 18, 0.486) 35%, rgba(103, 3, 21, 0.539) 85%);
-	border: 2px solid rgb(135, 2, 2);
-	border-radius: 1.25rem;
-}
-
-button > h4 {
-	font-size: 1.3rem;
-	color: #d32836;
-	padding-left: 0.25rem;
-	text-align: left;
-	display: inline;
-	text-shadow:
-		0 0 2px #240003,
-		0 0 2px #240003,
-		0 0 6px #a9083b;
-}
-
-button .logo {
-	background-color: #3c0101;
-	height: 100%;
-	aspect-ratio: 1;
-	display: inline;
-}
-
-.logo.discord {
-	background-image: url(../assets/logos/discord.svg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 80% 80%;
-}
-
-.logo.itch {
-	background-image: url(../assets/logos/itch.svg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 90% 90%;
 }
 
 @keyframes radialGrow {

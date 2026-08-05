@@ -1,17 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import cursorSheet from '@/assets/ui/32x_cursorSheet.png';
-
+import { xCursorOffset, yCursorOffset } from '@/managers/sceneGlobals';
 import cursorAcid from '@/assets/ui/48xCursorSet-Sheet.png';
-
-const xOffset = ref(0);
-const yOffset = ref(0);
-const cursorFrame = ref('');
-cursorFrame.value = cursorSheet;
 
 const frameInterval = ref(0);
 
-const cursorAnimator = setInterval(() => {
+setInterval(() => {
 	frameInterval.value += 1;
 	frameInterval.value %= 8;
 }, 125);
@@ -33,9 +27,6 @@ enum Cursor {
 const currentCursor = ref<Cursor>(Cursor.default);
 
 document.addEventListener('mousemove', (x) => {
-	xOffset.value = Math.floor(x.pageX / 4) * 4;
-	yOffset.value = Math.floor(x.pageY / 4) * 4;
-
 	if (x.target instanceof HTMLElement == false) {
 		return;
 	}
@@ -52,18 +43,16 @@ document.addEventListener('mousemove', (x) => {
 	} else if (classes.contains('resizeSE')) {
 		currentCursor.value = Cursor.resizeSE;
 	} else {
-		// console.log('not clickable?', classes);
 		currentCursor.value = Cursor.default;
 	}
-	// console.log(x.target);
 });
 </script>
 
 <template>
 	<div
 		:style="{
-			left: `${xOffset - 16}px`,
-			top: `${yOffset - 16}px`,
+			left: `${xCursorOffset - 16}px`,
+			top: `${yCursorOffset - 16}px`,
 			backgroundImage: `url(${cursorAcid})`,
 			backgroundPosition: `${frameInterval * -48}px ${currentCursor * -48}px`,
 		}"

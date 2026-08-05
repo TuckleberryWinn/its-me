@@ -2,7 +2,7 @@
 import { computed, onUnmounted, ref } from 'vue';
 import { type Coordinate, activeCoords } from '@/managers/shaderStateManager';
 import useWindowData from '@/composables/useWindowData';
-const { height, width } = useWindowData();
+const { height, width } = useWindowData(ref(document.body));
 
 const rowCount = computed(() => Math.ceil(height.value / 75));
 const columnCount = computed(() => Math.ceil(width.value / 75));
