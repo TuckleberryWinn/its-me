@@ -45,16 +45,17 @@ setInterval(() => {
 a {
 	color: inherit;
 	text-decoration: inherit;
-	width: 100%;
 	justify-items: center;
+	width: fit-content;
+	width: 80%;
+	min-width: 300px;
+	max-width: 420px;
 }
 button {
 	display: flex;
 	align-items: center;
 	flex-direction: row;
-	max-width: 380px;
-	width: 80%;
-	min-width: 300px;
+	width: 100%;
 	margin-bottom: 1rem;
 	background: linear-gradient(180deg, rgba(61, 2, 18, 0.486) 35%, rgba(103, 3, 21, 0.539) 85%);
 	border: 2px solid rgb(135, 2, 2);
