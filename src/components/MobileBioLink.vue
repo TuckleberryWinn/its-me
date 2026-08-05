@@ -24,26 +24,37 @@ setInterval(() => {
 </script>
 
 <template>
-	<button href="{{ link }}">
-		<div
-			class="logo"
-			:style="{
-				backgroundImage: `url(${logo})`,
-				backgroundPosition: `${frameInterval * iconHeight}px ${iconHeight}px`,
-			}"
-		></div>
-		<div class="link-text">{{ displayText }}</div>
-	</button>
+	<a
+		:href="link"
+		target="_blank"
+	>
+		<button>
+			<div
+				class="logo"
+				:style="{
+					backgroundImage: `url(${logo})`,
+					backgroundPosition: `${frameInterval * iconHeight}px ${iconHeight}px`,
+				}"
+			></div>
+			<div class="font-vt323 link-text">{{ displayText }}</div>
+		</button>
+	</a>
 </template>
 
 <style scoped>
+a {
+	color: inherit;
+	text-decoration: inherit;
+	width: 100%;
+	justify-items: center;
+}
 button {
 	display: flex;
 	align-items: center;
 	flex-direction: row;
 	max-width: 380px;
 	width: 80%;
-	min-width: 290px;
+	min-width: 300px;
 	margin-bottom: 1rem;
 	background: linear-gradient(180deg, rgba(61, 2, 18, 0.486) 35%, rgba(103, 3, 21, 0.539) 85%);
 	border: 2px solid rgb(135, 2, 2);
@@ -67,5 +78,16 @@ button .logo {
 	aspect-ratio: 1;
 	display: inline;
 	background-size: auto 100%;
+}
+
+.link-text {
+	font-size: 1.5rem;
+	margin: auto;
+	color: #a9083b;
+	text-shadow:
+		-2px -2px 0 #2f0202,
+		2px -2px 0 #2f0202,
+		-2px 2px 0 #2f0202,
+		2px 2px 0 #2f0202;
 }
 </style>
