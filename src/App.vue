@@ -99,8 +99,8 @@ const isDesktopView = computed(() => route.path === '/screen-emulator-view');
 	display: flex;
 	height: 100%;
 }
-
-@media (min-width: 640px) {
+/* MOBILE VIEW TEMP OVERRIDE HERE. SET BACK TO 640px ONCE SCENE IS READY */
+@media (min-width: 6400px) {
 	.view-full {
 		display: block;
 	}
